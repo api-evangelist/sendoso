@@ -1,0 +1,244 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Sendoso Gift Sending"
+  description: >-
+    Unified capability for corporate gifting and direct mail workflows using
+    the Sendoso platform. Enables sales and marketing teams to send physical
+    gifts, e-gift cards, swag, and direct mail to prospects and customers.
+    Integrates CRM attribution for campaign reporting.
+  tags:
+    - Corporate Gifting
+    - Direct Mail
+    - Sales Engagement
+    - Marketing Automation
+    - CRM Integration
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      SENDOSO_API_KEY: SENDOSO_API_KEY
+
+capability:
+  consumes:
+    - import: sendoso-api
+      location: ./shared/sendoso-api.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: sendoso-gift-sending-api
+      description: "Unified REST API for Sendoso corporate gifting and direct mail workflows."
+      resources:
+        - path: /v1/sends
+          name: sends
+          description: "Create and manage gift sends"
+          operations:
+            - method: GET
+              name: list-sends
+              description: "List sends with filtering by status and date range"
+              call: "sendoso-api.list-sends"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-send
+              description: "Create a new gift send to a recipient"
+              call: "sendoso-api.create-send"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/sends/{send_id}
+          name: send
+          description: "Retrieve or cancel a specific send"
+          operations:
+            - method: GET
+              name: retrieve-send
+              description: "Get send details and tracking status"
+              call: "sendoso-api.retrieve-send"
+              with:
+                send_id: "rest.send_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: cancel-send
+              description: "Cancel a pending send"
+              call: "sendoso-api.cancel-send"
+              with:
+                send_id: "rest.send_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/recipients
+          name: recipients
+          description: "Manage gift recipients"
+          operations:
+            - method: GET
+              name: list-recipients
+              description: "List recipient contacts"
+              call: "sendoso-api.list-recipients"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-recipient
+              description: "Add a new recipient contact"
+              call: "sendoso-api.create-recipient"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/inventory
+          name: inventory
+          description: "Browse available gifts and products"
+          operations:
+            - method: GET
+              name: list-inventory
+              description: "List available inventory items by type"
+              call: "sendoso-api.list-inventory"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/teams/budget
+          name: team-budget
+          description: "Monitor team budget"
+          operations:
+            - method: GET
+              name: get-team-budget
+              description: "Get team budget balance and remaining spend"
+              call: "sendoso-api.get-team-budget"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/reports/sends
+          name: sends-report
+          description: "Sending analytics"
+          operations:
+            - method: GET
+              name: get-sends-report
+              description: "Get aggregated sending analytics by date range"
+              call: "sendoso-api.get-sends-report"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: sendoso-gift-sending-mcp
+      transport: http
+      description: "MCP server for AI-assisted corporate gifting and sales engagement workflows."
+      tools:
+        - name: list-sends
+          description: >-
+            List gift sends with optional filtering by status (pending, shipped,
+            delivered, failed) and date range. Use to check on pending sends or
+            review recent gifting activity.
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sendoso-api.list-sends"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: create-send
+          description: >-
+            Send a gift to a recipient. Provide recipient_id and item_id from
+            inventory. Optionally add a personalized message and CRM attribution
+            (crm_id, crm_type) for Salesforce/HubSpot reporting.
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "sendoso-api.create-send"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: retrieve-send
+          description: "Get the current status and tracking details for a specific send"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sendoso-api.retrieve-send"
+          with:
+            send_id: "tools.send_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: cancel-send
+          description: "Cancel a pending send that has not yet been processed for shipment"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "sendoso-api.cancel-send"
+          with:
+            send_id: "tools.send_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-recipients
+          description: >-
+            Search for recipient contacts by name or email. Use before creating
+            a send to find an existing recipient_id.
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sendoso-api.list-recipients"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: create-recipient
+          description: "Add a new recipient contact with name, email, and optional address"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "sendoso-api.create-recipient"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-inventory
+          description: >-
+            Browse available gifts and products. Filter by type: egift (digital
+            gift cards), physical (shipped products), swag (branded merchandise),
+            direct_mail, or charity.
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sendoso-api.list-inventory"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-team-budget
+          description: "Check the team's remaining gift sending budget and billing period"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sendoso-api.get-team-budget"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-sends-report
+          description: >-
+            Get sending analytics for a date range. Use group_by to aggregate
+            by day, week, month, user, or team. Returns totals and time-series data.
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "sendoso-api.get-sends-report"
+          outputParameters:
+            - type: object
+              mapping: "$."

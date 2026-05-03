@@ -1,0 +1,54 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://app.sendoso.com/api/v2/sends",
+    "headers": {
+      "X-Api-Key": "YOUR_SENDOSO_API_KEY"
+    },
+    "queryParameters": {
+      "status": "delivered",
+      "start_date": "2026-04-01",
+      "end_date": "2026-04-30",
+      "per_page": 10,
+      "page": 1
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "sends": [
+        {
+          "id": "send_abc001",
+          "status": "delivered",
+          "recipient": {
+            "id": "rcpt_123",
+            "first_name": "Alex",
+            "last_name": "Chen",
+            "email": "alex.chen@prospect.com"
+          },
+          "item": {
+            "id": "item_amazon_50",
+            "name": "Amazon Gift Card $50",
+            "type": "egift"
+          },
+          "message": "Thank you for your time last week!",
+          "tracking_number": null,
+          "tracking_url": null,
+          "estimated_delivery": "2026-04-10",
+          "cost": 53.00,
+          "crm_id": "0031000000aaa",
+          "crm_type": "lead",
+          "team_id": "team_sales_east",
+          "created_at": "2026-04-08T10:00:00.000Z",
+          "updated_at": "2026-04-10T14:22:00.000Z"
+        }
+      ],
+      "pagination": {
+        "page": 1,
+        "per_page": 10,
+        "total": 47,
+        "total_pages": 5
+      }
+    }
+  }
+}

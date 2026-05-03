@@ -1,0 +1,95 @@
+extends: spectral:oas
+rules:
+
+  # Sendoso uses snake_case for all field names
+  sendoso-operation-id-camel-case:
+    description: Sendoso operationIds use camelCase
+    message: "operationId '{{value}}' must use camelCase"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
+
+  # All operations require operationId
+  sendoso-operation-id-required:
+    description: All operations must have an operationId
+    message: "Operation must have an operationId"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: defined
+
+  # All operations must have a summary
+  sendoso-operation-summary-required:
+    description: All operations must have a summary
+    message: "Operation must have a summary"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: defined
+
+  # Operations must have tags
+  sendoso-operation-tags-required:
+    description: All operations must be tagged
+    message: "Operation must have at least one tag"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: length
+      functionOptions:
+        min: 1
+
+  # Tags must be from the defined list
+  sendoso-valid-tags:
+    description: Operations must use defined tags
+    message: "Tag '{{value}}' is not in the Sendoso tag list"
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].tags[*]"
+    then:
+      function: enumeration
+      functionOptions:
+        values:
+          - Sends
+          - Recipients
+          - Teams
+          - Inventory
+          - Reports
+
+  # Pagination: list endpoints must have page and per_page
+  sendoso-list-pagination:
+    description: List operations should support page and per_page pagination
+    message: "GET list operations should include pagination parameters"
+    severity: info
+    given: "$.paths[*].get"
+    then:
+      field: parameters
+      function: defined
+
+  # Security must be defined globally
+  sendoso-security-defined:
+    description: API must define security (X-Api-Key)
+    message: "Global security must be defined"
+    severity: error
+    given: "$"
+    then:
+      field: security
+      function: defined
+
+  # Responses must include 200 or 201
+  sendoso-success-response:
+    description: Operations must define success response
+    message: "Operation must define a 200 or 201 response"
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          oneOf:
+            - required: ["200"]
+            - required: ["201"]

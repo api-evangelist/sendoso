@@ -1,0 +1,48 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://app.sendoso.com/api/v2/sends",
+    "headers": {
+      "X-Api-Key": "YOUR_SENDOSO_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "recipient_id": "rcpt_abc123",
+      "item_id": "item_starbucks_25",
+      "message": "Congratulations on your promotion, Sarah! We appreciate your partnership.",
+      "crm_id": "0031000000xyz",
+      "crm_type": "contact"
+    }
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "id": "send_9f82abc",
+      "status": "pending",
+      "recipient": {
+        "id": "rcpt_abc123",
+        "first_name": "Sarah",
+        "last_name": "Johnson",
+        "email": "sarah.johnson@example.com"
+      },
+      "item": {
+        "id": "item_starbucks_25",
+        "name": "Starbucks Gift Card $25",
+        "type": "egift"
+      },
+      "message": "Congratulations on your promotion, Sarah! We appreciate your partnership.",
+      "tracking_number": null,
+      "tracking_url": null,
+      "estimated_delivery": null,
+      "cost": 28.50,
+      "crm_id": "0031000000xyz",
+      "crm_type": "contact",
+      "team_id": "team_sales_west",
+      "created_at": "2026-05-02T15:30:00.000Z",
+      "updated_at": "2026-05-02T15:30:00.000Z"
+    }
+  }
+}

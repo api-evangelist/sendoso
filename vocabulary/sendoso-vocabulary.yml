@@ -1,0 +1,135 @@
+name: Sendoso Vocabulary
+description: >-
+  Domain vocabulary for the Sendoso corporate gifting and direct mail platform.
+  Covers send lifecycle, gift types, recipient management, CRM integration,
+  and budget management concepts.
+version: "2.0"
+created: '2026-05-02'
+modified: '2026-05-02'
+
+terms:
+  - term: Send
+    definition: >-
+      A single instance of a gift, e-gift, swag item, direct mail piece, or
+      charitable donation sent to a recipient. A send has a lifecycle from
+      pending through processing, shipment, and delivery.
+    synonyms:
+      - Gift Send
+      - Sending
+    related:
+      - Recipient
+      - Inventory Item
+      - Send Status
+
+  - term: Send Status
+    definition: >-
+      The current lifecycle state of a send. Valid statuses: pending (initiated,
+      awaiting processing), processing (being prepared), shipped (in transit),
+      delivered (confirmed delivery), failed (could not be completed), cancelled
+      (cancelled before processing).
+    values:
+      - pending
+      - processing
+      - shipped
+      - delivered
+      - failed
+      - cancelled
+    related:
+      - Send
+
+  - term: Recipient
+    definition: >-
+      A contact who receives a send. Recipients have profile information
+      (name, email, title, company) and an optional physical address for
+      delivering physical gifts and direct mail.
+    related:
+      - Send
+      - Address
+
+  - term: Inventory Item
+    definition: >-
+      A gift, product, or experience available to send through Sendoso.
+      Items have types: physical (shipped products), egift (electronic gift
+      cards delivered by email), swag (branded merchandise), direct_mail
+      (postcards, books, catalogs), and charity (charitable donations).
+    synonyms:
+      - Gift
+      - Product
+    related:
+      - Send
+
+  - term: E-Gift
+    definition: >-
+      An electronic gift card or digital reward delivered by email. E-gifts
+      include Starbucks, Amazon, DoorDash, and other digital gift cards.
+      They are delivered instantly without a physical address.
+    synonyms:
+      - Electronic Gift
+      - Digital Gift Card
+    related:
+      - Inventory Item
+
+  - term: Direct Mail
+    definition: >-
+      Physical marketing materials sent through postal mail, such as personalized
+      postcards, books, brochures, or catalogs. Sendoso automates direct mail
+      sending with CRM data for personalization.
+    related:
+      - Inventory Item
+      - Address
+
+  - term: Swag
+    definition: >-
+      Branded merchandise and promotional products sent to prospects, customers,
+      or employees. Includes branded apparel, tech accessories, drinkware, and
+      other custom-printed items.
+    synonyms:
+      - Branded Merchandise
+      - Branded Gifts
+    related:
+      - Inventory Item
+
+  - term: Team Budget
+    definition: >-
+      The allocated spending limit for a Sendoso team within a billing period.
+      Teams track budget remaining, spent amounts, and period dates. A send
+      fails with 402 if the team has insufficient budget.
+    related:
+      - Team
+
+  - term: CRM Integration
+    definition: >-
+      The association between a Sendoso send and a CRM record (Salesforce contact,
+      lead, account, or opportunity; HubSpot contact). Sends can carry crm_id
+      and crm_type for attribution reporting in connected CRM systems.
+    related:
+      - Send
+      - crm_id
+      - crm_type
+
+  - term: Tracking Number
+    definition: >-
+      A carrier-assigned identifier for tracking a physical shipment. Populated
+      once a physical gift has shipped. Null for e-gifts and before shipping.
+    related:
+      - Send
+
+categories:
+  - name: Core
+    terms:
+      - Send
+      - Send Status
+      - Recipient
+      - Inventory Item
+  - name: Gift Types
+    terms:
+      - E-Gift
+      - Direct Mail
+      - Swag
+  - name: Business
+    terms:
+      - Team Budget
+      - CRM Integration
+  - name: Logistics
+    terms:
+      - Tracking Number

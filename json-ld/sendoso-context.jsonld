@@ -1,0 +1,63 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "sendoso": "https://api-evangelist.github.io/sendoso/vocab/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Send": "sendoso:Send",
+    "Recipient": "schema:Person",
+    "InventoryItem": "schema:Product",
+    "Address": "schema:PostalAddress",
+    "TeamBudget": "sendoso:TeamBudget",
+
+    "id": "@id",
+    "status": "sendoso:sendStatus",
+    "message": "schema:description",
+    "cost": "schema:price",
+
+    "first_name": "schema:givenName",
+    "last_name": "schema:familyName",
+    "email": "schema:email",
+    "company": "schema:affiliation",
+    "title": "schema:jobTitle",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "price": "schema:price",
+    "image_url": {
+      "@id": "schema:image",
+      "@type": "@id"
+    },
+
+    "street1": "schema:streetAddress",
+    "street2": "schema:streetAddress",
+    "city": "schema:addressLocality",
+    "state": "schema:addressRegion",
+    "postal_code": "schema:postalCode",
+    "country": "schema:addressCountry",
+
+    "tracking_number": "sendoso:trackingNumber",
+    "tracking_url": {
+      "@id": "sendoso:trackingUrl",
+      "@type": "@id"
+    },
+    "estimated_delivery": {
+      "@id": "schema:deliveryTime",
+      "@type": "xsd:date"
+    },
+
+    "crm_id": "sendoso:crmId",
+    "crm_type": "sendoso:crmType",
+    "team_id": "sendoso:teamId",
+
+    "created_at": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "updated_at": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    }
+  }
+}
