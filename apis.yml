@@ -56,7 +56,7 @@ common:
   url: https://sendoso.com/terms-of-service/
 - type: PrivacyPolicy
   url: https://sendoso.com/privacy-policy/
-- type: Status
+- type: StatusPage
   url: https://status.sendoso.com/
 - type: OpenAPI
   url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/openapi/sendoso-api-openapi.yml
