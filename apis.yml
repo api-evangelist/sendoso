@@ -36,6 +36,8 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/openapi/sendoso-api-openapi.yml
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/sendoso
 - type: Website
   url: https://sendoso.com/
 - type: Portal

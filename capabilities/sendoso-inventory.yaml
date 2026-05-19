@@ -1,0 +1,91 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sendoso Sending Platform API — Inventory
+  description: 'Sendoso Sending Platform API — Inventory. 1 operations. Lead operation: List Inventory. Self-contained Naftiko
+    capability covering one Sendoso business surface.'
+  tags:
+  - Sendoso
+  - Inventory
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SENDOSO_API_KEY: SENDOSO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sendoso-inventory
+    baseUri: https://app.sendoso.com/api/v2
+    description: Sendoso Sending Platform API — Inventory business capability. Self-contained, no shared references.
+    resources:
+    - name: inventory
+      path: /inventory
+      operations:
+      - name: listinventory
+        method: GET
+        description: List Inventory
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: query
+          type: string
+          description: Filter by item type
+        - name: page
+          in: query
+          type: integer
+        - name: per_page
+          in: query
+          type: integer
+    authentication:
+      type: apikey
+      key: X-Api-Key
+      value: '{{env.SENDOSO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: sendoso-inventory-rest
+    port: 8080
+    description: REST adapter for Sendoso Sending Platform API — Inventory. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/inventory
+      name: inventory
+      description: REST surface for inventory.
+      operations:
+      - method: GET
+        name: listinventory
+        description: List Inventory
+        call: sendoso-inventory.listinventory
+        with:
+          type: rest.type
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sendoso-inventory-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sendoso Sending Platform API — Inventory. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-inventory
+      description: List Inventory
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sendoso-inventory.listinventory
+      with:
+        type: tools.type
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.

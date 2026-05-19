@@ -1,0 +1,95 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sendoso Sending Platform API — Reports
+  description: 'Sendoso Sending Platform API — Reports. 1 operations. Lead operation: Get Sends Report. Self-contained Naftiko
+    capability covering one Sendoso business surface.'
+  tags:
+  - Sendoso
+  - Reports
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SENDOSO_API_KEY: SENDOSO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sendoso-reports
+    baseUri: https://app.sendoso.com/api/v2
+    description: Sendoso Sending Platform API — Reports business capability. Self-contained, no shared references.
+    resources:
+    - name: reports-sends
+      path: /reports/sends
+      operations:
+      - name: getsendsreport
+        method: GET
+        description: Get Sends Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: start_date
+          in: query
+          type: string
+          description: Report start date (YYYY-MM-DD)
+          required: true
+        - name: end_date
+          in: query
+          type: string
+          description: Report end date (YYYY-MM-DD)
+          required: true
+        - name: group_by
+          in: query
+          type: string
+          description: Aggregation dimension
+    authentication:
+      type: apikey
+      key: X-Api-Key
+      value: '{{env.SENDOSO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: sendoso-reports-rest
+    port: 8080
+    description: REST adapter for Sendoso Sending Platform API — Reports. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/reports/sends
+      name: reports-sends
+      description: REST surface for reports-sends.
+      operations:
+      - method: GET
+        name: getsendsreport
+        description: Get Sends Report
+        call: sendoso-reports.getsendsreport
+        with:
+          start_date: rest.start_date
+          end_date: rest.end_date
+          group_by: rest.group_by
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sendoso-reports-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sendoso Sending Platform API — Reports. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-sends-report
+      description: Get Sends Report
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sendoso-reports.getsendsreport
+      with:
+        start_date: tools.start_date
+        end_date: tools.end_date
+        group_by: tools.group_by
+      outputParameters:
+      - type: object
+        mapping: $.

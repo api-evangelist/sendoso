@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Sendoso Sending Platform API — Teams
+  description: 'Sendoso Sending Platform API — Teams. 1 operations. Lead operation: Get Team Budget. Self-contained Naftiko
+    capability covering one Sendoso business surface.'
+  tags:
+  - Sendoso
+  - Teams
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SENDOSO_API_KEY: SENDOSO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sendoso-teams
+    baseUri: https://app.sendoso.com/api/v2
+    description: Sendoso Sending Platform API — Teams business capability. Self-contained, no shared references.
+    resources:
+    - name: teams-budget
+      path: /teams/budget
+      operations:
+      - name: getteambudget
+        method: GET
+        description: Get Team Budget
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: X-Api-Key
+      value: '{{env.SENDOSO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: sendoso-teams-rest
+    port: 8080
+    description: REST adapter for Sendoso Sending Platform API — Teams. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/teams/budget
+      name: teams-budget
+      description: REST surface for teams-budget.
+      operations:
+      - method: GET
+        name: getteambudget
+        description: Get Team Budget
+        call: sendoso-teams.getteambudget
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sendoso-teams-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Sendoso Sending Platform API — Teams. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-team-budget
+      description: Get Team Budget
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sendoso-teams.getteambudget
+      outputParameters:
+      - type: object
+        mapping: $.
