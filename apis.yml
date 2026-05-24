@@ -80,6 +80,8 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/json-ld/sendoso-context.jsonld
   - type: Vocabulary
     url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/vocabulary/sendoso-vocabulary.yml
+  - type: LLMsTxt
+    url: https://developer.sendoso.com/llms.txt
 maintainers:
   - FN: API Evangelist
     url: https://apievangelist.com
