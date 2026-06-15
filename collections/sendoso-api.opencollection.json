@@ -1,0 +1,288 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sendoso Sending Platform API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sends",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Sends",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/sends",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Results per page"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by send status"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter sends created on or after this date"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter sends created on or before this date"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of sends for the authenticated user or team."
+        },
+        {
+          "info": {
+            "name": "Create Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.sendoso.com/api/v2/sends",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a new send to one or more recipients. Supports physical gifts, e-gifts, direct mail, and custom branded merchandise. Requires a valid sending address or e-gift email for the recipient."
+        },
+        {
+          "info": {
+            "name": "Retrieve Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/sends/:send_id",
+            "params": [
+              {
+                "name": "send_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique send identifier"
+              }
+            ]
+          },
+          "docs": "Returns details and current status for a specific send."
+        },
+        {
+          "info": {
+            "name": "Cancel Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.sendoso.com/api/v2/sends/:send_id",
+            "params": [
+              {
+                "name": "send_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique send identifier"
+              }
+            ]
+          },
+          "docs": "Cancels a pending send before it has been processed for shipment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Recipients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/recipients",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search by name or email"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of recipient contacts."
+        },
+        {
+          "info": {
+            "name": "Create Recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.sendoso.com/api/v2/recipients",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new recipient contact in the Sendoso address book."
+        },
+        {
+          "info": {
+            "name": "Retrieve Recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/recipients/:recipient_id",
+            "params": [
+              {
+                "name": "recipient_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique recipient identifier"
+              }
+            ]
+          },
+          "docs": "Returns details for a specific recipient contact."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Inventory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Inventory",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/inventory",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by item type"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns available gifts and products in the team's Sendoso inventory. Includes physical gifts, e-gift cards, branded swag, and direct mail options."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Teams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Team Budget",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/teams/budget"
+          },
+          "docs": "Returns the current budget balance and allocation for the authenticated team."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Sends Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/reports/sends",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Report start date (YYYY-MM-DD)"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Report end date (YYYY-MM-DD)"
+              },
+              {
+                "name": "group_by",
+                "value": "",
+                "type": "query",
+                "description": "Aggregation dimension"
+              }
+            ]
+          },
+          "docs": "Returns aggregated sending analytics for a date range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
