@@ -4,7 +4,7 @@ description: >-
   send physical and digital gifts at scale. The Sendoso Sending Platform provides personalized gift sending, branded
   swag, e-gift cards, direct mail, and charitable donations. Sendoso integrates with Salesforce, HubSpot, Outreach,
   Marketo, and other CRM and sales engagement tools to automate gift-sending at scale.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/sendoso/refs/heads/main/apis.yml
 created: '2026-05-02'
 modified: '2026-05-02'
@@ -21,7 +21,7 @@ apis:
       The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise.
       Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines. Supports
       recipient management, inventory browsing, budget tracking, and send analytics.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://developer.sendoso.com/
     baseURL: https://app.sendoso.com/api/v2
     tags:
