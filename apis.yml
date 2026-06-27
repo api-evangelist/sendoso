@@ -77,15 +77,15 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/json-schema/sendoso-send-schema.json
   - type: JSONStructure
     url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/json-structure/sendoso-send-structure.json
-  - type: Example
+  - type: Examples
     url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/examples/sendoso-create-send-example.json
-  - type: Example
+  - type: Examples
     url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/examples/sendoso-list-sends-example.json
   - type: JSONLD
     url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/json-ld/sendoso-context.jsonld
   - type: Vocabulary
     url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/vocabulary/sendoso-vocabulary.yml
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://developer.sendoso.com/llms.txt
 maintainers:
   - FN: API Evangelist
