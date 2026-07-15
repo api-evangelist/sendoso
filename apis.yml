@@ -43,6 +43,8 @@ apis:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/openapi/sendoso-api-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/sendoso-agentic-access.yml
   - type: DomainSecurity
     url: security/sendoso-domain-security.yml
   - type: Authentication
