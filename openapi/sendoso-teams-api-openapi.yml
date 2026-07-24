@@ -1,0 +1,67 @@
+openapi: 3.1.0
+info:
+  title: Sendoso Sending Platform Inventory Teams API
+  description: Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.
+  version: '2.0'
+  contact:
+    name: Sendoso Developer Support
+    url: https://developer.sendoso.com/
+  license:
+    name: Sendoso Terms of Service
+    url: https://sendoso.com/terms-of-service/
+servers:
+- url: https://app.sendoso.com/api/v2
+  description: Sendoso Production API v2
+security:
+- ApiKeyAuth: []
+tags:
+- name: Teams
+  description: Team and budget management
+paths:
+  /teams/budget:
+    get:
+      operationId: getTeamBudget
+      summary: Get Team Budget
+      description: Returns the current budget balance and allocation for the authenticated team.
+      tags:
+      - Teams
+      responses:
+        '200':
+          description: Team budget information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamBudget'
+components:
+  schemas:
+    TeamBudget:
+      type: object
+      properties:
+        team_id:
+          type: string
+        team_name:
+          type: string
+        total_budget:
+          type: number
+          format: float
+          description: Total allocated budget in USD
+        spent:
+          type: number
+          format: float
+          description: Amount spent in the current period
+        remaining:
+          type: number
+          format: float
+          description: Remaining budget
+        period_start:
+          type: string
+          format: date
+        period_end:
+          type: string
+          format: date
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: Sendoso API key from Settings > API Keys

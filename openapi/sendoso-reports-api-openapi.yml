@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: Sendoso Sending Platform Inventory Reports API
+  description: Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.
+  version: '2.0'
+  contact:
+    name: Sendoso Developer Support
+    url: https://developer.sendoso.com/
+  license:
+    name: Sendoso Terms of Service
+    url: https://sendoso.com/terms-of-service/
+servers:
+- url: https://app.sendoso.com/api/v2
+  description: Sendoso Production API v2
+security:
+- ApiKeyAuth: []
+tags:
+- name: Reports
+  description: Sending analytics and reports
+paths:
+  /reports/sends:
+    get:
+      operationId: getSendsReport
+      summary: Get Sends Report
+      description: Returns aggregated sending analytics for a date range.
+      tags:
+      - Reports
+      parameters:
+      - name: start_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Report start date (YYYY-MM-DD)
+      - name: end_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Report end date (YYYY-MM-DD)
+      - name: group_by
+        in: query
+        schema:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+          - user
+          - team
+        description: Aggregation dimension
+      responses:
+        '200':
+          description: Sends report data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendsReport'
+components:
+  schemas:
+    SendsReport:
+      type: object
+      properties:
+        period:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date
+            end_date:
+              type: string
+              format: date
+        totals:
+          type: object
+          properties:
+            sends:
+              type: integer
+            delivered:
+              type: integer
+            failed:
+              type: integer
+            total_spend:
+              type: number
+              format: float
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              period:
+                type: string
+              sends:
+                type: integer
+              delivered:
+                type: integer
+              spend:
+                type: number
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: Sendoso API key from Settings > API Keys

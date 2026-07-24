@@ -1,0 +1,269 @@
+openapi: 3.1.0
+info:
+  title: Sendoso Sending Platform Inventory Sends API
+  description: Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.
+  version: '2.0'
+  contact:
+    name: Sendoso Developer Support
+    url: https://developer.sendoso.com/
+  license:
+    name: Sendoso Terms of Service
+    url: https://sendoso.com/terms-of-service/
+servers:
+- url: https://app.sendoso.com/api/v2
+  description: Sendoso Production API v2
+security:
+- ApiKeyAuth: []
+tags:
+- name: Sends
+  description: Create and manage gift sends
+paths:
+  /sends:
+    get:
+      operationId: listSends
+      summary: List Sends
+      description: Returns a paginated list of sends for the authenticated user or team.
+      tags:
+      - Sends
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+          default: 25
+          maximum: 100
+        description: Results per page
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - pending
+          - processing
+          - shipped
+          - delivered
+          - failed
+          - cancelled
+        description: Filter by send status
+      - name: start_date
+        in: query
+        schema:
+          type: string
+          format: date
+        description: Filter sends created on or after this date
+      - name: end_date
+        in: query
+        schema:
+          type: string
+          format: date
+        description: Filter sends created on or before this date
+      responses:
+        '200':
+          description: List of sends
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sends:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Send'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createSend
+      summary: Create Send
+      description: Initiates a new send to one or more recipients. Supports physical gifts, e-gifts, direct mail, and custom branded merchandise. Requires a valid sending address or e-gift email for the recipient.
+      tags:
+      - Sends
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCreate'
+      responses:
+        '201':
+          description: Send created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Send'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Unauthorized
+        '402':
+          description: Insufficient team budget
+        '422':
+          description: Validation error
+  /sends/{send_id}:
+    get:
+      operationId: retrieveSend
+      summary: Retrieve Send
+      description: Returns details and current status for a specific send.
+      tags:
+      - Sends
+      parameters:
+      - $ref: '#/components/parameters/SendId'
+      responses:
+        '200':
+          description: Send details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Send'
+        '404':
+          description: Send not found
+    delete:
+      operationId: cancelSend
+      summary: Cancel Send
+      description: Cancels a pending send before it has been processed for shipment.
+      tags:
+      - Sends
+      parameters:
+      - $ref: '#/components/parameters/SendId'
+      responses:
+        '200':
+          description: Send cancelled
+        '409':
+          description: Send cannot be cancelled (already shipped or delivered)
+components:
+  schemas:
+    SendCreate:
+      type: object
+      required:
+      - recipient_id
+      - item_id
+      properties:
+        recipient_id:
+          type: string
+          description: Sendoso recipient ID
+        item_id:
+          type: string
+          description: Inventory item to send
+        message:
+          type: string
+          maxLength: 500
+          description: Personalized gift message
+        scheduled_date:
+          type: string
+          format: date
+          description: Schedule the send for a future date
+        crm_id:
+          type: string
+          description: CRM object ID to associate with this send
+        crm_type:
+          type: string
+          enum:
+          - contact
+          - lead
+          - account
+          - opportunity
+          description: CRM object type
+    Send:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique send identifier
+        status:
+          type: string
+          enum:
+          - pending
+          - processing
+          - shipped
+          - delivered
+          - failed
+          - cancelled
+          description: Current send status
+        recipient:
+          $ref: '#/components/schemas/RecipientRef'
+        item:
+          $ref: '#/components/schemas/InventoryItemRef'
+        message:
+          type: string
+          description: Personalized message included with the send
+        tracking_number:
+          type: string
+          nullable: true
+          description: Carrier tracking number once shipped
+        tracking_url:
+          type: string
+          format: uri
+          nullable: true
+        estimated_delivery:
+          type: string
+          format: date
+          nullable: true
+        cost:
+          type: number
+          format: float
+          description: Send cost in USD
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        crm_id:
+          type: string
+          nullable: true
+          description: External CRM object ID (Salesforce, HubSpot, etc.)
+        team_id:
+          type: string
+          description: Team that owns this send
+    InventoryItemRef:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+    RecipientRef:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        per_page:
+          type: integer
+        total:
+          type: integer
+        total_pages:
+          type: integer
+  parameters:
+    SendId:
+      name: send_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique send identifier
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: Sendoso API key from Settings > API Keys

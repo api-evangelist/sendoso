@@ -1,0 +1,111 @@
+openapi: 3.1.0
+info:
+  title: Sendoso Sending Platform Inventory API
+  description: Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.
+  version: '2.0'
+  contact:
+    name: Sendoso Developer Support
+    url: https://developer.sendoso.com/
+  license:
+    name: Sendoso Terms of Service
+    url: https://sendoso.com/terms-of-service/
+servers:
+- url: https://app.sendoso.com/api/v2
+  description: Sendoso Production API v2
+security:
+- ApiKeyAuth: []
+tags:
+- name: Inventory
+  description: Browse available gifts and products
+paths:
+  /inventory:
+    get:
+      operationId: listInventory
+      summary: List Inventory
+      description: Returns available gifts and products in the team's Sendoso inventory. Includes physical gifts, e-gift cards, branded swag, and direct mail options.
+      tags:
+      - Inventory
+      parameters:
+      - name: type
+        in: query
+        schema:
+          type: string
+          enum:
+          - physical
+          - egift
+          - swag
+          - direct_mail
+          - charity
+        description: Filter by item type
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+          default: 25
+      responses:
+        '200':
+          description: List of inventory items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InventoryItem'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+components:
+  schemas:
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        per_page:
+          type: integer
+        total:
+          type: integer
+        total_pages:
+          type: integer
+    InventoryItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+          - physical
+          - egift
+          - swag
+          - direct_mail
+          - charity
+        price:
+          type: number
+          format: float
+          description: Item price in USD
+        image_url:
+          type: string
+          format: uri
+        available:
+          type: boolean
+        shipping_time_days:
+          type: integer
+          nullable: true
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: Sendoso API key from Settings > API Keys
