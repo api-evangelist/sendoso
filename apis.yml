@@ -4,7 +4,20 @@ description: >-
   send physical and digital gifts at scale. The Sendoso Sending Platform provides personalized gift sending, branded
   swag, e-gift cards, direct mail, and charitable donations. Sendoso integrates with Salesforce, HubSpot, Outreach,
   Marketo, and other CRM and sales engagement tools to automate gift-sending at scale.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sendoso.png
 url: https://raw.githubusercontent.com/api-evangelist/sendoso/refs/heads/main/apis.yml
 created: '2026-05-02'
 modified: '2026-05-02'
@@ -16,33 +29,109 @@ tags:
   - Marketing Automation
   - CRM Integration
 apis:
-  - name: Sendoso Sending Platform API
-    description: >-
-      The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise.
-      Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines. Supports
-      recipient management, inventory browsing, budget tracking, and send analytics.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://developer.sendoso.com/
-    baseURL: https://app.sendoso.com/api/v2
-    tags:
-      - Corporate Gifting
-      - Direct Mail
-      - Sales Engagement
-      - Marketing Automation
-    properties:
-      - type: Documentation
-        url: https://developer.sendoso.com/
-      - type: Reference
-        url: https://developer.sendoso.com/reference
-      - type: GettingStarted
-        url: https://developer.sendoso.com/getting-started
-      - type: Authentication
-        url: https://developer.sendoso.com/authentication
-      - type: Webhooks
-        url: https://developer.sendoso.com/webhooks
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/sendoso/main/openapi/sendoso-api-openapi.yml
+- aid: sendoso:sendoso-inventory-api
+  name: Sendoso Inventory API
+  description: Browse available gifts and products
+  humanURL: https://developer.sendoso.com/
+  baseURL: https://app.sendoso.com/api/v2
+  tags:
+  - Inventory
+  properties:
+  - type: OpenAPI
+    url: openapi/sendoso-inventory-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sendoso.com/
+  - type: Reference
+    url: https://developer.sendoso.com/reference
+  - type: GettingStarted
+    url: https://developer.sendoso.com/getting-started
+  - type: Authentication
+    url: https://developer.sendoso.com/authentication
+  - type: Webhooks
+    url: https://developer.sendoso.com/webhooks
+- aid: sendoso:sendoso-recipients-api
+  name: Sendoso Recipients API
+  description: Manage recipient contacts
+  humanURL: https://developer.sendoso.com/
+  baseURL: https://app.sendoso.com/api/v2
+  tags:
+  - Recipients
+  properties:
+  - type: OpenAPI
+    url: openapi/sendoso-recipients-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sendoso.com/
+  - type: Reference
+    url: https://developer.sendoso.com/reference
+  - type: GettingStarted
+    url: https://developer.sendoso.com/getting-started
+  - type: Authentication
+    url: https://developer.sendoso.com/authentication
+  - type: Webhooks
+    url: https://developer.sendoso.com/webhooks
+- aid: sendoso:sendoso-reports-api
+  name: Sendoso Reports API
+  description: Sending analytics and reports
+  humanURL: https://developer.sendoso.com/
+  baseURL: https://app.sendoso.com/api/v2
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/sendoso-reports-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sendoso.com/
+  - type: Reference
+    url: https://developer.sendoso.com/reference
+  - type: GettingStarted
+    url: https://developer.sendoso.com/getting-started
+  - type: Authentication
+    url: https://developer.sendoso.com/authentication
+  - type: Webhooks
+    url: https://developer.sendoso.com/webhooks
+- aid: sendoso:sendoso-sends-api
+  name: Sendoso Sends API
+  description: Create and manage gift sends
+  humanURL: https://developer.sendoso.com/
+  baseURL: https://app.sendoso.com/api/v2
+  tags:
+  - Sends
+  properties:
+  - type: OpenAPI
+    url: openapi/sendoso-sends-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sendoso.com/
+  - type: Reference
+    url: https://developer.sendoso.com/reference
+  - type: GettingStarted
+    url: https://developer.sendoso.com/getting-started
+  - type: Authentication
+    url: https://developer.sendoso.com/authentication
+  - type: Webhooks
+    url: https://developer.sendoso.com/webhooks
+- aid: sendoso:sendoso-teams-api
+  name: Sendoso Teams API
+  description: Team and budget management
+  humanURL: https://developer.sendoso.com/
+  baseURL: https://app.sendoso.com/api/v2
+  tags:
+  - Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/sendoso-teams-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sendoso.com/
+  - type: Reference
+    url: https://developer.sendoso.com/reference
+  - type: GettingStarted
+    url: https://developer.sendoso.com/getting-started
+  - type: Authentication
+    url: https://developer.sendoso.com/authentication
+  - type: Webhooks
+    url: https://developer.sendoso.com/webhooks
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/sendoso/overview
   - type: AgenticAccess
     url: agentic-access/sendoso-agentic-access.yml
   - type: DomainSecurity
