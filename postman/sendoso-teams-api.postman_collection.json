@@ -1,0 +1,133 @@
+{
+  "info": {
+    "_postman_id": "c3f06673-04d1-4e0d-9f8c-89d13bb812d5",
+    "name": "Sendoso Sending Platform Inventory Teams API",
+    "description": "Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.\n\nContact Support:\n Name: Sendoso Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:52:07.000Z",
+    "updatedAt": "2026-07-28T02:52:07.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c3f06673-04d1-4e0d-9f8c-89d13bb812d5"
+  },
+  "item": [
+    {
+      "name": "teams",
+      "item": [
+        {
+          "name": "budget",
+          "item": [
+            {
+              "name": "Get Team Budget",
+              "id": "3f26609d-db40-46cb-aeb3-33ac14a5a960",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/teams/budget",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "teams",
+                    "budget"
+                  ]
+                },
+                "description": "Returns the current budget balance and allocation for the authenticated team."
+              },
+              "response": [
+                {
+                  "id": "3b6761e0-9b9e-442c-b70e-7d5d29d02547",
+                  "name": "Team budget information",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Api-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/teams/budget",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "teams",
+                        "budget"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"team_id\": \"<string>\",\n  \"team_name\": \"<string>\",\n  \"total_budget\": \"<float>\",\n  \"spent\": \"<float>\",\n  \"remaining\": \"<float>\",\n  \"period_start\": \"<date>\",\n  \"period_end\": \"<date>\"\n}",
+                  "createdAt": "2026-07-28T02:52:07.000Z",
+                  "updatedAt": "2026-07-28T02:52:07.000Z",
+                  "uid": "35240-3b6761e0-9b9e-442c-b70e-7d5d29d02547"
+                }
+              ],
+              "createdAt": "2026-07-28T02:52:07.000Z",
+              "updatedAt": "2026-07-28T02:52:07.000Z",
+              "uid": "35240-3f26609d-db40-46cb-aeb3-33ac14a5a960"
+            }
+          ],
+          "id": "7fe5c7f9-293e-4b12-90b1-903c62630e49",
+          "createdAt": "2026-07-28T02:52:07.000Z",
+          "updatedAt": "2026-07-28T02:52:07.000Z",
+          "uid": "35240-7fe5c7f9-293e-4b12-90b1-903c62630e49"
+        }
+      ],
+      "id": "3687265b-a266-4ad4-8b52-2a1103111eba",
+      "createdAt": "2026-07-28T02:52:07.000Z",
+      "updatedAt": "2026-07-28T02:52:07.000Z",
+      "uid": "35240-3687265b-a266-4ad4-8b52-2a1103111eba"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://app.sendoso.com/api/v2"
+    }
+  ]
+}

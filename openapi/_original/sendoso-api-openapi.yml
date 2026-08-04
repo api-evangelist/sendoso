@@ -1,0 +1,608 @@
+openapi: 3.1.0
+info:
+  title: Sendoso Sending Platform API
+  description: >-
+    Sendoso is a corporate gifting and direct mail platform that enables sales,
+    marketing, and customer success teams to send physical and digital gifts at
+    scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts,
+    direct mail, and branded merchandise. Integrate gift-sending into CRM
+    workflows, marketing automation, and customer engagement pipelines.
+  version: "2.0"
+  contact:
+    name: Sendoso Developer Support
+    url: https://developer.sendoso.com/
+  license:
+    name: Sendoso Terms of Service
+    url: https://sendoso.com/terms-of-service/
+servers:
+  - url: https://app.sendoso.com/api/v2
+    description: Sendoso Production API v2
+
+security:
+  - ApiKeyAuth: []
+
+tags:
+  - name: Sends
+    description: Create and manage gift sends
+  - name: Recipients
+    description: Manage recipient contacts
+  - name: Teams
+    description: Team and budget management
+  - name: Inventory
+    description: Browse available gifts and products
+  - name: Reports
+    description: Sending analytics and reports
+
+paths:
+  /sends:
+    get:
+      operationId: listSends
+      summary: List Sends
+      description: Returns a paginated list of sends for the authenticated user or team.
+      tags:
+        - Sends
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 25
+            maximum: 100
+          description: Results per page
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, processing, shipped, delivered, failed, cancelled]
+          description: Filter by send status
+        - name: start_date
+          in: query
+          schema:
+            type: string
+            format: date
+          description: Filter sends created on or after this date
+        - name: end_date
+          in: query
+          schema:
+            type: string
+            format: date
+          description: Filter sends created on or before this date
+      responses:
+        '200':
+          description: List of sends
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sends:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Send'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createSend
+      summary: Create Send
+      description: >-
+        Initiates a new send to one or more recipients. Supports physical gifts,
+        e-gifts, direct mail, and custom branded merchandise. Requires a valid
+        sending address or e-gift email for the recipient.
+      tags:
+        - Sends
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCreate'
+      responses:
+        '201':
+          description: Send created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Send'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Unauthorized
+        '402':
+          description: Insufficient team budget
+        '422':
+          description: Validation error
+
+  /sends/{send_id}:
+    get:
+      operationId: retrieveSend
+      summary: Retrieve Send
+      description: Returns details and current status for a specific send.
+      tags:
+        - Sends
+      parameters:
+        - $ref: '#/components/parameters/SendId'
+      responses:
+        '200':
+          description: Send details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Send'
+        '404':
+          description: Send not found
+    delete:
+      operationId: cancelSend
+      summary: Cancel Send
+      description: Cancels a pending send before it has been processed for shipment.
+      tags:
+        - Sends
+      parameters:
+        - $ref: '#/components/parameters/SendId'
+      responses:
+        '200':
+          description: Send cancelled
+        '409':
+          description: Send cannot be cancelled (already shipped or delivered)
+
+  /recipients:
+    get:
+      operationId: listRecipients
+      summary: List Recipients
+      description: Returns a paginated list of recipient contacts.
+      tags:
+        - Recipients
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 25
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: Search by name or email
+      responses:
+        '200':
+          description: List of recipients
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recipients:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Recipient'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+    post:
+      operationId: createRecipient
+      summary: Create Recipient
+      description: Creates a new recipient contact in the Sendoso address book.
+      tags:
+        - Recipients
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipientCreate'
+      responses:
+        '201':
+          description: Recipient created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipient'
+        '422':
+          description: Validation error
+
+  /recipients/{recipient_id}:
+    get:
+      operationId: retrieveRecipient
+      summary: Retrieve Recipient
+      description: Returns details for a specific recipient contact.
+      tags:
+        - Recipients
+      parameters:
+        - $ref: '#/components/parameters/RecipientId'
+      responses:
+        '200':
+          description: Recipient details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipient'
+        '404':
+          description: Recipient not found
+
+  /inventory:
+    get:
+      operationId: listInventory
+      summary: List Inventory
+      description: >-
+        Returns available gifts and products in the team's Sendoso inventory.
+        Includes physical gifts, e-gift cards, branded swag, and direct mail options.
+      tags:
+        - Inventory
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [physical, egift, swag, direct_mail, charity]
+          description: Filter by item type
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 25
+      responses:
+        '200':
+          description: List of inventory items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InventoryItem'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+
+  /teams/budget:
+    get:
+      operationId: getTeamBudget
+      summary: Get Team Budget
+      description: Returns the current budget balance and allocation for the authenticated team.
+      tags:
+        - Teams
+      responses:
+        '200':
+          description: Team budget information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamBudget'
+
+  /reports/sends:
+    get:
+      operationId: getSendsReport
+      summary: Get Sends Report
+      description: Returns aggregated sending analytics for a date range.
+      tags:
+        - Reports
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Report start date (YYYY-MM-DD)
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Report end date (YYYY-MM-DD)
+        - name: group_by
+          in: query
+          schema:
+            type: string
+            enum: [day, week, month, user, team]
+          description: Aggregation dimension
+      responses:
+        '200':
+          description: Sends report data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendsReport'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: Sendoso API key from Settings > API Keys
+
+  parameters:
+    SendId:
+      name: send_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique send identifier
+    RecipientId:
+      name: recipient_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique recipient identifier
+
+  schemas:
+    Send:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique send identifier
+        status:
+          type: string
+          enum: [pending, processing, shipped, delivered, failed, cancelled]
+          description: Current send status
+        recipient:
+          $ref: '#/components/schemas/RecipientRef'
+        item:
+          $ref: '#/components/schemas/InventoryItemRef'
+        message:
+          type: string
+          description: Personalized message included with the send
+        tracking_number:
+          type: string
+          nullable: true
+          description: Carrier tracking number once shipped
+        tracking_url:
+          type: string
+          format: uri
+          nullable: true
+        estimated_delivery:
+          type: string
+          format: date
+          nullable: true
+        cost:
+          type: number
+          format: float
+          description: Send cost in USD
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        crm_id:
+          type: string
+          nullable: true
+          description: External CRM object ID (Salesforce, HubSpot, etc.)
+        team_id:
+          type: string
+          description: Team that owns this send
+
+    SendCreate:
+      type: object
+      required:
+        - recipient_id
+        - item_id
+      properties:
+        recipient_id:
+          type: string
+          description: Sendoso recipient ID
+        item_id:
+          type: string
+          description: Inventory item to send
+        message:
+          type: string
+          maxLength: 500
+          description: Personalized gift message
+        scheduled_date:
+          type: string
+          format: date
+          description: Schedule the send for a future date
+        crm_id:
+          type: string
+          description: CRM object ID to associate with this send
+        crm_type:
+          type: string
+          enum: [contact, lead, account, opportunity]
+          description: CRM object type
+
+    Recipient:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        company:
+          type: string
+        title:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        created_at:
+          type: string
+          format: date-time
+
+    RecipientCreate:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        company:
+          type: string
+        title:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+
+    RecipientRef:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+
+    InventoryItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum: [physical, egift, swag, direct_mail, charity]
+        price:
+          type: number
+          format: float
+          description: Item price in USD
+        image_url:
+          type: string
+          format: uri
+        available:
+          type: boolean
+        shipping_time_days:
+          type: integer
+          nullable: true
+
+    InventoryItemRef:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+
+    Address:
+      type: object
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+          description: State or province code
+        postal_code:
+          type: string
+        country:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+          default: US
+
+    TeamBudget:
+      type: object
+      properties:
+        team_id:
+          type: string
+        team_name:
+          type: string
+        total_budget:
+          type: number
+          format: float
+          description: Total allocated budget in USD
+        spent:
+          type: number
+          format: float
+          description: Amount spent in the current period
+        remaining:
+          type: number
+          format: float
+          description: Remaining budget
+        period_start:
+          type: string
+          format: date
+        period_end:
+          type: string
+          format: date
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        per_page:
+          type: integer
+        total:
+          type: integer
+        total_pages:
+          type: integer
+
+    SendsReport:
+      type: object
+      properties:
+        period:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date
+            end_date:
+              type: string
+              format: date
+        totals:
+          type: object
+          properties:
+            sends:
+              type: integer
+            delivered:
+              type: integer
+            failed:
+              type: integer
+            total_spend:
+              type: number
+              format: float
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              period:
+                type: string
+              sends:
+                type: integer
+              delivered:
+                type: integer
+              spend:
+                type: number

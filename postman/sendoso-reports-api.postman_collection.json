@@ -1,0 +1,167 @@
+{
+  "info": {
+    "_postman_id": "cd00d3d0-2daa-4a93-8eb3-c0d0e2692f4e",
+    "name": "Sendoso Sending Platform Inventory Reports API",
+    "description": "Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.\n\nContact Support:\n Name: Sendoso Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:52:05.000Z",
+    "updatedAt": "2026-07-28T02:52:05.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-cd00d3d0-2daa-4a93-8eb3-c0d0e2692f4e"
+  },
+  "item": [
+    {
+      "name": "reports",
+      "item": [
+        {
+          "name": "sends",
+          "item": [
+            {
+              "name": "Get Sends Report",
+              "id": "478943d6-9246-41d6-9130-ddf9f08c7573",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/reports/sends?start_date=<date>&end_date=<date>&group_by=week",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reports",
+                    "sends"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Report start date (YYYY-MM-DD)",
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "(Required) Report end date (YYYY-MM-DD)",
+                      "key": "end_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Aggregation dimension",
+                      "key": "group_by",
+                      "value": "week"
+                    }
+                  ]
+                },
+                "description": "Returns aggregated sending analytics for a date range."
+              },
+              "response": [
+                {
+                  "id": "e804d603-d8ec-4636-bbbf-2ca25429bdfd",
+                  "name": "Sends report data",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Api-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reports/sends?start_date=<date>&end_date=<date>&group_by=week",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reports",
+                        "sends"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Report start date (YYYY-MM-DD)",
+                          "key": "start_date",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "(Required) Report end date (YYYY-MM-DD)",
+                          "key": "end_date",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Aggregation dimension",
+                          "key": "group_by",
+                          "value": "week"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"period\": {\n    \"start_date\": \"<date>\",\n    \"end_date\": \"<date>\"\n  },\n  \"totals\": {\n    \"sends\": \"<integer>\",\n    \"delivered\": \"<integer>\",\n    \"failed\": \"<integer>\",\n    \"total_spend\": \"<float>\"\n  },\n  \"data\": [\n    {\n      \"period\": \"<string>\",\n      \"sends\": \"<integer>\",\n      \"delivered\": \"<integer>\",\n      \"spend\": \"<number>\"\n    },\n    {\n      \"period\": \"<string>\",\n      \"sends\": \"<integer>\",\n      \"delivered\": \"<integer>\",\n      \"spend\": \"<number>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T02:52:06.000Z",
+                  "updatedAt": "2026-07-28T02:52:06.000Z",
+                  "uid": "35240-e804d603-d8ec-4636-bbbf-2ca25429bdfd"
+                }
+              ],
+              "createdAt": "2026-07-28T02:52:06.000Z",
+              "updatedAt": "2026-07-28T02:52:06.000Z",
+              "uid": "35240-478943d6-9246-41d6-9130-ddf9f08c7573"
+            }
+          ],
+          "id": "69137c5d-eb45-4854-b8d0-a751d07a15da",
+          "createdAt": "2026-07-28T02:52:06.000Z",
+          "updatedAt": "2026-07-28T02:52:06.000Z",
+          "uid": "35240-69137c5d-eb45-4854-b8d0-a751d07a15da"
+        }
+      ],
+      "id": "a02cfdf4-c523-4a9e-9791-ad3e12f56d45",
+      "createdAt": "2026-07-28T02:52:06.000Z",
+      "updatedAt": "2026-07-28T02:52:06.000Z",
+      "uid": "35240-a02cfdf4-c523-4a9e-9791-ad3e12f56d45"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://app.sendoso.com/api/v2"
+    }
+  ]
+}

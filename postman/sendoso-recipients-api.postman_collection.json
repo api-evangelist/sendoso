@@ -1,0 +1,436 @@
+{
+  "info": {
+    "_postman_id": "eab58a7b-e2bd-45a0-bc29-1bf2a4fd6c56",
+    "name": "Sendoso Sending Platform Inventory Recipients API",
+    "description": "Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.\n\nContact Support:\n Name: Sendoso Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:52:04.000Z",
+    "updatedAt": "2026-07-28T02:52:04.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-eab58a7b-e2bd-45a0-bc29-1bf2a4fd6c56"
+  },
+  "item": [
+    {
+      "name": "recipients",
+      "item": [
+        {
+          "name": "{recipient_id}",
+          "item": [
+            {
+              "name": "Retrieve Recipient",
+              "id": "9c9e6578-de14-4b50-8dd1-6567d04c7c3c",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/recipients/:recipient_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "recipients",
+                    ":recipient_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "882ccf0f-f4ac-4d0f-b219-babfdbed5803",
+                      "key": "recipient_id",
+                      "value": "<string>",
+                      "description": "(Required) Unique recipient identifier"
+                    }
+                  ]
+                },
+                "description": "Returns details for a specific recipient contact."
+              },
+              "response": [
+                {
+                  "id": "49d07ee9-f6f2-441b-999c-6647f703db06",
+                  "name": "Recipient details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Api-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/recipients/:recipient_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "recipients",
+                        ":recipient_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "recipient_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"company\": \"<string>\",\n  \"title\": \"<string>\",\n  \"address\": {\n    \"street1\": \"<string>\",\n    \"street2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postal_code\": \"<string>\",\n    \"country\": \"US\"\n  },\n  \"created_at\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-07-28T02:52:05.000Z",
+                  "updatedAt": "2026-07-28T02:52:05.000Z",
+                  "uid": "35240-49d07ee9-f6f2-441b-999c-6647f703db06"
+                },
+                {
+                  "id": "d9b400b0-8311-4575-9a1c-c7d1480d9c82",
+                  "name": "Recipient not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Api-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/recipients/:recipient_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "recipients",
+                        ":recipient_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "recipient_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:52:05.000Z",
+                  "updatedAt": "2026-07-28T02:52:05.000Z",
+                  "uid": "35240-d9b400b0-8311-4575-9a1c-c7d1480d9c82"
+                }
+              ],
+              "createdAt": "2026-07-28T02:52:05.000Z",
+              "updatedAt": "2026-07-28T02:52:05.000Z",
+              "uid": "35240-9c9e6578-de14-4b50-8dd1-6567d04c7c3c"
+            }
+          ],
+          "id": "fc1c477c-9660-4ff1-909b-e225339781b0",
+          "createdAt": "2026-07-28T02:52:05.000Z",
+          "updatedAt": "2026-07-28T02:52:05.000Z",
+          "uid": "35240-fc1c477c-9660-4ff1-909b-e225339781b0"
+        },
+        {
+          "name": "List Recipients",
+          "id": "6aec258b-f571-4ce9-87fe-30a6c47ebf2d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/recipients?page=1&per_page=25&search=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recipients"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "25"
+                },
+                {
+                  "description": "Search by name or email",
+                  "key": "search",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Returns a paginated list of recipient contacts."
+          },
+          "response": [
+            {
+              "id": "5403b7c7-e14f-439d-85f3-e3d9614b0f84",
+              "name": "List of recipients",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/recipients?page=1&per_page=25&search=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "recipients"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "25"
+                    },
+                    {
+                      "description": "Search by name or email",
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"recipients\": [\n    {\n      \"id\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<email>\",\n      \"company\": \"<string>\",\n      \"title\": \"<string>\",\n      \"address\": {\n        \"street1\": \"<string>\",\n        \"street2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"postal_code\": \"<string>\",\n        \"country\": \"US\"\n      },\n      \"created_at\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<email>\",\n      \"company\": \"<string>\",\n      \"title\": \"<string>\",\n      \"address\": {\n        \"street1\": \"<string>\",\n        \"street2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"postal_code\": \"<string>\",\n        \"country\": \"US\"\n      },\n      \"created_at\": \"<dateTime>\"\n    }\n  ],\n  \"pagination\": {\n    \"page\": \"<integer>\",\n    \"per_page\": \"<integer>\",\n    \"total\": \"<integer>\",\n    \"total_pages\": \"<integer>\"\n  }\n}",
+              "createdAt": "2026-07-28T02:52:05.000Z",
+              "updatedAt": "2026-07-28T02:52:05.000Z",
+              "uid": "35240-5403b7c7-e14f-439d-85f3-e3d9614b0f84"
+            }
+          ],
+          "createdAt": "2026-07-28T02:52:05.000Z",
+          "updatedAt": "2026-07-28T02:52:05.000Z",
+          "uid": "35240-6aec258b-f571-4ce9-87fe-30a6c47ebf2d"
+        },
+        {
+          "name": "Create Recipient",
+          "id": "b447cf99-f25e-498f-b3c2-765ce2211d27",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"company\": \"<string>\",\n  \"title\": \"<string>\",\n  \"address\": {\n    \"street1\": \"<string>\",\n    \"street2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postal_code\": \"<string>\",\n    \"country\": \"US\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/recipients",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "recipients"
+              ]
+            },
+            "description": "Creates a new recipient contact in the Sendoso address book."
+          },
+          "response": [
+            {
+              "id": "b3c97735-6fec-4d88-8e2b-955f1a58c29c",
+              "name": "Recipient created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"company\": \"<string>\",\n  \"title\": \"<string>\",\n  \"address\": {\n    \"street1\": \"<string>\",\n    \"street2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postal_code\": \"<string>\",\n    \"country\": \"US\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/recipients",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "recipients"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"company\": \"<string>\",\n  \"title\": \"<string>\",\n  \"address\": {\n    \"street1\": \"<string>\",\n    \"street2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postal_code\": \"<string>\",\n    \"country\": \"US\"\n  },\n  \"created_at\": \"<dateTime>\"\n}",
+              "createdAt": "2026-07-28T02:52:05.000Z",
+              "updatedAt": "2026-07-28T02:52:05.000Z",
+              "uid": "35240-b3c97735-6fec-4d88-8e2b-955f1a58c29c"
+            },
+            {
+              "id": "3dcaf3f0-c101-49da-860a-68ec2a1adacf",
+              "name": "Validation error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"company\": \"<string>\",\n  \"title\": \"<string>\",\n  \"address\": {\n    \"street1\": \"<string>\",\n    \"street2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postal_code\": \"<string>\",\n    \"country\": \"US\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/recipients",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "recipients"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T02:52:05.000Z",
+              "updatedAt": "2026-07-28T02:52:05.000Z",
+              "uid": "35240-3dcaf3f0-c101-49da-860a-68ec2a1adacf"
+            }
+          ],
+          "createdAt": "2026-07-28T02:52:05.000Z",
+          "updatedAt": "2026-07-28T02:52:05.000Z",
+          "uid": "35240-b447cf99-f25e-498f-b3c2-765ce2211d27"
+        }
+      ],
+      "id": "bcf06079-930e-420f-88de-dff069f132c6",
+      "createdAt": "2026-07-28T02:52:05.000Z",
+      "updatedAt": "2026-07-28T02:52:05.000Z",
+      "uid": "35240-bcf06079-930e-420f-88de-dff069f132c6"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://app.sendoso.com/api/v2"
+    }
+  ]
+}
