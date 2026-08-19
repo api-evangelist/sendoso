@@ -1,0 +1,804 @@
+{
+  "item": [
+    {
+      "id": "c0f5302f-cdfc-4276-8c14-4c202142b558",
+      "name": "Sends",
+      "description": {
+        "content": "Create and manage gift sends",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2a6cfeb5-2006-4ff9-9faa-35c6817c14a8",
+          "name": "List Sends",
+          "request": {
+            "name": "List Sends",
+            "description": {
+              "content": "Returns a paginated list of sends for the authenticated user or team.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sends"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "25",
+                  "description": "Results per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by send status"
+                },
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "Filter sends created on or after this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "Filter sends created on or before this date"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7df89c28-1e5b-461a-87d6-70feb206dec5",
+              "name": "List of sends",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "25"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sends\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"delivered\",\n      \"recipient\": {\n        \"id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"email\": \"string\"\n      },\n      \"item\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"message\": \"string\",\n      \"tracking_number\": \"string\",\n      \"tracking_url\": \"http://LcENaembFDZZPJkYE.kbG4-cyKU8kIl8kMTpMkFWblDu,CFB-y\",\n      \"estimated_delivery\": \"1999-06-30\",\n      \"cost\": 2597.6626091987164,\n      \"created_at\": \"2006-11-28T11:48:53.823Z\",\n      \"updated_at\": \"1992-09-21T18:48:41.000Z\",\n      \"crm_id\": \"string\",\n      \"team_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"processing\",\n      \"recipient\": {\n        \"id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"email\": \"string\"\n      },\n      \"item\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      },\n      \"message\": \"string\",\n      \"tracking_number\": \"string\",\n      \"tracking_url\": \"https://vEmZoWzpdkENhHKHNUfRcvjzVZwlcL.yzgaMaBT+UbTnLvSa.DU,THG1Ij78kHVB7jJZURJolUzkgy8dAccTaARR6Vm60W4MJYU3A\",\n      \"estimated_delivery\": \"1962-09-13\",\n      \"cost\": 2000.4738396099708,\n      \"created_at\": \"1965-11-12T12:54:45.029Z\",\n      \"updated_at\": \"1968-10-28T11:04:00.723Z\",\n      \"crm_id\": \"string\",\n      \"team_id\": \"string\"\n    }\n  ],\n  \"pagination\": {\n    \"page\": 6451,\n    \"per_page\": 747,\n    \"total\": 447,\n    \"total_pages\": 7019\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ae1dde3-e72d-4a11-b95d-47168176d324",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "25"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9ccba51-f2c2-4257-801d-f1c9348679c3",
+          "name": "Create Send",
+          "request": {
+            "name": "Create Send",
+            "description": {
+              "content": "Initiates a new send to one or more recipients. Supports physical gifts, e-gifts, direct mail, and custom branded merchandise. Requires a valid sending address or e-gift email for the recipient.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sends"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipient_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"message\": \"<string>\",\n  \"scheduled_date\": \"<date>\",\n  \"crm_id\": \"<string>\",\n  \"crm_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fadab3c3-9506-472d-a384-83c835539d92",
+              "name": "Send created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipient_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"message\": \"<string>\",\n  \"scheduled_date\": \"<date>\",\n  \"crm_id\": \"<string>\",\n  \"crm_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"failed\",\n  \"recipient\": {\n    \"id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"email\": \"string\"\n  },\n  \"item\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\"\n  },\n  \"message\": \"string\",\n  \"tracking_number\": \"string\",\n  \"tracking_url\": \"https://eHkc.uozdX-H7jOXMMZDBf\",\n  \"estimated_delivery\": \"2003-01-04\",\n  \"cost\": 8552.805681943984,\n  \"created_at\": \"2022-05-02T00:32:40.513Z\",\n  \"updated_at\": \"1989-03-30T16:20:07.840Z\",\n  \"crm_id\": \"string\",\n  \"team_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b4f8699-e94e-4901-8036-ac11d31e7f60",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipient_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"message\": \"<string>\",\n  \"scheduled_date\": \"<date>\",\n  \"crm_id\": \"<string>\",\n  \"crm_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "174cbe52-b711-4183-8ccd-a3c9200c9cfc",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipient_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"message\": \"<string>\",\n  \"scheduled_date\": \"<date>\",\n  \"crm_id\": \"<string>\",\n  \"crm_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "289be30c-743f-4e7b-9cff-8728e9f1ea80",
+              "name": "Insufficient team budget",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipient_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"message\": \"<string>\",\n  \"scheduled_date\": \"<date>\",\n  \"crm_id\": \"<string>\",\n  \"crm_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "37cd0e70-a6b0-4b30-9664-1280d9d6f843",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipient_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"message\": \"<string>\",\n  \"scheduled_date\": \"<date>\",\n  \"crm_id\": \"<string>\",\n  \"crm_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff31549c-7dc5-4039-b419-681ad0fabacd",
+          "name": "Retrieve Send",
+          "request": {
+            "name": "Retrieve Send",
+            "description": {
+              "content": "Returns details and current status for a specific send.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sends",
+                ":send_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "send_id",
+                  "description": "(Required) Unique send identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8097ba41-9675-4bf4-89aa-581ea7d826cf",
+              "name": "Send details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends",
+                    ":send_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "send_id",
+                      "description": "(Required) Unique send identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"failed\",\n  \"recipient\": {\n    \"id\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"email\": \"string\"\n  },\n  \"item\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\"\n  },\n  \"message\": \"string\",\n  \"tracking_number\": \"string\",\n  \"tracking_url\": \"https://eHkc.uozdX-H7jOXMMZDBf\",\n  \"estimated_delivery\": \"2003-01-04\",\n  \"cost\": 8552.805681943984,\n  \"created_at\": \"2022-05-02T00:32:40.513Z\",\n  \"updated_at\": \"1989-03-30T16:20:07.840Z\",\n  \"crm_id\": \"string\",\n  \"team_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a55fb97-61e8-4fda-82b7-b1ca4e652605",
+              "name": "Send not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends",
+                    ":send_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "send_id",
+                      "description": "(Required) Unique send identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fc85f0f6-f3b8-4211-b1ee-634c61cb1473",
+          "name": "Cancel Send",
+          "request": {
+            "name": "Cancel Send",
+            "description": {
+              "content": "Cancels a pending send before it has been processed for shipment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sends",
+                ":send_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "send_id",
+                  "description": "(Required) Unique send identifier"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bebf6eb7-af61-48ea-83b2-59467c73e284",
+              "name": "Send cancelled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends",
+                    ":send_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "send_id",
+                      "description": "(Required) Unique send identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce8a3515-c5c9-44ae-935a-a0f8125773ba",
+              "name": "Send cannot be cancelled (already shipped or delivered)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sends",
+                    ":send_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "send_id",
+                      "description": "(Required) Unique send identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.sendoso.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e4fc8c11-191f-4716-80f0-1c9db574ef65",
+    "name": "Sendoso Sending Platform Inventory Sends API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.\n\nContact Support:\n Name: Sendoso Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

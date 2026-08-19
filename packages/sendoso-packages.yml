@@ -1,0 +1,82 @@
+generated: '2026-08-13'
+method: searched
+source: registry.npmjs.org, pypi.org, rubygems.org, packagist.org, api.github.com/orgs/sendoso
+provider: Sendoso
+providerId: sendoso
+description: >-
+  Recorded absence. Sendoso ships no first-party client library in any package registry, and
+  its developer documentation offers no SDK — the only client code it publishes is the
+  per-language request snippet auto-generated on each reference page (curl, Python, JS, PHP,
+  Go, Java, Ruby). An integrator writes the HTTP calls themselves.
+official_count: 0
+package_count: 0
+packages: []
+third_party:
+  - name: '@pipedream/sendoso'
+    registry: npm
+    official: false
+    version: 0.2.0
+    published: '2026-05-14'
+    description: Pipedream Sendoso Components
+    note: >-
+      Published by Pipedream, the integration platform, not by Sendoso. Recorded for
+      completeness; it is not a Sendoso SDK.
+  - name: passport-sendoso-postilize
+    registry: npm
+    official: false
+    version: 1.0.2
+    published: '2023-11-09'
+    description: Passport strategy wrapping the Sendoso auth flow.
+    note: >-
+      A third-party Passport.js OAuth strategy, last published 2023. Not first-party.
+registries_searched:
+  - registry: npm
+    query: sendoso
+    first_party_hits: 0
+    exact_name_probes:
+      - name: sendoso
+        status: 404
+      - name: '@sendoso/sdk'
+        status: 404
+      - name: sendoso-api
+        status: 404
+      - name: sendoso-node
+        status: 404
+  - registry: pypi
+    first_party_hits: 0
+    exact_name_probes:
+      - name: sendoso
+        status: 404
+      - name: sendoso-api
+        status: 404
+  - registry: rubygems
+    query: sendoso
+    results: 0
+  - registry: packagist
+    query: sendoso
+    results: 0
+  - registry: maven-central
+    first_party_hits: 0
+  - registry: nuget
+    first_party_hits: 0
+  - registry: crates.io
+    first_party_hits: 0
+  - registry: pkg.go.dev
+    first_party_hits: 0
+github_org:
+  url: https://github.com/sendoso
+  http_status: 200
+  public_repos: 16
+  client_libraries: 0
+  finding: >-
+    The org holds no Sendoso client library. Fifteen of the sixteen public repositories are
+    ARCHIVED, and all fifteen are forks of other people's Ruby/infra projects (wicked_pdf,
+    sassc-ruby, rack-cors, temporal-ruby, acts_as_paranoid, apollo-federation-ruby,
+    odbc_adapter, omniauth-eloqua, omniauth-surveymonkey, rubocop-sendoso, charts,
+    docker-compose, nuxt-prometheus-module, temporal, app-example). The single unarchived
+    repository is `linear-release`, a TypeScript CLI for tracking releases in Linear
+    (last pushed 2026-06-08) — internal tooling, unrelated to the API.
+  checked: '2026-08-13'
+irony_note: >-
+  Sendoso ships an MCP server, an agent skill and an A2A card — three agent-native surfaces —
+  and zero SDKs. The machine clients are better served than the human ones.

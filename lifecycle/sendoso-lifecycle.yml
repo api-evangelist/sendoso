@@ -1,0 +1,90 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.sendoso.com/rest-api/overview/faq
+provider: Sendoso
+providerId: sendoso
+description: >-
+  Versioning, deprecation, release and availability posture for the Sendoso APIs. Almost every
+  field here is a recorded absence: Sendoso publishes no versioning policy, no deprecation
+  policy, no changelog and no working status page.
+versioning:
+  style: uri-path
+  current_version: v3
+  scim_version: v2
+  policy_published: false
+  policy_url: null
+  prior_versions_documented: false
+  note: >-
+    The current documentation set describes v3 only. Nothing states how long a version is
+    supported, how a new one is announced, or what happened to v1 and v2 —
+    https://app.sendoso.com/api/v2 returns 404 (probed 2026-08-13), so v2 is gone with no
+    published record of its retirement.
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No Sunset or Deprecation headers are documented, and no operation in the published
+    reference is marked deprecated.
+release_process:
+  deployment: >-
+    "Sendoso has a zero-downtime deployment." No release windows, maintenance windows or
+    advance notice are published.
+  source: https://developer.sendoso.com/rest-api/overview/faq
+  changelog_published: false
+  changelog_probe:
+    url: https://developer.sendoso.com/changelog
+    status: 404
+    checked: '2026-08-13'
+  note: >-
+    developer.sendoso.com/llms.txt enumerates all 44 documentation pages; none of them is a
+    changelog or release-notes page.
+status_page:
+  published: false
+  broken_pointer: true
+  probes:
+    - url: https://status.sendoso.com/
+      status: 0
+      note: >-
+        DNS resolves (CNAME to 323348189951214.hostedstatus.com and a CloudFront
+        distribution) but neither HTTPS nor HTTP completes a request. The hostname is a
+        dangling record.
+      checked: '2026-08-13'
+    - url: https://sendoso.statuspage.io
+      status: 200
+      effective_url: https://sendoso.statuspage.io/inactive
+      note: Atlassian Statuspage reports the page as INACTIVE.
+      checked: '2026-08-13'
+  finding: >-
+    Sendoso previously ran an Atlassian Statuspage and has since let it lapse. This repo's
+    apis.yml carried a `StatusPage` pointer at https://status.sendoso.com/ which has been
+    removed — the pointer asserted a surface that does not answer.
+sla:
+  published: false
+  note: >-
+    No uptime commitment, latency target or credit schedule is published on the developer
+    site or the plan comparison page.
+support:
+  channel: email
+  contact: developers@sendoso.com
+  help_center: https://support.sendoso.com/
+  incident_process: >-
+    The FAQ asks integrators to email developers@sendoso.com with the environment, API
+    request, error response and timestamp.
+  tiering: >-
+    The plan comparison page attaches a "Digital" account team to Starter and a "Dedicated"
+    account team to Core and above, with global product and fulfillment support at every
+    tier. No response-time targets are attached to any of it.
+data_retention:
+  history_api: false
+  statement: >-
+    "Sendoso does not publish history via the API. However, any updates or sends completed
+    via the API will be recorded in the platform."
+  source: https://developer.sendoso.com/rest-api/overview/faq
+  consequence: >-
+    There is no date-ranged query over past sends. GET /api/v3/send pages the full
+    organization-wide list with no filter parameters, so any reporting integration has to
+    walk and cache it.

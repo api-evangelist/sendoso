@@ -1,0 +1,145 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTPS probes of every host named in apis.yml and in the OpenAPI servers[] blocks
+provider: Sendoso
+providerId: sendoso
+checked: '2026-08-13'
+description: >-
+  Well-known probe across sendoso.com, app.sendoso.com and developer.sendoso.com. Two real
+  documents were served, both by the production application host and both belonging to the
+  OAuth-protected Sendoso MCP server: RFC 9728 protected-resource metadata and RFC 8414
+  authorization-server metadata. A third real document, the A2A agent card, is served by the
+  documentation host and is recorded separately in a2a/.
+hosts:
+  - host: app.sendoso.com
+    paths:
+      - path: /.well-known/oauth-protected-resource/mcp
+        status: 200
+        content_type: application/json
+        file: well-known/sendoso-oauth-protected-resource-mcp.json
+        document: true
+        note: >-
+          RFC 9728. Discovered from the `WWW-Authenticate: Bearer resource_metadata=...`
+          challenge returned by POST https://app.sendoso.com/mcp.
+      - path: /.well-known/oauth-authorization-server/mcp
+        status: 200
+        content_type: application/json
+        file: well-known/sendoso-oauth-authorization-server-mcp.json
+        document: true
+        note: >-
+          RFC 8414. Advertises authorization, token and dynamic client registration
+          endpoints, PKCE S256, and an Auth0 JWKS URI.
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+        document: false
+        note: Only the /mcp-suffixed resource metadata is served.
+      - path: /.well-known/security.txt
+        status: 404
+        document: false
+      - path: /.well-known/openid-configuration
+        status: 404
+        document: false
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        document: false
+      - path: /.well-known/api-catalog
+        status: 404
+        document: false
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        document: false
+      - path: /.well-known/agent-card.json
+        status: 404
+        document: false
+      - path: /.well-known/agent.json
+        status: 404
+        document: false
+  - host: developer.sendoso.com
+    paths:
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: application/json
+        file: a2a/sendoso-agent-card.json
+        document: true
+        note: A2A Agent Card. Graded in a2a/sendoso-a2a.yml.
+      - path: /.well-known/agent-skills/index.json
+        status: 200
+        content_type: application/json
+        file: skills/sendoso-agent-skills-index.json
+        document: true
+        note: >-
+          Agent Skills discovery document, schema
+          https://schemas.agentskills.io/discovery/0.2.0/schema.json. One skill, with a
+          sha256 digest.
+      - path: /.well-known/agent-skills/sendoso/skill.md
+        status: 200
+        content_type: text/markdown
+        file: skills/sendoso-skill.md
+        document: true
+      - path: /.well-known/mcp/server-card.json
+        status: 200
+        content_type: application/json
+        file: mcp/sendoso-mcp-server-card.json
+        document: true
+        note: Documentation-search MCP server card. See mcp/sendoso-mcp.yml.
+      - path: /.well-known/api-catalog
+        status: 404
+        document: false
+        note: >-
+          Advertised in the Link header (rel="api-catalog") on every docs response but not
+          actually served — a broken advertisement, not a document.
+      - path: /.well-known/security.txt
+        status: 404
+        document: false
+      - path: /.well-known/openid-configuration
+        status: 404
+        document: false
+        note: Returned an HTML error shell, not a document.
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        document: false
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+        document: false
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        document: false
+      - path: /.well-known/agent.json
+        status: 404
+        document: false
+  - host: sendoso.com
+    paths:
+      - path: /.well-known/security.txt
+        status: 404
+        document: false
+        note: >-
+          The marketing host answers every /.well-known/* path with an 88-byte HTML page
+          reading "Invalid .well-known request".
+      - path: /.well-known/openid-configuration
+        status: 404
+        document: false
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        document: false
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+        document: false
+      - path: /.well-known/api-catalog
+        status: 404
+        document: false
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        document: false
+      - path: /.well-known/agent-card.json
+        status: 404
+        document: false
+      - path: /.well-known/agent.json
+        status: 404
+        document: false
+summary:
+  paths_probed: 26
+  documents_served: 6
+  security_txt: false
+  openid_configuration: false
+  oauth_metadata: true
+  agent_card: true

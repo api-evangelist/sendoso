@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sendoso Sending Platform Inventory Sends API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sends",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Sends",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/sends",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Results per page"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by send status"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter sends created on or after this date"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter sends created on or before this date"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of sends for the authenticated user or team."
+        },
+        {
+          "info": {
+            "name": "Create Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.sendoso.com/api/v2/sends",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a new send to one or more recipients. Supports physical gifts, e-gifts, direct mail, and custom branded merchandise. Requires a valid sending address or e-gift email for the recipient."
+        },
+        {
+          "info": {
+            "name": "Retrieve Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/sends/:send_id",
+            "params": [
+              {
+                "name": "send_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique send identifier"
+              }
+            ]
+          },
+          "docs": "Returns details and current status for a specific send."
+        },
+        {
+          "info": {
+            "name": "Cancel Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.sendoso.com/api/v2/sends/:send_id",
+            "params": [
+              {
+                "name": "send_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique send identifier"
+              }
+            ]
+          },
+          "docs": "Cancels a pending send before it has been processed for shipment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

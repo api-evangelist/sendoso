@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sendoso Sending Platform Inventory Recipients API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Recipients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/recipients",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search by name or email"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of recipient contacts."
+        },
+        {
+          "info": {
+            "name": "Create Recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.sendoso.com/api/v2/recipients",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new recipient contact in the Sendoso address book."
+        },
+        {
+          "info": {
+            "name": "Retrieve Recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/recipients/:recipient_id",
+            "params": [
+              {
+                "name": "recipient_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique recipient identifier"
+              }
+            ]
+          },
+          "docs": "Returns details for a specific recipient contact."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

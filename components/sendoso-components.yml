@@ -1,0 +1,81 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.sendoso.com/iframe/abouttheiframe
+provider: Sendoso
+providerId: sendoso
+description: >-
+  Sendoso's only client-side embeddable surface is a hosted iFrame that renders the whole
+  Sendoso sending flow inside a partner application. There is no component library, no web
+  components, no element/SDK loader — it is one URL in an iframe, and access to it is granted
+  by hand.
+component_count: 1
+families:
+  - id: sending-iframe
+    name: Sendoso iFrame
+    kind: hosted-prebuilt-surface
+    description: >-
+      "With the Sendoso iFrame we handle the sending & user experience; you display it."
+      Embeds the full Sendoso send flow into a partner app so a user can send without
+      leaving it — internal CRMs, channel partner apps, sales engagement tools.
+    url: https://app.sendoso.com/v2/plugin/sends
+    setup_url_pattern: 'https://app.sendoso.com/{{Custom}}/setup'
+    dimensions:
+      width_px: 435
+      height_px: 500
+    prepopulation: >-
+      The iFrame endpoint accepts optional URL parameters (recipient name, address fields and
+      others) to prepopulate the send flow. All special characters must be HTML encoded.
+    inputs_required:
+      - Sender information
+      - Recipient information
+      - 'Delivery location: recipient email for electronic gifts'
+      - 'Delivery location: name, street, city, state, country, postal code for physical gifts'
+    access:
+      self_serve: false
+      process: >-
+        Email developers@sendoso.com with a summary of the use case and the URL of your
+        application; Sendoso authorizes the origin and hosts the iFrame within it.
+    documented_deployments:
+      - name: Outreach.io
+        url: https://sendoso.zendesk.com/hc/en-us/articles/115000814091-Outreach-io-Integration
+      - name: SalesLoft
+        url: https://sendoso.zendesk.com/hc/en-us/articles/115000872071-SalesLoft-Integration
+    assets:
+      icon: https://drive.google.com/file/d/1vGQ8fQy7A0w5ZEYjfvclaWrrItRs_yzU/view
+      icon_note: >-
+        Sendoso distributes the embed icon as a Google Drive link, not from a CDN it controls.
+loader_libraries: []
+embedding_allowlist:
+  observed: true
+  note: >-
+    app.sendoso.com's Content-Security-Policy `frame-ancestors` names the exact partner
+    surfaces permitted to embed it — an explicit, observable allowlist rather than a
+    documented one. Probed 2026-08-13.
+  hosts:
+    - '*.salesforce.com, *.lightning.force.com, *.visual.force.com, *.visualforce.com, *.vf.force.com'
+    - app.salesloft.com
+    - '*.outreach.io'
+    - '*.amazon.com, *.amazon.ca, *.amazon.co.uk'
+    - '*.eloqua.com'
+    - '*.groove.co, *.grooveapp.com'
+    - '*.hubspot.com'
+    - '*.insidesales-playbooks.com, *.xant.ai'
+    - mail.google.com, calendar.google.com
+    - '*.activehosted.com'
+    - '*.crm.dynamics.com'
+    - '*.gainsightcloud.com'
+    - '*.catalyst.io'
+    - '*.vitally.io'
+    - '*.monday.com'
+    - '*.pipedrive.com'
+    - '*.zendesk.com'
+    - '*.zoho.com'
+    - '*.app.gong.io'
+    - outlook.office.com
+    - '*.clari.com'
+    - 'chrome-extension://*'
+not_published:
+  - Web components / custom elements
+  - A JS SDK or element loader
+  - Embedded dashboards or reporting widgets
+  - Any npm-distributed embed package

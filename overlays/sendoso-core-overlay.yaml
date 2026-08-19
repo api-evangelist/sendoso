@@ -1,0 +1,79 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Sendoso core API
+  version: 1.0.0
+extends: ../openapi/sendoso-core-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment pipeline. Captures the cross-cutting runtime semantics that
+  Sendoso documents in prose but that do not live in any spec, so they can be re-applied
+  after the OpenAPI is regenerated from the docs.
+actions:
+  - target: $.info
+    description: Stamp provenance and the operational facts an agent needs before calling.
+    update:
+      x-provenance:
+        generated-from: documentation
+        source: https://developer.sendoso.com/llms.txt
+        generated-on: '2026-08-13'
+        publisher-of-spec: API Evangelist
+        publisher-of-api: Sendoso
+        note: >-
+          Sendoso publishes no OpenAPI. This document is generated from Sendoso's own
+          reference pages; every operation carries an externalDocs URL back to the page it
+          came from.
+      x-idempotency:
+        supported: false
+        statement: >-
+          Sendoso does not handle duplicate payloads. Any order sent to Sendoso is processed
+          immediately. POST operations are NOT safe to retry.
+        source: https://developer.sendoso.com/rest-api/overview/faq
+      x-rate-limits:
+        source: rate-limits/sendoso-rate-limits.yml
+        core: 10 requests/second per application client
+        marketplace: 100 requests/minute per user
+        exhaustion_status: 429
+        headers: [X-Rate-Limit-Reset]
+      x-error-format:
+        rfc9457: false
+        envelope: '{success: boolean, message: string}'
+        stable_codes: false
+        source: errors/sendoso-problem-types.yml
+      x-agent-surfaces:
+        mcp: https://app.sendoso.com/mcp
+        agent_card: https://developer.sendoso.com/.well-known/agent-card.json
+        agent_skill: https://developer.sendoso.com/.well-known/agent-skills/sendoso/skill.md
+        llms_txt: https://developer.sendoso.com/llms.txt
+      x-lifecycle:
+        status_page: none
+        changelog: none
+        deprecation_policy: none
+        source: lifecycle/sendoso-lifecycle.yml
+  - target: $.paths['/api/v3/send'].post
+    description: >-
+      Flag the highest-consequence operation in the API. It spends real money and ships a
+      physical object, it has no idempotency, and a 2xx does not mean delivery.
+    update:
+      x-consequence: physical
+      x-reversible: false
+      x-human-in-the-loop-recommended: true
+      x-retry-safe: false
+      x-async-failure-modes:
+        - send.insufficient_funds
+        - send.out_of_stock
+        - send.blocked
+        - send.email_blacklist
+        - send.bounced
+        - send.failed
+        - send.undeliverable
+      x-note: >-
+        A 200 means Sendoso accepted the order, not that a gift will arrive. Terminal outcome
+        arrives asynchronously over webhooks — see asyncapi/sendoso-webhooks-asyncapi.yml.
+  - target: $.paths['/api/v3/touches'].get
+    description: Record the date-window trap Sendoso names in its own agent skill.
+    update:
+      x-gotcha: >-
+        Campaigns carry start_date and end_date. A send outside that window fails with
+        "Touch not found" even though the campaign exists — the 404 is about the window, not
+        the id.

@@ -1,0 +1,155 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/sendoso-core-api-openapi.yml, openapi/sendoso-marketplace-api-openapi.yml, openapi/sendoso-scim-api-openapi.yml
+provider: Sendoso
+providerId: sendoso
+description: >-
+  Entity graph for the Sendoso platform, derived from the schemas and id-reference fields in
+  the three OpenAPI descriptions. The spine is short: a Team Group holds Users, a User creates
+  a Send, and every Send is created against a Touch (campaign) — except marketplace and
+  SmartSend sends, which bypass Touch entirely and reference a catalog Variant instead.
+id_conventions:
+  numeric_ids: >-
+    Core entities use integer ids (Touch.id, CurrentUser.id, TeamGroup.team_id). Sendoso is
+    inconsistent about the type: User.id and TeamGroup.id are documented as `string` on the
+    list endpoints while CurrentUser.id is `integer`.
+  send_gid: >-
+    Sends carry both an integer `id` and a string `send_gid`. The gid is the durable
+    identifier — it is what every webhook payload carries.
+  tracking_code: >-
+    A 40-character hex string returned only at creation time. It is the sole handle on a send
+    until it appears in GET /api/v3/send.
+  marketplace_ids: Marketplace products, variants and categories all use string ids.
+  no_prefixes: >-
+    Sendoso uses no typed id prefixes. An id alone does not tell you what it identifies.
+entities:
+  - name: TeamGroup
+    description: A team within the organization, holding a budget.
+    surface: Core
+    key: id
+    fields: [id, name, budget, monthly_budget, one_time_budget, rollover, team_id, created_at, updated_at]
+    operations: [getTeamGroups, getTeamGroupUsers]
+  - name: User
+    description: A member of the organization, belonging to exactly one team group.
+    surface: Core
+    key: id
+    fields: [id, first_name, last_name, email, team_group_id, balance, team_id, sandbox, key]
+    operations: [getCurrentUser, getUsers, getTeamGroupUsers, inviteUser]
+  - name: Touch
+    description: A campaign. The pre-configured gift, budget and date window a send draws from.
+    surface: Core
+    key: id
+    fields: [id, name, description, start_date, end_date, created_at, user_id, gift_id, status, delivery_type, is_default_price, starting_egift_price, ending_egift_price]
+    operations: [getCampaigns, getCampaign]
+  - name: Send
+    description: One gift, eGift or direct mail item on its way to one recipient.
+    surface: Core
+    key: send_gid
+    fields: [id, send_gid, type, subtype, currency, current_total_cost]
+    operations: [getSends, createSend, generateEgiftLinks]
+  - name: Product
+    description: A marketplace catalog item.
+    surface: Marketplace
+    key: id
+    fields: [id, name, description, variants]
+    operations: [getMarketplaceProducts, getGiftRecommendations]
+  - name: Variant
+    description: A specific purchasable configuration of a Product. What actually gets sent.
+    surface: Marketplace
+    key: id
+    fields: [id, estimated_total_price, images]
+    operations: [sendMarketplaceProduct]
+  - name: Category
+    description: A marketplace taxonomy node, returned in groups alongside product results.
+    surface: Marketplace
+    key: id
+    fields: [id, name]
+  - name: ScimUser
+    description: >-
+      The same human as User, addressed through the SCIM 2.0 resource model. A separate
+      identity space with its own credentials.
+    surface: SCIM
+    key: id
+    fields: [id, userName, active, name.givenName, name.familyName, emails, userType, division]
+    operations: [scimGetUsers, scimCreateUser, scimUpdateUser]
+relationships:
+  - from: TeamGroup
+    to: User
+    type: has_many
+    via: User.team_group_id
+  - from: User
+    to: TeamGroup
+    type: belongs_to
+    via: User.team_group_id
+  - from: TeamGroup
+    to: Organization
+    type: belongs_to
+    via: TeamGroup.team_id
+    note: >-
+      `team_id` is documented as "the team group's organization id". The organization itself
+      has no endpoint — it exists only as a foreign key.
+  - from: Touch
+    to: User
+    type: belongs_to
+    via: Touch.user_id
+    note: The user who created the campaign.
+  - from: Send
+    to: Touch
+    type: belongs_to
+    via: 'request field send.touch_id'
+    note: >-
+      Set at creation and required for every Core send, but NOT returned on the Send object —
+      GET /api/v3/send gives you type, subtype, currency and cost with no campaign reference.
+      You cannot reconstruct which campaign a send came from through the API.
+    confidence: high
+  - from: Send
+    to: Recipient
+    type: has_one
+    via: 'request fields send.email, send.name, send.address'
+    note: >-
+      There is no Recipient entity. Recipients are inlined into the send request and are not
+      addressable, listable or reusable — a fact worth contrasting with the fabricated
+      "Recipients API" this repo previously carried (see openapi/_scaffold/).
+    confidence: high
+  - from: Product
+    to: Variant
+    type: has_many
+    via: Product.variants
+  - from: Variant
+    to: Category
+    type: belongs_to
+    via: 'query filter category_ids[]'
+    confidence: medium
+  - from: MarketplaceSend
+    to: Variant
+    type: has_many
+    via: 'request field variant_ids'
+    note: 'Documented as at most one: extra variant ids are silently ignored.'
+  - from: ScimUser
+    to: TeamGroup
+    type: belongs_to
+    via: 'ScimUser.division (matched by team group NAME, not id)'
+    note: >-
+      The only cross-surface join in the product, and it joins on a human-readable name. The
+      SCIM docs tell you to read the names from GET /api/v3/groups on the Core API — which
+      needs a different OAuth client. Renaming a team group breaks provisioning.
+    confidence: high
+  - from: WebhookEvent
+    to: Send
+    type: belongs_to
+    via: 'payload send_gid'
+    source: asyncapi/sendoso-webhooks-asyncapi.yml
+observations:
+  - >-
+    The graph has no write path back into most of it. Users can be invited; sends can be
+    created. Team groups, campaigns and products are read-only through the API — they are
+    configured in the Sendoso application.
+  - >-
+    Two disjoint sending models share one product: Touch-based sends (Core) and Variant-based
+    sends (Marketplace/SmartSend). They return different result shapes — `tracking_code` vs a
+    `{products, send}` object — and there is no documented way to look a marketplace send up
+    afterwards via GET /api/v3/send.
+  - >-
+    Money appears as `balance` and `team_balance` on the user and `budget`, `monthly_budget`,
+    `one_time_budget` on the team group, typed inconsistently as string in some places and
+    integer in others.

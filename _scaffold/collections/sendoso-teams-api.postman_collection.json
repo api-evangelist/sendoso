@@ -1,0 +1,129 @@
+{
+  "item": [
+    {
+      "id": "3cee237c-fef3-481f-9a67-6b09be093740",
+      "name": "Teams",
+      "description": {
+        "content": "Team and budget management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "66d56b08-6651-4558-abc2-02f0e2e4f433",
+          "name": "Get Team Budget",
+          "request": {
+            "name": "Get Team Budget",
+            "description": {
+              "content": "Returns the current budget balance and allocation for the authenticated team.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams",
+                "budget"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9c5b2c1-6dd6-4126-ae36-c02c87b97c00",
+              "name": "Team budget information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams",
+                    "budget"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"team_id\": \"string\",\n  \"team_name\": \"string\",\n  \"total_budget\": 6359.150923333033,\n  \"spent\": 9647.918708414489,\n  \"remaining\": 5420.1788971394235,\n  \"period_start\": \"1990-03-05\",\n  \"period_end\": \"1994-03-21\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.sendoso.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a821e105-99e6-4d45-a300-c0881a2776eb",
+    "name": "Sendoso Sending Platform Inventory Teams API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.\n\nContact Support:\n Name: Sendoso Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

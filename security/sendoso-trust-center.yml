@@ -1,0 +1,63 @@
+generated: '2026-08-13'
+method: probed
+source: https://security.sendoso.com/
+provider: Sendoso
+providerId: sendoso
+description: >-
+  Sendoso runs a Vanta-hosted Trust Center at security.sendoso.com. It answers HTTP 200, but
+  it is a client-rendered single-page application: the 5.7 KB HTML the server actually
+  delivers contains the title "Sendoso Trust Center" and nothing else — no certification
+  name, no control, no document list. Certifications are therefore NOT recorded here, because
+  none were readable. That is a measurement of the surface, not a claim about Sendoso's
+  compliance posture.
+trust_center:
+  url: https://security.sendoso.com/
+  http_status: 200
+  platform: Vanta
+  platform_evidence: >-
+    Page assets load exclusively from assets.vanta.com (index-trust-report bundle), and the
+    page links a Vanta document viewer at https://app.vanta.com/doc?s=wj3tcv6rtc7222p39ikj9.
+  discovered_via: https://www.sendoso.com/security (302 to security.sendoso.com)
+  machine_readable: false
+  machine_readable_note: >-
+    Probed for a machine-readable trust report at /api/trust-center, /api/trust-report,
+    app.vanta.com/api/trust-report/sendoso and app.vanta.com/api/trust/sendoso — all returned
+    the SPA HTML shell rather than data.
+certifications: []
+certifications_note: >-
+  None readable. Do not emit a Compliance pointer from this file; a trust center whose
+  contents cannot be read is not published evidence of a named certification.
+compliance_signals_found_elsewhere:
+  - signal: CCPA
+    where: https://www.sendoso.com/ and https://www.sendoso.com/compare-plans (footer link)
+    note: A privacy-rights link, not a certification.
+  - signal: Anti-Bribery Controls
+    where: https://www.sendoso.com/compare-plans
+    note: Sold as an Enterprise-tier feature row, not stated as an external attestation.
+  - signal: Advanced Audit Services
+    where: https://www.sendoso.com/compare-plans
+    note: Enterprise-tier feature row.
+security_claims_in_docs:
+  - claim: Data encrypted at rest with AES-256.
+    source: https://developer.sendoso.com/rest-api/overview/security
+  - claim: Data in transit over HTTPS TLS 1.2 with RSA 256-bit.
+    source: https://developer.sendoso.com/rest-api/overview/security
+    observed: TLSv1.3 negotiated on all three hosts (probed 2026-08-13).
+  - claim: >-
+      All API requests are logged (IP, method, resource, response status) and monitored for
+      suspicious activity.
+    source: https://developer.sendoso.com/rest-api/overview/security
+enterprise_controls_published:
+  source: https://www.sendoso.com/compare-plans
+  controls:
+    - Single Sign-On (SSO) — Core tier and above
+    - SCIM user management — Enterprise tier
+    - IP allow listing — Enterprise tier
+    - Admin audit log — Enterprise tier
+    - Policy Center — Enterprise tier
+    - Advanced IT controls — Enterprise tier
+recommendation_for_provider: >-
+  The Vanta trust center is invisible to every automated reader, including the AI agents
+  Sendoso is otherwise courting with an MCP server and an agent skill. Serving the
+  certification list as static HTML, or exposing Vanta's public trust-report JSON, would make
+  a real compliance program legible without changing what is disclosed.

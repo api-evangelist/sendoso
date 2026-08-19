@@ -1,0 +1,157 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.sendoso.com/rest-api/overview/introduction
+provider: Sendoso
+providerId: sendoso
+docs:
+  - https://developer.sendoso.com/rest-api/overview/introduction
+  - https://developer.sendoso.com/rest-api/overview/pagination
+  - https://developer.sendoso.com/rest-api/overview/rate-limits
+  - https://developer.sendoso.com/rest-api/overview/faq
+  - https://developer.sendoso.com/rest-api/overview/security
+derived_from:
+  - openapi/sendoso-core-api-openapi.yml
+  - openapi/sendoso-marketplace-api-openapi.yml
+  - openapi/sendoso-scim-api-openapi.yml
+description: >-
+  Cross-cutting runtime semantics for the Sendoso APIs, read from Sendoso's own overview
+  pages and cross-checked against the reference pages.
+auth:
+  style: oauth2-authorization-code
+  header: 'Authorization: Bearer <token>'
+  token_lifetime_seconds: 7200
+  detail: authentication/sendoso-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  statement: >-
+    "Sendoso does not handle duplicate payloads. Any order that is sent to Sendoso will be
+    processed immediately."
+  source: https://developer.sendoso.com/rest-api/overview/faq
+  consequence: >-
+    POST /api/v3/send is not safe to retry. A network timeout on a send has no
+    server-side dedupe behind it — retrying creates a second physical gift and a second
+    charge. Sendoso's own agent skill names this as the first gotcha and tells integrators to
+    "implement idempotency on your side".
+  guidance_for_agents: >-
+    Treat every send as at-most-once. Record the client-side request id before the call, and
+    on an ambiguous failure reconcile against GET /api/v3/send (matching on recipient email
+    and touch_id) rather than re-POSTing.
+pagination:
+  core:
+    style: page-number
+    params:
+      page:
+        description: Page number; the first page is 1.
+      per_page:
+        description: Results per page. Max 100.
+    response_fields:
+      - current_page
+      - per_page
+      - 'total_{resource}'
+    total_field_is_inconsistent: true
+    total_field_note: >-
+      The total count field is named per resource and is NOT uniform: `total_users` on
+      /api/v3/users, `total_groups` on /api/v3/groups, `total_count` on /api/v3/send, and
+      `total_posts` on /api/v3/touches. A generic pagination client cannot key on one name.
+    envelope: >-
+      The collection is returned under a resource-named key at the root alongside the
+      pagination fields (e.g. `{"touches": [...], "current_page": 2, "per_page": 50,
+      "total_posts": 234}`) — there is no generic `data` wrapper.
+    doc_defect: >-
+      The pagination page's prose says the parameters are `page` and `page_size`, then
+      documents and exemplifies `per_page`. `per_page` is what the reference pages use.
+    source: https://developer.sendoso.com/rest-api/overview/pagination
+  marketplace:
+    style: cursor
+    params:
+      after:
+        description: Cursor returned in the previous response's `pagination` object.
+    response_fields:
+      - pagination.after
+      - pagination.next_page.url
+    source: https://developer.sendoso.com/marketplace/reference/products/get-products
+  scim:
+    style: scim-index
+    params:
+      startIndex:
+        description: 1-based index of the first result. Defaults to 1.
+      count:
+        description: Max results per page. Defaults to 100 when unspecified.
+    response_fields:
+      - itemsPerPage
+      - startIndex
+      - totalResults
+    source: https://developer.sendoso.com/scim/reference/get-users
+  note: Three different pagination styles across three surfaces of the same product.
+field_expansion:
+  supported: false
+  note: No `expand`, sparse-fieldset or field-selection parameter is documented.
+metadata:
+  supported: false
+  note: >-
+    No free-form metadata bag. `via_from` (the name of the calling application) is the only
+    caller-supplied attribution field, and Sendoso asks that it stay constant per
+    application.
+request_id_tracing:
+  client_supplied: false
+  server_supplied: true
+  header: X-Request-Id
+  evidence: >-
+    Observed on live responses from app.sendoso.com (probed 2026-08-13, e.g.
+    x-request-id: 59578657e2bc8b2e48004e58caca1c70). Not documented.
+  correlation_note: >-
+    For send tracking, the durable business identifiers are `tracking_code` (returned on
+    create) and `send_gid` (returned on read and in every webhook payload).
+versioning:
+  style: uri-path
+  current: v3
+  paths: /api/v3/..., /api/scim/v2/Users
+  policy_published: false
+  note: >-
+    Version lives in the path. Sendoso publishes no versioning policy, no changelog and no
+    deprecation policy. See lifecycle/sendoso-lifecycle.yml.
+error_envelope:
+  format: bespoke-json
+  rfc9457: false
+  content_type: application/json
+  shape:
+    success: boolean
+    message: 'string — human-readable; the only machine-usable discriminator'
+  variants:
+    - >-
+      Some documented 401 bodies use `description` and `expired` instead of `message`
+      (see the eGift reference page).
+    - >-
+      The 404 on GET /api/v3/groups/{team_group_id}/members returns a bare
+      `{"message": "Group not found!"}` with no `success` flag.
+  no_error_codes: true
+  no_error_codes_note: >-
+    There is no stable error code. Clients must string-match on English prose such as
+    "Touch not found" or "email can't be blank", which breaks the moment Sendoso rewords a
+    message.
+  detail: errors/sendoso-problem-types.yml
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  headers_returned:
+    - name: X-Rate-Limit-Reset
+      surface: Marketplace / SmartSend
+      description: The time at which the rate limit will reset.
+      source: https://developer.sendoso.com/marketplace/overview/rate-limits
+  headers_missing:
+    - X-RateLimit-Limit
+    - X-RateLimit-Remaining
+    - RateLimit
+    - RateLimit-Policy
+    - Retry-After
+  note: >-
+    No remaining/limit counters are published on any surface, and the Core and SCIM rate-limit
+    pages document no headers at all. An agent cannot pace itself from the response — it can
+    only back off after being rejected. Detail in rate-limits/sendoso-rate-limits.yml.
+content_types:
+  request: application/json
+  response: application/json
+  methods_supported: 'GET and POST (plus PUT on the SCIM Users resource)'
+  note: >-
+    "We support both GET and POST requests" — the Core API has no PUT, PATCH or DELETE.
+    Sends cannot be cancelled or amended through the API.

@@ -1,0 +1,93 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/sendoso-mcp.yml + openapi/sendoso-core-api-openapi.yml + openapi/sendoso-marketplace-api-openapi.yml + openapi/sendoso-scim-api-openapi.yml
+provider: Sendoso
+providerId: sendoso
+description: >-
+  Binding between Sendoso's MCP tools and the REST operations behind them. The only tool list
+  we could enumerate belongs to the DOCUMENTATION MCP server, whose tools read docs and bind
+  to no REST operation at all. The platform MCP server at https://app.sendoso.com/mcp is
+  OAuth-gated, so its tools could not be enumerated and are deliberately NOT guessed here —
+  every REST operation therefore lands in rest_only[] until an authenticated introspection
+  pass can be run.
+surfaces:
+  openapi:
+    - path: openapi/sendoso-core-api-openapi.yml
+      operations: 10
+      gated: false
+    - path: openapi/sendoso-marketplace-api-openapi.yml
+      operations: 4
+      gated: false
+    - path: openapi/sendoso-scim-api-openapi.yml
+      operations: 3
+      gated: false
+  graphql: null
+  mcp:
+    - url: https://app.sendoso.com/mcp
+      gated: true
+      gate: OAuth 2.1 bearer, RFC 9728 resource metadata
+      tools_enumerated: 0
+    - url: https://developer.sendoso.com/mcp
+      gated: false
+      tools_enumerated: 3
+crosswalk: []
+mcp_only:
+  - tool: search_sendoso_api
+    server: developer.sendoso.com/mcp
+    reason: >-
+      Documentation retrieval. Backed by the Mintlify docs index, not by any Sendoso REST
+      operation.
+  - tool: query_docs_filesystem_sendoso_api
+    server: developer.sendoso.com/mcp
+    reason: >-
+      Read-only query over a virtualized filesystem of documentation pages. No REST
+      equivalent.
+  - tool: submit_feedback
+    server: developer.sendoso.com/mcp
+    reason: Writes documentation feedback to Mintlify. No Sendoso REST equivalent.
+rest_only:
+  - operationId: getCurrentUser
+    spec: openapi/sendoso-core-api-openapi.yml
+  - operationId: getUsers
+    spec: openapi/sendoso-core-api-openapi.yml
+  - operationId: inviteUser
+    spec: openapi/sendoso-core-api-openapi.yml
+  - operationId: getTeamGroups
+    spec: openapi/sendoso-core-api-openapi.yml
+  - operationId: getTeamGroupUsers
+    spec: openapi/sendoso-core-api-openapi.yml
+  - operationId: getCampaigns
+    spec: openapi/sendoso-core-api-openapi.yml
+  - operationId: getCampaign
+    spec: openapi/sendoso-core-api-openapi.yml
+  - operationId: getSends
+    spec: openapi/sendoso-core-api-openapi.yml
+  - operationId: createSend
+    spec: openapi/sendoso-core-api-openapi.yml
+  - operationId: generateEgiftLinks
+    spec: openapi/sendoso-core-api-openapi.yml
+  - operationId: getMarketplaceProducts
+    spec: openapi/sendoso-marketplace-api-openapi.yml
+  - operationId: sendMarketplaceProduct
+    spec: openapi/sendoso-marketplace-api-openapi.yml
+  - operationId: getGiftRecommendations
+    spec: openapi/sendoso-marketplace-api-openapi.yml
+  - operationId: sendRecommendation
+    spec: openapi/sendoso-marketplace-api-openapi.yml
+  - operationId: scimGetUsers
+    spec: openapi/sendoso-scim-api-openapi.yml
+  - operationId: scimCreateUser
+    spec: openapi/sendoso-scim-api-openapi.yml
+  - operationId: scimUpdateUser
+    spec: openapi/sendoso-scim-api-openapi.yml
+coverage:
+  rest_operations: 17
+  mcp_tools_enumerated: 3
+  bound: 0
+  mcp_only: 3
+  rest_only: 17
+  bound_pct: 0
+note: >-
+  A 0% crosswalk here is a measurement, not a gap in Sendoso's product. The platform MCP
+  server is real and reachable; its tool schemas simply cannot be read without a token. Re-run
+  this crosswalk after an authenticated tools/list against https://app.sendoso.com/mcp.

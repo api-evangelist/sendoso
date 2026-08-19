@@ -1,0 +1,161 @@
+{
+  "item": [
+    {
+      "id": "c455a05a-5096-4a3e-a5bb-8ff86df9c7a9",
+      "name": "Reports",
+      "description": {
+        "content": "Sending analytics and reports",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "41c8aa91-2f76-4841-88b0-4c3ca2658e02",
+          "name": "Get Sends Report",
+          "request": {
+            "name": "Get Sends Report",
+            "description": {
+              "content": "Returns aggregated sending analytics for a date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "sends"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) Report start date (YYYY-MM-DD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "(Required) Report end date (YYYY-MM-DD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "group_by",
+                  "value": "<string>",
+                  "description": "Aggregation dimension"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "984a6cca-7eea-4aa9-bfc0-1633fcaa0957",
+              "name": "Sends report data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "sends"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "group_by",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"period\": {\n    \"start_date\": \"1991-06-22\",\n    \"end_date\": \"2012-03-16\"\n  },\n  \"totals\": {\n    \"sends\": 2566,\n    \"delivered\": 2896,\n    \"failed\": 8746,\n    \"total_spend\": 8592.224282371904\n  },\n  \"data\": [\n    {\n      \"period\": \"string\",\n      \"sends\": 5419,\n      \"delivered\": 3791,\n      \"spend\": 2042.3176723639192\n    },\n    {\n      \"period\": \"string\",\n      \"sends\": 4803,\n      \"delivered\": 4700,\n      \"spend\": 7410.033648621465\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.sendoso.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8af323b2-2997-4295-9045-bc2cafc3a5c6",
+    "name": "Sendoso Sending Platform Inventory Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.\n\nContact Support:\n Name: Sendoso Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

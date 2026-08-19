@@ -1,16 +1,80 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/sendoso-api-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://developer.sendoso.com/rest-api/overview/authentication
+docs:
+  - https://developer.sendoso.com/rest-api/overview/authentication
+  - https://developer.sendoso.com/scim/overview/authentication
+  - https://developer.sendoso.com/marketplace/overview/authentication
+  - https://developer.sendoso.com/rest-api/overview/security
+derived_from:
+  - openapi/sendoso-core-api-openapi.yml
+  - openapi/sendoso-marketplace-api-openapi.yml
+  - openapi/sendoso-scim-api-openapi.yml
 summary:
   types:
-  - apiKey
-  api_key_in:
-  - header
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
 schemes:
-- name: ApiKeyAuth
-  type: apiKey
-  in: header
-  parameter: X-Api-Key
-  description: Sendoso API key from Settings > API Keys
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.sendoso.com/oauth/authorize
+    tokenUrl: https://app.sendoso.com/oauth/token
+    scopes: 5
+  description: 'OAuth 2.0 Authorization Code grant. Register your application by contacting
+    developers@sendoso.com to receive a client ID and client secret. Access tokens live 7200
+    seconds (2 hours) and are refreshed at the same token endpoint. Tokens are sent as `Authorization:
+    Bearer <token>`.'
   sources:
-  - openapi/sendoso-api-openapi.yml
+  - openapi/sendoso-core-api-openapi.yml
+  - openapi/sendoso-marketplace-api-openapi.yml
+  - openapi/sendoso-scim-api-openapi.yml
+registration:
+  self_serve: false
+  process: >-
+    Client ID and client secret are issued by hand. Sendoso's docs say to request credentials
+    by emailing developers@sendoso.com, and to include your production redirect URI — by
+    default only the standard Postman redirect URI is allowlisted. SCIM requires a SEPARATE
+    client id and secret; Core API credentials do not work against the SCIM API.
+  contact: developers@sendoso.com
+token:
+  type: bearer
+  header: 'Authorization: Bearer <token>'
+  lifetime_seconds: 7200
+  refresh: >-
+    POST the same token endpoint with grant_type=refresh_token. Refresh tokens only expire
+    after they are used.
+  revocation_endpoint: https://app.sendoso.com/oauth/revoke
+  revocation_auth: 'Basic base64(client_id:client_secret)'
+  revocation_note: The token to revoke is passed as a `token` query parameter.
+transport_security:
+  claim: >-
+    Sendoso's security page states data is encrypted at rest with AES-256 and in transit over
+    HTTPS TLS 1.2 with RSA 256-bit.
+  source: https://developer.sendoso.com/rest-api/overview/security
+  observed_tls: TLSv1.3 on app.sendoso.com, developer.sendoso.com and sendoso.com (probed 2026-08-13)
+additional_authorization_servers:
+  - name: Sendoso MCP Server
+    resource: https://app.sendoso.com/mcp
+    issuer: https://app.sendoso.com/mcp
+    discovery:
+      protected_resource_metadata: https://app.sendoso.com/.well-known/oauth-protected-resource/mcp
+      authorization_server_metadata: https://app.sendoso.com/.well-known/oauth-authorization-server/mcp
+    grant_types: [authorization_code, refresh_token]
+    pkce: S256
+    dynamic_client_registration: https://app.sendoso.com/mcp/oauth/register
+    scopes: [openid, profile, email, offline_access]
+    idp: Auth0 (jwks https://sendosoprod.auth0.com/.well-known/jwks.json)
+    note: >-
+      Separate from the developer API's OAuth server. This one supports OIDC scopes, PKCE and
+      dynamic client registration, none of which the developer API advertises — the MCP
+      surface is materially more modern than the REST surface it fronts.
+notes:
+  - >-
+    Sendoso's own security page tells you to "revoke your API key" when finished, but the API
+    has no API keys — it is OAuth only. That sentence is a leftover.
+  - >-
+    The docs describe the authorization code grant as "two-legged" / "two-step" OAuth. That
+    is a misnomer; authorization code is three-legged.

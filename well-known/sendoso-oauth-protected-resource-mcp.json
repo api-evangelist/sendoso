@@ -1,0 +1,1 @@
+{"resource":"https://app.sendoso.com/mcp","authorization_servers":["https://app.sendoso.com/mcp"],"scopes_supported":["openid","profile","email"],"bearer_methods_supported":["header"]}

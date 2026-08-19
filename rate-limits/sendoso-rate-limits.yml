@@ -4,87 +4,86 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Sendoso
 providerId: sendoso
 created: '2026-05-04'
-modified: '2026-05-04'
+generated: '2026-08-13'
+modified: '2026-08-13'
+method: searched
+source: https://developer.sendoso.com/rest-api/overview/rate-limits
+docs:
+  - https://developer.sendoso.com/rest-api/overview/rate-limits
+  - https://developer.sendoso.com/rest-api/overview/faq
+  - https://developer.sendoso.com/marketplace/overview/rate-limits
+  - https://developer.sendoso.com/scim/overview/rate-limits
 tags:
   - Corporate Gifting
   - Direct Mail
-  - Sales Engagement
-  - Marketing Automation
-  - CRM Integration
   - Rate Limiting
   - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the Sendoso API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+description: >-
+  Published rate limits for the three Sendoso API surfaces. This file replaces a 2026-05-04
+  scaffold that carried invented tiers and quotas; every number below now comes from a
+  Sendoso documentation page named in `source`.
+limit_count: 2
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
+  - id: core-api-throttle
+    surface: Core API
+    scope: per-application-client
     limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Sendoso Sending Platform API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Sendoso Sending Platform API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
+    unit: requests
+    window: 1s
+    burst: null
+    statement: >-
+      "Sendoso will throttle application clients sending more than 10 requests/second. If you
+      have a use case that requires a higher limit, please contact developers@sendoso.com."
+    source: https://developer.sendoso.com/rest-api/overview/faq
+    note: >-
+      Published on the FAQ page, not on the Core API's own Rate Limits page — that page states
+      only that exceeding an unnamed limit returns 429.
+  - id: marketplace-smartsend
+    surface: Marketplace / SmartSend API
+    scope: per-user
     limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Sendoso Sending Platform API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Sendoso Sending Platform API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Sendoso Sending Platform API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers:
-  - FN: API Evangelist
-    url: https://apievangelist.com
-    email: info@apievangelist.com
+    unit: requests
+    window: 1m
+    burst: null
+    statement: >-
+      "the rate limits for the Sendoso Marketplace and SmartSend APIs are as 100 requests per
+      minute per user."
+    source: https://developer.sendoso.com/marketplace/overview/rate-limits
+undocumented:
+  - surface: SCIM API
+    note: >-
+      The SCIM rate-limits page describes the 429 behavior but publishes no number, window or
+      scope.
+    source: https://developer.sendoso.com/scim/overview/rate-limits
+exhaustion:
+  status_code: 429
+  reason_phrase: Too Many Requests
+  behavior: >-
+    "the application will be temporarily blocked from making further requests." The security
+    page puts it in terms of the caller's IP address: "If you exceed the rate limit, your IP
+    address will be temporarily blocked."
+  block_duration_published: false
+response_headers:
+  returned:
+    - name: X-Rate-Limit-Reset
+      surface: Marketplace / SmartSend
+      description: The time at which the rate limit will reset.
+      format_published: false
+      source: https://developer.sendoso.com/marketplace/overview/rate-limits
+  not_returned:
+    - X-RateLimit-Limit
+    - X-RateLimit-Remaining
+    - RateLimit
+    - RateLimit-Policy
+    - RateLimit-Reset
+    - Retry-After
+  assessment: >-
+    Only one rate-limit header is published, on one of three surfaces, and it carries reset
+    time but not limit or remaining. The Core API — the surface that actually creates sends —
+    documents no headers at all. A client cannot pace itself against Sendoso; it can only
+    detect that it has already been rejected.
+increase_process:
+  self_serve: false
+  contact: developers@sendoso.com
+  statement: Contact developers@sendoso.com for a higher limit.

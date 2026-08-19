@@ -1,0 +1,109 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.sendoso.com/rest-api/overview/authentication
+docs:
+  - https://developer.sendoso.com/rest-api/overview/authentication
+  - https://developer.sendoso.com/marketplace/overview/authentication
+  - https://developer.sendoso.com/scim/overview/authentication
+derived_from:
+  - openapi/sendoso-core-api-openapi.yml
+  - openapi/sendoso-marketplace-api-openapi.yml
+  - openapi/sendoso-scim-api-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/sendoso-core-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.sendoso.com/oauth/authorize
+    tokenUrl: https://app.sendoso.com/oauth/token
+  description: 'OAuth 2.0 Authorization Code grant. Register your application by contacting
+    developers@sendoso.com to receive a client ID and client secret. Access tokens live 7200
+    seconds (2 hours) and are refreshed at the same token endpoint. Tokens are sent as `Authorization:
+    Bearer <token>`.'
+- name: OAuth2
+  source: openapi/sendoso-marketplace-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.sendoso.com/oauth/authorize
+    tokenUrl: https://app.sendoso.com/oauth/token
+  description: OAuth 2.0 Authorization Code grant, same authorization server as the Core API.
+    Marketplace operations require the `marketplace` scope; SmartSend operations require `smartsend`.
+- name: OAuth2
+  source: openapi/sendoso-scim-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.sendoso.com/oauth/authorize
+    tokenUrl: https://app.sendoso.com/oauth/token
+  description: OAuth 2.0 Authorization Code grant with `scope=scim`. SCIM requires a client
+    id and secret specific to the SCIM API, obtained from developers@sendoso.com; Core API credentials
+    do not work here.
+scopes:
+- scope: marketplace
+  description: Access the marketplace API.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/sendoso-core-api-openapi.yml
+  - openapi/sendoso-marketplace-api-openapi.yml
+- scope: public
+  description: Access the user's basic information.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/sendoso-core-api-openapi.yml
+  - openapi/sendoso-marketplace-api-openapi.yml
+- scope: scim
+  description: Access the SCIM API.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/sendoso-scim-api-openapi.yml
+- scope: smartsend
+  description: Access the smartsend API.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/sendoso-core-api-openapi.yml
+  - openapi/sendoso-marketplace-api-openapi.yml
+- scope: update
+  description: Update the user's account details.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/sendoso-core-api-openapi.yml
+  - openapi/sendoso-marketplace-api-openapi.yml
+- scope: write
+  description: Send gifts on the user's behalf.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/sendoso-core-api-openapi.yml
+  - openapi/sendoso-marketplace-api-openapi.yml
+request_format: >-
+  Scopes are requested as a space-separated list in the `scope` parameter of the authorization
+  request, e.g. `scope=write update`. Sendoso notes the user must grant each scope
+  individually.
+operation_requirements:
+  - scope: marketplace
+    operations: [getMarketplaceProducts, sendMarketplaceProduct]
+    source: https://developer.sendoso.com/marketplace/reference/products/get-products
+  - scope: smartsend
+    operations: [getGiftRecommendations, sendRecommendation, sendMarketplaceProduct]
+    source: https://developer.sendoso.com/marketplace/reference/recommendations/get-recommendations
+    note: sendMarketplaceProduct accepts either `marketplace` or `smartsend`.
+  - scope: scim
+    operations: [scimGetUsers, scimCreateUser, scimUpdateUser]
+    source: https://developer.sendoso.com/scim/overview/authentication
+mcp_scopes:
+  resource: https://app.sendoso.com/mcp
+  source: https://app.sendoso.com/.well-known/oauth-authorization-server/mcp
+  scopes_supported: [openid, profile, email, offline_access]
+  note: >-
+    The MCP server's authorization server advertises OIDC scopes only — none of the
+    developer-API scopes (public/write/update/marketplace/smartsend/scim) appear in its
+    metadata, so MCP authorization is coarse-grained relative to the REST API.
+gaps:
+  - >-
+    Sendoso publishes no per-operation scope table for the Core API. The five Core scopes are
+    described in prose only ("write: allows your application to send gifts on the user's
+    behalf"), so which scope each Core operation actually requires is not documented.

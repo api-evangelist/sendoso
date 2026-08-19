@@ -1,0 +1,43 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.sendoso.com/llms.txt
+provider: Sendoso
+providerId: sendoso
+file: llms/sendoso-llms.txt
+http_status: 200
+bytes: 5096
+fetched: '2026-08-13'
+description: >-
+  Sendoso's own llms.txt, saved verbatim. It enumerates all 44 documentation pages across
+  four surfaces — REST API, SCIM, Marketplace/SmartSend, webhooks and the iFrame — and every
+  listed page is also served as `.md`, so the whole developer corpus is machine-readable
+  without rendering JavaScript.
+advertised_by:
+  - 'HTTP header: x-llms-txt: /llms.txt'
+  - 'Link header: </llms.txt>; rel="llms-txt"'
+llms_full_txt:
+  advertised: true
+  url: https://developer.sendoso.com/llms-full.txt
+  committed: false
+  reason: >-
+    *-llms-full.txt is gitignored across the network — verbatim docs dumps embed vendor
+    example tokens that trip GitHub push protection.
+page_count: 44
+sections:
+  - name: REST API
+    pages: 12
+  - name: SCIM
+    pages: 8
+  - name: Marketplace / SmartSend
+    pages: 7
+  - name: iFrame
+    pages: 1
+  - name: Webhooks
+    pages: 6
+robots:
+  url: https://developer.sendoso.com/robots.txt
+  status: 200
+  content_signal: 'ai-train=yes, search=yes, ai-input=yes'
+  note: >-
+    Sendoso's docs host explicitly opts IN to AI training, search and AI input via the
+    Content-Signal header — the permissive end of the spectrum.

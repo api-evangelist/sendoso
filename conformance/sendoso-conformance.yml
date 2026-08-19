@@ -1,0 +1,202 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/, authentication/, conventions/, well-known/, asyncapi/
+provider: Sendoso
+providerId: sendoso
+description: >-
+  Which cross-cutting standards the Sendoso APIs actually conform to, each with the evidence
+  that decided it. Assertions only — nothing here is inferred from the product category.
+standards:
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749)
+    conforms: true
+    evidence: >-
+      Authorization Code grant with authorize/token/revoke endpoints at
+      https://app.sendoso.com/oauth/{authorize,token,revoke}, bearer tokens, refresh tokens,
+      and a documented scope set. Sendoso cites RFC 6749 §4.1 by name.
+    source: https://developer.sendoso.com/rest-api/overview/authentication
+  - id: oauth2-revocation
+    name: OAuth 2.0 Token Revocation (RFC 7009)
+    conforms: partial
+    evidence: >-
+      A revocation endpoint exists and takes client Basic auth, but the token is passed as a
+      query parameter rather than the form-encoded body RFC 7009 specifies.
+    source: https://developer.sendoso.com/rest-api/overview/authentication
+  - id: pkce
+    name: PKCE (RFC 7636)
+    conforms: partial
+    evidence: >-
+      Not documented for the developer API. The MCP authorization server advertises
+      `code_challenge_methods_supported: ["S256"]`.
+    source: https://app.sendoso.com/.well-known/oauth-authorization-server/mcp
+  - id: rfc8414
+    name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+    conforms: partial
+    evidence: >-
+      Served for the MCP resource only, at
+      https://app.sendoso.com/.well-known/oauth-authorization-server/mcp (HTTP 200). The
+      developer API's authorization server publishes no metadata document —
+      /.well-known/oauth-authorization-server on app.sendoso.com is 404.
+    source: https://app.sendoso.com/.well-known/oauth-authorization-server/mcp
+  - id: rfc9728
+    name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+    conforms: partial
+    evidence: >-
+      https://app.sendoso.com/.well-known/oauth-protected-resource/mcp returns 200, and the
+      MCP endpoint returns a correct `WWW-Authenticate: Bearer resource_metadata=...`
+      challenge. Scoped to the MCP resource only.
+    source: https://app.sendoso.com/mcp
+  - id: rfc7591
+    name: OAuth 2.0 Dynamic Client Registration (RFC 7591)
+    conforms: partial
+    evidence: >-
+      `registration_endpoint: https://app.sendoso.com/mcp/oauth/register` is advertised for
+      the MCP resource. The developer API is the opposite — client credentials are issued by
+      emailing developers@sendoso.com.
+    source: https://app.sendoso.com/.well-known/oauth-authorization-server/mcp
+  - id: oidc
+    name: OpenID Connect
+    conforms: false
+    evidence: >-
+      /.well-known/openid-configuration returns 404 on sendoso.com, app.sendoso.com and
+      developer.sendoso.com. The MCP authorization server lists `openid` and `profile` among
+      its scopes but publishes no OIDC discovery document.
+  - id: scim
+    name: SCIM 2.0 (RFC 7642/7643/7644)
+    conforms: true
+    evidence: >-
+      A dedicated SCIM surface at /api/scim/v2/Users returning the RFC schema URNs
+      (`urn:ietf:params:scim:api:messages:2.0:ListResponse`,
+      `urn:ietf:params:scim:schemas:core:2.0:User`) with startIndex/count/totalResults
+      paging. Sendoso cites RFC 7642 by name.
+    source: https://developer.sendoso.com/scim/overview/introduction
+    gaps: >-
+      Only GET/POST on /Users and PUT on /Users/{user_id} are documented. No PATCH, no DELETE,
+      no /Groups, no /ServiceProviderConfig, no /ResourceTypes, no /Schemas, no filtering.
+      Deprovisioning is described in prose but no endpoint is published for it.
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    evidence: >-
+      Two live remote MCP servers over streamable HTTP. https://app.sendoso.com/mcp returns a
+      spec-correct 401 with RFC 9728 resource metadata;
+      https://developer.sendoso.com/mcp answers tools/list anonymously with three tools.
+    source: mcp/sendoso-mcp.yml
+  - id: a2a
+    name: A2A Agent Card
+    conforms: partial
+    evidence: >-
+      https://developer.sendoso.com/.well-known/agent-card.json returns 200 with a valid card
+      shape, graded `conformant` on A2A 1.0.0's hard checks but declaring protocolVersion 0.3,
+      omitting the required top-level `description`, and pointing `url` at the docs site
+      rather than an A2A endpoint.
+    source: a2a/sendoso-a2a.yml
+  - id: agent-skills
+    name: Agent Skills discovery 0.2.0
+    conforms: true
+    evidence: >-
+      https://developer.sendoso.com/.well-known/agent-skills/index.json returns 200 against
+      https://schemas.agentskills.io/discovery/0.2.0/schema.json, with one skill-md entry
+      carrying a sha256 digest that resolves.
+    source: skills/_index.yml
+  - id: llmstxt
+    name: llms.txt
+    conforms: true
+    evidence: >-
+      https://developer.sendoso.com/llms.txt returns 200 and enumerates all 44 documentation
+      pages, and every page is also served as `.md`. Advertised by an `x-llms-txt` response
+      header and a Link rel="llms-txt".
+    source: llms/sendoso-llms.txt
+  - id: openapi
+    name: OpenAPI
+    conforms: false
+    evidence: >-
+      Sendoso publishes no OpenAPI document. Probed 404 on developer.sendoso.com:
+      /openapi.json, /openapi.yaml, /docs.json, /mint.json, /rest-api/openapi.json,
+      /rest-api/openapi.yaml, /scim/openapi.json, /marketplace/openapi.json,
+      /api-reference/openapi.json. The Mintlify page payload reports
+      `openApiReferenceData: undefined` — the reference pages are hand-authored MDX.
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: false
+    evidence: >-
+      A real webhook event surface exists (28 event types) but no AsyncAPI document is
+      published. asyncapi/sendoso-webhooks-asyncapi.yml is API Evangelist's generation from
+      the published event catalog, marked as such.
+  - id: rfc9457
+    name: Problem Details for HTTP APIs (RFC 9457)
+    conforms: false
+    evidence: >-
+      Errors are `application/json` with a bespoke `{success, message}` envelope (with
+      variants). No `application/problem+json`, no `type`, `title`, `status` or `detail`
+      members, no stable error codes.
+    source: errors/sendoso-problem-types.yml
+  - id: idempotency
+    name: Idempotency keys (draft-ietf-httpapi-idempotency-key-header)
+    conforms: false
+    evidence: >-
+      Explicitly absent. "Sendoso does not handle duplicate payloads. Any order that is sent
+      to Sendoso will be processed immediately." No Idempotency-Key header is accepted on any
+      operation.
+    source: https://developer.sendoso.com/rest-api/overview/faq
+  - id: ratelimit-headers
+    name: RateLimit header fields (RFC 9331 / draft-ietf-httpapi-ratelimit-headers)
+    conforms: false
+    evidence: >-
+      Only a non-standard `X-Rate-Limit-Reset` on the Marketplace/SmartSend surface. No
+      RateLimit, RateLimit-Policy, X-RateLimit-Limit/Remaining or Retry-After anywhere.
+    source: rate-limits/sendoso-rate-limits.yml
+  - id: rfc8594
+    name: Sunset header (RFC 8594)
+    conforms: false
+    evidence: No Sunset or Deprecation headers, and no deprecation policy at all.
+    source: lifecycle/sendoso-lifecycle.yml
+  - id: pagination
+    name: Consistent pagination
+    conforms: false
+    evidence: >-
+      Three different schemes across one product (page/per_page on Core, cursor `after` on
+      Marketplace, SCIM startIndex/count), and the Core total-count field is renamed per
+      resource — total_users, total_groups, total_count, total_posts.
+    source: conventions/sendoso-conventions.yml
+  - id: webhook-signing
+    name: Signed webhooks
+    conforms: true
+    evidence: >-
+      HMAC-SHA256 over `{id}.{timestamp}.{raw body}` with a per-endpoint secret, plus a
+      five-minute timestamp window for replay protection, delivered on svix-* headers.
+      Published source IPs for the US.
+    source: https://developer.sendoso.com/webhooks/security
+  - id: hsts
+    name: HTTP Strict Transport Security
+    conforms: partial
+    evidence: >-
+      app.sendoso.com sends `strict-transport-security: max-age=631138519` and
+      developer.sendoso.com `max-age=63072000`; the marketing host sendoso.com sends no HSTS.
+    source: security/sendoso-domain-security.yml
+  - id: dnssec
+    name: DNSSEC
+    conforms: false
+    evidence: Not enabled on sendoso.com (probed 2026-08-13).
+  - id: caa
+    name: CAA records
+    conforms: false
+    evidence: No CAA records published for sendoso.com (probed 2026-08-13).
+  - id: spf-dmarc
+    name: SPF / DMARC
+    conforms: true
+    evidence: 'SPF present; DMARC present with policy p=quarantine.'
+    source: security/sendoso-domain-security.yml
+compliance_program:
+  trust_center: https://security.sendoso.com/
+  platform: Vanta
+  certifications_named: []
+  note: >-
+    A trust center is served (HTTP 200) but it is a client-rendered Vanta application; no
+    certification name is present in the delivered HTML, so none is recorded. See
+    security/sendoso-trust-center.yml. This is an unreadable surface, not an absent program —
+    do not read the empty list as "no certifications".
+summary:
+  conforms: 8
+  partial: 5
+  does_not_conform: 10

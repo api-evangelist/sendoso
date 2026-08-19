@@ -1,0 +1,68 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.sendoso.com/rest-api/overview/faq
+provider: Sendoso
+providerId: sendoso
+description: >-
+  Sendoso runs a sandbox environment, but it is an account-level mode obtained through sales
+  rather than a self-serve test-key scheme. There are no test cards, test tokens, fixtures or
+  time-simulation tools — the sandbox is a real environment with its own data.
+sandbox_published: true
+self_serve: false
+mode_style: separate-environment
+environments:
+  - name: Production
+    host: https://app.sendoso.com
+    api_base: https://app.sendoso.com/api/v3
+    scim_base: https://app.sendoso.com/api/scim/v2
+  - name: Sandbox / staging
+    host: https://app.staging.sendo.so
+    api_base: https://app.staging.sendo.so/api/v3
+    evidence: >-
+      Declared in the `servers` block of Sendoso's own reference pages and used verbatim in
+      every generated code sample on developer.sendoso.com (curl, Python, JS, PHP, Go, Java,
+      Ruby all point at https://app.staging.sendo.so/api/v3/send).
+      Host resolves (99.84.234.62, 99.84.234.34), probed 2026-08-13.
+    note: >-
+      Note the different apex domain — sendo.so, not sendoso.com. Sendoso's docs never name
+      this host in prose; it appears only inside the code samples.
+behavior:
+  statement: >-
+    "The sandbox environment mirrors the production environment workflow except that the
+    touch IDs will differ and package status will not be triggered beyond processing."
+  source: https://developer.sendoso.com/rest-api/overview/faq
+  implications:
+    - Campaign (touch) IDs are NOT portable between sandbox and production.
+    - >-
+      Send status never advances past processing in sandbox, so the delivered / opened /
+      clicked / redeemed webhook events cannot be exercised there.
+sandbox_users:
+  flag: sandbox
+  where: >-
+    The user object returned by GET /api/v3/groups/{team_group_id}/members carries a boolean
+    `sandbox` field — "Whether or not this user is a sandbox user or not".
+  source: https://developer.sendoso.com/rest-api/reference/teams/get-team-users
+product_environments:
+  note: >-
+    Sendoso's plan comparison sells "Product Environments" as a metered entitlement: 1 on
+    Core and Advanced, 2 on Enterprise, none listed on Starter. A non-production environment
+    is a paid line item.
+  source: https://www.sendoso.com/compare-plans
+not_published:
+  test_key_prefixes: >-
+    None. Sendoso uses OAuth client credentials, not prefixed keys, so there is no
+    test-vs-live key discriminator in the credential itself. Nothing in the request tells you
+    which environment you are hitting except the hostname.
+  test_cards: null
+  test_bank_accounts: null
+  test_tokens: null
+  test_clocks: null
+  fixtures_or_triggers: null
+  webhook_test_events: >-
+    Partially. The webhooks portal has a "Testing" tab that sends example events to an
+    endpoint — but that is the Svix portal, not an API.
+  source_for_webhook_testing: https://developer.sendoso.com/webhooks/endpoints
+access:
+  process: >-
+    Not self-serve. Sandbox access follows from the account; the FAQ points integrators at
+    developers@sendoso.com and the plan grid meters environments per tier.

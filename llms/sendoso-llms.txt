@@ -1,0 +1,44 @@
+# Sendoso API
+
+## Docs
+
+- [Introduction](https://developer.sendoso.com/rest-api/overview/introduction.md): With the Sendoso API we handle the sending; you automate it.
+- [Security](https://developer.sendoso.com/rest-api/overview/security.md)
+- [Rate Limits](https://developer.sendoso.com/rest-api/overview/rate-limits.md)
+- [Authentication & Authorization](https://developer.sendoso.com/rest-api/overview/authentication.md)
+- [Pagination](https://developer.sendoso.com/rest-api/overview/pagination.md)
+- [Frequently Asked Questions](https://developer.sendoso.com/rest-api/overview/faq.md)
+- [Get Current User](https://developer.sendoso.com/rest-api/reference/users/get-current-user.md): Get information about the current authorized user.
+- [Get All Users](https://developer.sendoso.com/rest-api/reference/users/get-users.md): Retrieve a paginated list of all active users associated to the organization.
+- [Invite New User](https://developer.sendoso.com/rest-api/reference/users/invite-user.md): Create a new user invitation for a specific team group.
+- [Get All Team Groups](https://developer.sendoso.com/rest-api/reference/teams/get-teams.md): Retrieve information of all the organization's active team groups.
+- [Get All Team Group Users](https://developer.sendoso.com/rest-api/reference/teams/get-team-users.md): Get the list of users for the specific team.
+- [Get All Campaigns](https://developer.sendoso.com/rest-api/reference/campaigns/get-campaigns.md): Retrieve a list of all active campaigns associated to the organization.
+- [Get Campaign](https://developer.sendoso.com/rest-api/reference/campaigns/get-campaign.md): Retrieve additional details on a specific campaign.
+- [Retrieve All Sends](https://developer.sendoso.com/rest-api/reference/sends/get-sends.md): Retrieves a list of all sends initiated by anyone in the organization.
+- [Send Physical Gift](https://developer.sendoso.com/rest-api/reference/sends/physical/physical.md): This endpoint allows you to send a physical item directly to a recipient when their address is known.
+- [Send Physical Gift with Address Collection](https://developer.sendoso.com/rest-api/reference/sends/physical/physicalAC.md): This endpoint allows you to send a physical item when you do not know the recipient address.
+- [Send eGift via Sendoso Email](https://developer.sendoso.com/rest-api/reference/sends/egift/eGift.md): This endpoint allows you to send an eGift directly to a recipient.
+- [Generate eGift Links](https://developer.sendoso.com/rest-api/reference/sends/egift/eGiftlink.md): This endpoint allows you to generate one or more eGift links to embed in your own outreach to the recipient(s).
+- [Introduction](https://developer.sendoso.com/scim/overview/introduction.md): Automate user provisioning & deprovisioning with Sendoso SCIM.
+- [Security](https://developer.sendoso.com/scim/overview/security.md)
+- [Rate Limits](https://developer.sendoso.com/scim/overview/rate-limits.md)
+- [Authentication & Authorization](https://developer.sendoso.com/scim/overview/authentication.md)
+- [Get All Users](https://developer.sendoso.com/scim/reference/get-users.md): Get all users
+- [Get Single User](https://developer.sendoso.com/scim/reference/get-user.md): Get single user
+- [Create User](https://developer.sendoso.com/scim/reference/create-users.md): Create a new user and assign them a role and a team
+- [Update User](https://developer.sendoso.com/scim/reference/update-user.md): Updates user
+- [Introduction](https://developer.sendoso.com/marketplace/overview/introduction.md): Send from a large selection of gifts and direct mail options.
+- [Authentication & Authorization](https://developer.sendoso.com/marketplace/overview/authentication.md)
+- [Rate Limits](https://developer.sendoso.com/marketplace/overview/rate-limits.md)
+- [Get Marketplace Products](https://developer.sendoso.com/marketplace/reference/products/get-products.md): Retrieves a paginated list of all products in the marketplace catalog.
+- [Send a Product (variant)](https://developer.sendoso.com/marketplace/reference/products/send.md): Send a product variant to a recipient.
+- [Get Gift Recommendations](https://developer.sendoso.com/marketplace/reference/recommendations/get-recommendations.md): Retrieves a list of recommendations for a given recipient email.
+- [Send a Recommendation](https://developer.sendoso.com/marketplace/reference/recommendations/send.md): Automatically pick and send a recommendation to a recipient.
+- [About the iFrame](https://developer.sendoso.com/iframe/abouttheiframe.md): With the Sendoso iFrame we handle the sending & user experience; you display it.
+- [Introduction](https://developer.sendoso.com/webhooks/introduction.md): Enable Sendoso webhooks to receive real time status updates on your sends.
+- [Events](https://developer.sendoso.com/webhooks/events.md)
+- [Endpoints](https://developer.sendoso.com/webhooks/endpoints.md)
+- [Security](https://developer.sendoso.com/webhooks/security.md)
+- [Retries](https://developer.sendoso.com/webhooks/retries.md)
+- [Troubleshooting](https://developer.sendoso.com/webhooks/troubleshooting.md)

@@ -1,0 +1,98 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/sendoso-core-api-openapi.yml, openapi/sendoso-marketplace-api-openapi.yml, openapi/sendoso-scim-api-openapi.yml
+provider: Sendoso
+providerId: sendoso
+docs:
+  - https://developer.sendoso.com/rest-api/reference/sends/physical/physical
+  - https://developer.sendoso.com/rest-api/reference/sends/egift/eGift
+  - https://developer.sendoso.com/rest-api/reference/users/invite-user
+  - https://developer.sendoso.com/rest-api/reference/teams/get-team-users
+  - https://developer.sendoso.com/rest-api/overview/rate-limits
+description: >-
+  Sendoso publishes no error reference page and no error code catalog. What follows is derived
+  from the response examples printed on the individual reference pages — the only place error
+  bodies appear anywhere in the documentation.
+format: bespoke-json
+rfc9457: false
+media_type: application/json
+envelope:
+  fields:
+    success:
+      type: boolean
+      note: false on errors. Absent on some 404 bodies.
+    message:
+      type: string
+      note: Human-readable English prose. The only discriminator.
+    description:
+      type: string
+      note: Used in place of `message` in one documented 401 body.
+    expired:
+      type: boolean
+      note: Appears alongside `description` in that same 401 body.
+  stable_error_code: false
+statuses:
+  - status: 400
+    title: Bad Request
+    operations: [createSend, generateEgiftLinks, inviteUser, scimCreateUser, scimUpdateUser]
+    documented_messages:
+      - message: "email can't be blank"
+        operation: createSend
+        remediation: Supply the recipient's email in `send.email`.
+      - message: Please enter a valid team group
+        operation: inviteUser
+        remediation: >-
+          Read a real team_group_id from GET /api/v3/groups before inviting.
+      - message: 'Role can be one of these: manager,regular'
+        operation: inviteUser
+        remediation: Set `user.role` to `regular` or `manager`.
+  - status: 401
+    title: Unauthorized
+    operations: [all]
+    documented_messages:
+      - message: The access token is invalid
+        remediation: >-
+          Refresh the token at https://app.sendoso.com/oauth/token. Access tokens expire after
+          7200 seconds; refresh before the call, not after the failure.
+    variant_body: '{"success": false, "description": "The access token is invalid", "expired": false}'
+  - status: 404
+    title: Not Found
+    operations: [createSend, generateEgiftLinks, getCampaign, getTeamGroupUsers]
+    documented_messages:
+      - message: Touch not found
+        operations: [createSend, generateEgiftLinks, getCampaign]
+        remediation: >-
+          The campaign id is wrong, the campaign is inactive, or — a documented trap — the
+          send falls outside the campaign's start_date/end_date window. An in-window check
+          against GET /api/v3/touches distinguishes the two.
+      - message: Group not found!
+        operation: getTeamGroupUsers
+        remediation: Read a valid team_group_id from GET /api/v3/groups.
+        body_shape: '{"message": "Group not found!"}'
+        note: No `success` field on this one.
+  - status: 429
+    title: Too Many Requests
+    operations: [all]
+    documented_messages: []
+    remediation: >-
+      Back off. Core API throttles above 10 requests/second; Marketplace and SmartSend at 100
+      requests/minute per user, returning X-Rate-Limit-Reset. Sendoso's security page warns
+      that the offending IP address is temporarily blocked.
+undocumented_failure_modes:
+  - condition: Physical send to a non-US address without `mobile_no`
+    behavior: >-
+      Sendoso's own agent skill says such sends "will fail silently" — no status code or
+      message is documented for this case.
+    source: skills/sendoso-skill.md
+  - condition: Insufficient funds, out of stock, blocked or blacklisted recipient
+    behavior: >-
+      These are not synchronous API errors at all. They surface asynchronously as webhook
+      events (send.insufficient_funds, send.out_of_stock, send.blocked,
+      send.email_blacklist, send.bounced, send.failed). A 200 on POST /api/v3/send does not
+      mean the gift will be delivered.
+    source: https://developer.sendoso.com/webhooks/events
+gaps:
+  - No error reference page.
+  - No stable error codes — clients must match on English message strings.
+  - No 5xx responses documented anywhere.
+  - No `Retry-After` on 429.

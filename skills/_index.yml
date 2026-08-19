@@ -1,0 +1,57 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.sendoso.com/.well-known/agent-skills/index.json
+provider: Sendoso
+providerId: sendoso
+description: >-
+  Sendoso publishes its own Agent Skill. Nothing in this directory was authored by API
+  Evangelist — both files are saved verbatim from Sendoso's documentation host, which
+  advertises them via a Link header (rel="agent-skills") on every response.
+discovery:
+  index: https://developer.sendoso.com/.well-known/agent-skills/index.json
+  schema: https://schemas.agentskills.io/discovery/0.2.0/schema.json
+  http_status: 200
+  fetched: '2026-08-13'
+skills:
+  - name: sendoso
+    type: skill-md
+    file: skills/sendoso-skill.md
+    url: https://developer.sendoso.com/.well-known/agent-skills/sendoso/skill.md
+    digest: sha256:f67a9e07b2a9e193c77b2e6380b2b771ce040e3d7df4fa4d12d923c70d923a3c
+    http_status: 200
+    bytes: 9688
+    description: >-
+      Use when integrating gift and direct mail sending capabilities into applications,
+      automating physical gift and eGift sends to customers/leads/employees, managing
+      campaigns and sends, tracking send status, or provisioning users via SCIM.
+    covers:
+      - OAuth 2.0 authorization code flow, token lifetime and scopes
+      - Core endpoint table (/api/v3/send, /api/v3/touches, /api/v3/me, /api/v3/users)
+      - The three send types and their required fields
+      - Pagination, webhook event names, decision guidance
+      - Eleven named gotchas, including no idempotency and the 10 req/s throttle
+      - A twelve-item pre-flight verification checklist
+    grounded_operations:
+      - createSend
+      - getSends
+      - getCampaigns
+      - getCampaign
+      - getCurrentUser
+      - getUsers
+      - sendMarketplaceProduct
+      - sendRecommendation
+discrepancies:
+  - claim: '`GET /api/v3/teams` — "List teams"'
+    reality: >-
+      The reference nav declares the team-group listing at GET /api/v3/groups. No
+      /api/v3/teams path appears anywhere in the published reference.
+    where: skills/sendoso-skill.md, "Core API Endpoints" table
+  - claim: 'POST /api/v3/marketplace/recommendations/send'
+    reality: >-
+      The reference nav declares this operation at POST
+      /api/v3/smartsend/recommendations/send.
+    where: skills/sendoso-skill.md, "When to use Marketplace vs Core API" table
+  - note: >-
+      Recorded, not corrected. The skill is saved verbatim; these are Sendoso's own
+      inconsistencies between its generated skill and its reference nav, and an agent
+      following the skill literally will 404 on both paths.

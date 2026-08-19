@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sendoso Sending Platform Inventory Reports API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Sends Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.sendoso.com/api/v2/reports/sends",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Report start date (YYYY-MM-DD)"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query",
+                "description": "Report end date (YYYY-MM-DD)"
+              },
+              {
+                "name": "group_by",
+                "value": "",
+                "type": "query",
+                "description": "Aggregation dimension"
+              }
+            ]
+          },
+          "docs": "Returns aggregated sending analytics for a date range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

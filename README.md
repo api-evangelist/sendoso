@@ -42,74 +42,106 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso Sending Platform provides personalized gift sending, branded swag, e-gift cards, direct mail, and charitable donations. Sendoso integrates with Salesforce, HubSpot, Outreach, Marketo, and other CRM and sales engagement tools to automate gift-sending at scale.
+Sendoso is a corporate gifting and direct mail platform that lets sales, marketing, customer success
+and people teams send physical gifts, branded swag, eGifts, direct mail and charitable donations at
+scale. The Core API (v3) automates sending against pre-configured campaigns, the Marketplace and
+SmartSend APIs send from an open catalog, SCIM 2.0 handles user provisioning, an embeddable iFrame
+puts the send flow inside a partner application, and Svix-signed webhooks report twenty-eight send
+lifecycle events.
 
 **APIs.json:** [https://raw.githubusercontent.com/api-evangelist/sendoso/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/sendoso/refs/heads/main/apis.yml)
-
-## Tags
-
-- Corporate Gifting
-- Direct Mail
-- Sales Engagement
-- Marketing Automation
-- CRM Integration
 
 ## Timestamps
 
 - **Created:** 2026-05-02
-- **Modified:** 2026-05-02
+- **Modified:** 2026-08-13
 
 ## APIs
 
-### Sendoso Sending Platform API
+### Sendoso Core API — `https://app.sendoso.com/api/v3`
 
-The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines. Supports recipient management, inventory browsing, budget tracking, and send analytics.
+Ten operations: create a send (physical, physical-with-address-collection, or eGift), generate eGift
+links, list sends, list and read campaigns ("touches"), read the current user, list and invite users,
+list team groups and their members.
 
-- **Human URL:** [https://developer.sendoso.com/](https://developer.sendoso.com/)
-- **Base URL:** `https://app.sendoso.com/api/v2`
+- [Documentation](https://developer.sendoso.com/rest-api/overview/introduction)
+- [OpenAPI](openapi/sendoso-core-api-openapi.yml) · [Overlay](overlays/sendoso-core-overlay.yaml)
 
-#### Tags
+### Sendoso Marketplace and SmartSend API — `https://app.sendoso.com/api/v3`
 
-- Corporate Gifting
-- Direct Mail
-- Sales Engagement
-- Marketing Automation
+Four operations: browse the catalog, send a product variant, get AI gift recommendations for a
+recipient email, send a recommendation. Scoped to `marketplace` and `smartsend`.
 
-#### Properties
+- [Documentation](https://developer.sendoso.com/marketplace/overview/introduction)
+- [OpenAPI](openapi/sendoso-marketplace-api-openapi.yml) · [Overlay](overlays/sendoso-marketplace-overlay.yaml)
 
-- [Documentation](https://developer.sendoso.com/)
-- [Reference](https://developer.sendoso.com/reference)
-- [Getting Started](https://developer.sendoso.com/getting-started)
-- [Authentication](https://developer.sendoso.com/authentication)
-- [Webhooks](https://developer.sendoso.com/webhooks)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/sendoso/main/openapi/sendoso-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/sendoso-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/sendoso-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+### Sendoso SCIM API — `https://app.sendoso.com/api/scim/v2`
 
-## Common Properties
+SCIM 2.0 user provisioning. Needs its own OAuth client credentials, separate from the Core API, and
+is an Enterprise-tier entitlement.
 
-- [GitHub Organization](https://github.com/sendoso)
-- [LinkedIn](https://www.linkedin.com/company/sendoso)
-- [Website](https://sendoso.com/)
-- [Portal](https://developer.sendoso.com/)
-- [Documentation](https://developer.sendoso.com/)
-- [Authentication](https://developer.sendoso.com/authentication)
-- [Webhooks](https://sendoso.com/webhooks/)
-- [Blog](https://sendoso.com/blog/)
-- [Integrations](https://sendoso.com/integrations/)
-- [Pricing](https://sendoso.com/pricing/)
-- [Terms of Service](https://sendoso.com/terms-of-service/)
-- [Privacy Policy](https://sendoso.com/privacy-policy/)
-- [Status Page](https://status.sendoso.com/)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/sendoso/main/openapi/sendoso-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/sendoso/main/rules/sendoso-rules.yml)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/sendoso/main/json-schema/sendoso-send-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](https://raw.githubusercontent.com/api-evangelist/sendoso/main/json-structure/sendoso-send-structure.json)
-- [Example](https://raw.githubusercontent.com/api-evangelist/sendoso/main/examples/sendoso-create-send-example.json)
-- [Example](https://raw.githubusercontent.com/api-evangelist/sendoso/main/examples/sendoso-list-sends-example.json)
-- [JSON-LD](https://raw.githubusercontent.com/api-evangelist/sendoso/main/json-ld/sendoso-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/sendoso/main/vocabulary/sendoso-vocabulary.yml)
-- [L L Ms Txt](https://developer.sendoso.com/llms.txt)
+- [Documentation](https://developer.sendoso.com/scim/overview/introduction)
+- [OpenAPI](openapi/sendoso-scim-api-openapi.yml) · [Overlay](overlays/sendoso-scim-overlay.yaml)
+
+### Sendoso Webhooks
+
+Twenty-eight send lifecycle events, signed with Svix HMAC-SHA256 over the raw body with a five-minute
+replay window. Subscriptions live in a hosted portal; there is no webhook management API.
+
+- [Documentation](https://developer.sendoso.com/webhooks/introduction)
+- [AsyncAPI](asyncapi/sendoso-webhooks-asyncapi.yml)
+
+### Sendoso MCP Server — `https://app.sendoso.com/mcp`
+
+An OAuth-protected remote MCP server over the Sendoso platform, publishing RFC 9728 protected-resource
+metadata and RFC 8414 authorization-server metadata with dynamic client registration and PKCE S256.
+Sold from the Core plan tier upward.
+
+- [MCP profile](mcp/sendoso-mcp.yml) · [Tool crosswalk](mcp/sendoso-tool-crosswalk.yml)
+
+## Agent surfaces Sendoso publishes itself
+
+| Surface | URL | Status |
+|---|---|---|
+| MCP server (platform) | `https://app.sendoso.com/mcp` | Live, OAuth-gated |
+| MCP server (docs search) | `https://developer.sendoso.com/mcp` | Live, anonymous, 3 tools |
+| A2A agent card | `/.well-known/agent-card.json` on the docs host | 200, graded **conformant** with deviations |
+| Agent Skill | `/.well-known/agent-skills/sendoso/skill.md` | 200, provider-authored, saved verbatim |
+| llms.txt | `https://developer.sendoso.com/llms.txt` | 200, 44 pages, every page also served as `.md` |
+
+Sendoso's `robots.txt` sets `Content-Signal: ai-train=yes, search=yes, ai-input=yes` — an explicit
+opt-in.
+
+## Not published by Sendoso
+
+Recorded absences, so that a gap here reads as deliberate rather than unexamined:
+
+- **No OpenAPI.** Probed 404 on `/openapi.json`, `/openapi.yaml`, `/docs.json`, `/mint.json`,
+  `/rest-api/openapi.json`, `/scim/openapi.json`, `/marketplace/openapi.json` and
+  `/api-reference/openapi.json`. The reference pages are hand-authored MDX, not spec-backed. The
+  three descriptions in `openapi/` are generated by API Evangelist from those pages and say so.
+- **No SDKs.** Nothing first-party on npm, PyPI, RubyGems, Packagist, Maven Central, NuGet, crates.io
+  or pkg.go.dev. Fifteen of the sixteen repositories in `github.com/sendoso` are archived forks of
+  other people's projects.
+- **No status page.** `status.sendoso.com` resolves but does not answer; the underlying Atlassian
+  Statuspage reports INACTIVE.
+- **No changelog, no versioning policy, no deprecation policy, no SLA.**
+- **No security.txt and no published vulnerability disclosure policy** on any host.
+- **No idempotency.** Sendoso states plainly that duplicate payloads are not handled — `POST
+  /api/v3/send` is not safe to retry.
+- **No AsyncAPI.** The event catalog is real and complete; the AsyncAPI document in `asyncapi/` is
+  ours, generated from it.
+- **No named certifications readable.** The Vanta trust center at `security.sendoso.com` returns 200
+  but renders entirely client-side, delivering no certification name to any automated reader.
+
+## Provenance correction, 2026-08-13
+
+This repository previously carried five API entries (Inventory, Recipients, Reports, Sends, Teams)
+and an OpenAPI describing `https://app.sendoso.com/api/v2` with `X-Api-Key` authentication. **None of
+it was real** — Sendoso's API is `/api/v3` with OAuth 2.0, and not one of those paths exists. Those
+files and the eighteen artifacts derived from them (Postman and Open Collections, examples, JSON
+Schema, JSON Structure, JSON-LD, agentic-access) are quarantined in
+[`_scaffold/`](_scaffold/README.md) rather than deleted, so the mistake stays auditable.
 
 ## Maintainers
 

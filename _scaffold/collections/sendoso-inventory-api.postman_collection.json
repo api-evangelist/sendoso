@@ -1,0 +1,157 @@
+{
+  "item": [
+    {
+      "id": "53be2944-5801-4b31-a29c-47a38ae7bba1",
+      "name": "Inventory",
+      "description": {
+        "content": "Browse available gifts and products",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "12f93f03-5f17-4748-bda4-7fe1ecaceb72",
+          "name": "List Inventory",
+          "request": {
+            "name": "List Inventory",
+            "description": {
+              "content": "Returns available gifts and products in the team's Sendoso inventory. Includes physical gifts, e-gift cards, branded swag, and direct mail options.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inventory"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter by item type"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "25"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a122da3-1602-43bd-91df-6be04dd91384",
+              "name": "List of inventory items",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"egift\",\n      \"price\": 493.8576323027022,\n      \"image_url\": \"http://oYPzdpvSidYpbQdSeJntFCrfrBbMDRt.fgww,0YX\",\n      \"available\": false,\n      \"shipping_time_days\": 3336\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"physical\",\n      \"price\": 7449.587478516308,\n      \"image_url\": \"https://raeAYEHFSNOocHvUX.qxbcJGz7v34CuG3-N0NEyGfXFGnuJ4oWYauU04DoQs9LR4A4tB3jYJ7ObSqZHh7v\",\n      \"available\": false,\n      \"shipping_time_days\": 5242\n    }\n  ],\n  \"pagination\": {\n    \"page\": 4807,\n    \"per_page\": 7509,\n    \"total\": 8672,\n    \"total_pages\": 1194\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.sendoso.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "74a61be2-d6a9-4a8e-8004-d4b563bb7a98",
+    "name": "Sendoso Sending Platform Inventory API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Sendoso is a corporate gifting and direct mail platform that enables sales, marketing, and customer success teams to send physical and digital gifts at scale. The Sendoso API enables programmatic sending of gifts, swag, e-gifts, direct mail, and branded merchandise. Integrate gift-sending into CRM workflows, marketing automation, and customer engagement pipelines.\n\nContact Support:\n Name: Sendoso Developer Support",
+      "type": "text/plain"
+    }
+  }
+}
