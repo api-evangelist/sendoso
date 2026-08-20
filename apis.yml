@@ -45,6 +45,19 @@ tags:
   - Employee Recognition
   - Account Based Marketing
   - SCIM Provisioning
+  - Webhook
+tags_raw:
+  - Corporate Gifting
+  - Direct Mail
+  - Sales Engagement
+  - Marketing Automation
+  - CRM Integration
+  - eGifts
+  - Swag and Merchandise
+  - Fulfillment
+  - Employee Recognition
+  - Account Based Marketing
+  - SCIM Provisioning
   - Webhooks
 apis:
 - aid: sendoso:sendoso-core-api
@@ -55,6 +68,11 @@ apis:
   humanURL: https://developer.sendoso.com/rest-api/overview/introduction
   baseURL: https://app.sendoso.com/api/v3
   tags:
+  - Sends
+  - Campaigns
+  - User
+  - Team
+  tags_raw:
   - Sends
   - Campaigns
   - Users
@@ -137,6 +155,9 @@ apis:
   humanURL: https://developer.sendoso.com/webhooks/introduction
   baseURL: https://developer.sendoso.com/webhooks/introduction
   tags:
+  - Webhook
+  - Event
+  tags_raw:
   - Webhooks
   - Events
   properties:
