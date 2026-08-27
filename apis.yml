@@ -60,50 +60,11 @@ tags_raw:
   - SCIM Provisioning
   - Webhooks
 apis:
-- aid: sendoso:sendoso-core-api
-  name: Sendoso Core API
-  description: >-
-    Create physical gift, direct mail and eGift sends against Sendoso campaigns, and read the
-    campaigns, users and team groups behind them. Ten operations on /api/v3.
-  humanURL: https://developer.sendoso.com/rest-api/overview/introduction
-  baseURL: https://app.sendoso.com/api/v3
-  tags:
-  - Sends
-  - Campaigns
-  - User
-  - Team
-  tags_raw:
-  - Sends
-  - Campaigns
-  - Users
-  - Teams
-  properties:
-  - type: OpenAPI
-    url: openapi/sendoso-core-api-openapi.yml
-  - type: Overlay
-    url: overlays/sendoso-core-overlay.yaml
-  - type: Documentation
-    url: https://developer.sendoso.com/rest-api/overview/introduction
-  - type: APIReference
-    url: https://developer.sendoso.com/rest-api/reference/sends/get-sends
-  - type: GettingStarted
-    url: https://developer.sendoso.com/rest-api/overview/introduction
-  - type: Authentication
-    url: https://developer.sendoso.com/rest-api/overview/authentication
-  - type: RateLimits
-    url: https://developer.sendoso.com/rest-api/overview/rate-limits
-  - type: Security
-    url: https://developer.sendoso.com/rest-api/overview/security
-  - type: FAQ
-    url: https://developer.sendoso.com/rest-api/overview/faq
-  - type: Webhooks
-    url: https://developer.sendoso.com/webhooks/introduction
 - aid: sendoso:sendoso-marketplace-api
   name: Sendoso Marketplace and SmartSend API
   description: >-
-    Browse the Sendoso marketplace catalog, get AI-selected gift recommendations for a
-    recipient, and send either. Four operations on /api/v3, scoped to `marketplace` and
-    `smartsend`.
+    Browse the Sendoso marketplace catalog, get AI-selected gift recommendations for a recipient, and
+    send either. Four operations on /api/v3, scoped to `marketplace` and `smartsend`.
   humanURL: https://developer.sendoso.com/marketplace/overview/introduction
   baseURL: https://app.sendoso.com/api/v3
   tags:
@@ -123,35 +84,11 @@ apis:
     url: https://developer.sendoso.com/marketplace/overview/authentication
   - type: RateLimits
     url: https://developer.sendoso.com/marketplace/overview/rate-limits
-- aid: sendoso:sendoso-scim-api
-  name: Sendoso SCIM API
-  description: >-
-    SCIM 2.0 user provisioning and deprovisioning for the Sendoso platform. Requires its own
-    OAuth client credentials, and is an Enterprise-tier entitlement.
-  humanURL: https://developer.sendoso.com/scim/overview/introduction
-  baseURL: https://app.sendoso.com/api/scim/v2
-  tags:
-  - SCIM
-  - Provisioning
-  - Identity
-  properties:
-  - type: OpenAPI
-    url: openapi/sendoso-scim-api-openapi.yml
-  - type: Overlay
-    url: overlays/sendoso-scim-overlay.yaml
-  - type: Documentation
-    url: https://developer.sendoso.com/scim/overview/introduction
-  - type: APIReference
-    url: https://developer.sendoso.com/scim/reference/get-users
-  - type: Authentication
-    url: https://developer.sendoso.com/scim/overview/authentication
-  - type: Security
-    url: https://developer.sendoso.com/scim/overview/security
 - aid: sendoso:sendoso-webhooks
   name: Sendoso Webhooks
   description: >-
-    Twenty-eight Svix-signed send lifecycle events delivered to an endpoint you control.
-    Subscriptions are configured in a hosted portal; there is no webhook management API.
+    Twenty-eight Svix-signed send lifecycle events delivered to an endpoint you control. Subscriptions
+    are configured in a hosted portal; there is no webhook management API.
   humanURL: https://developer.sendoso.com/webhooks/introduction
   baseURL: https://developer.sendoso.com/webhooks/introduction
   tags:
@@ -172,10 +109,9 @@ apis:
 - aid: sendoso:sendoso-mcp
   name: Sendoso MCP Server
   description: >-
-    OAuth-protected remote MCP server over the Sendoso platform, at
-    https://app.sendoso.com/mcp. Publishes RFC 9728 protected-resource and RFC 8414
-    authorization-server metadata with dynamic client registration and PKCE. Sold from the
-    Core plan tier upward.
+    OAuth-protected remote MCP server over the Sendoso platform, at https://app.sendoso.com/mcp. Publishes
+    RFC 9728 protected-resource and RFC 8414 authorization-server metadata with dynamic client registration
+    and PKCE. Sold from the Core plan tier upward.
   humanURL: https://www.sendoso.com/compare-plans
   baseURL: https://app.sendoso.com/mcp
   tags:
@@ -188,7 +124,181 @@ apis:
     url: mcp/sendoso-tool-crosswalk.yml
   - type: OAuthMetadata
     url: well-known/sendoso-oauth-authorization-server-mcp.json
+- aid: sendoso:sendoso-campaigns-api
+  name: Sendoso Campaigns API
+  description: Campaigns, called "touches" in the API.
+  humanURL: https://developer.sendoso.com/rest-api/overview/introduction
+  baseURL: https://app.sendoso.com/api/v3
+  tags:
+  - Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/sendoso-campaigns-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sendoso.com/rest-api/overview/introduction
+  - type: APIReference
+    url: https://developer.sendoso.com/rest-api/reference/sends/get-sends
+  - type: GettingStarted
+    url: https://developer.sendoso.com/rest-api/overview/introduction
+  - type: Authentication
+    url: https://developer.sendoso.com/rest-api/overview/authentication
+  - type: RateLimits
+    url: https://developer.sendoso.com/rest-api/overview/rate-limits
+  - type: Security
+    url: https://developer.sendoso.com/rest-api/overview/security
+  - type: FAQ
+    url: https://developer.sendoso.com/rest-api/overview/faq
+  - type: Webhooks
+    url: https://developer.sendoso.com/webhooks/introduction
+  - type: Documentation
+    url: https://developer.sendoso.com/scim/overview/introduction
+  - type: APIReference
+    url: https://developer.sendoso.com/scim/reference/get-users
+  - type: Authentication
+    url: https://developer.sendoso.com/scim/overview/authentication
+  - type: Security
+    url: https://developer.sendoso.com/scim/overview/security
+- aid: sendoso:sendoso-sends-api
+  name: Sendoso Sends API
+  description: Create and retrieve gift, direct mail and eGift sends.
+  humanURL: https://developer.sendoso.com/rest-api/overview/introduction
+  baseURL: https://app.sendoso.com/api/v3
+  tags:
+  - Sends
+  properties:
+  - type: OpenAPI
+    url: openapi/sendoso-sends-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sendoso.com/rest-api/overview/introduction
+  - type: APIReference
+    url: https://developer.sendoso.com/rest-api/reference/sends/get-sends
+  - type: GettingStarted
+    url: https://developer.sendoso.com/rest-api/overview/introduction
+  - type: Authentication
+    url: https://developer.sendoso.com/rest-api/overview/authentication
+  - type: RateLimits
+    url: https://developer.sendoso.com/rest-api/overview/rate-limits
+  - type: Security
+    url: https://developer.sendoso.com/rest-api/overview/security
+  - type: FAQ
+    url: https://developer.sendoso.com/rest-api/overview/faq
+  - type: Webhooks
+    url: https://developer.sendoso.com/webhooks/introduction
+  - type: Documentation
+    url: https://developer.sendoso.com/scim/overview/introduction
+  - type: APIReference
+    url: https://developer.sendoso.com/scim/reference/get-users
+  - type: Authentication
+    url: https://developer.sendoso.com/scim/overview/authentication
+  - type: Security
+    url: https://developer.sendoso.com/scim/overview/security
+- aid: sendoso:sendoso-smartsend-api
+  name: Sendoso Smart Send API
+  description: AI-selected gift recommendations and sending them.
+  humanURL: https://developer.sendoso.com/rest-api/overview/introduction
+  baseURL: https://app.sendoso.com/api/v3
+  tags:
+  - SmartSend
+  properties:
+  - type: OpenAPI
+    url: openapi/sendoso-smartsend-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sendoso.com/rest-api/overview/introduction
+  - type: APIReference
+    url: https://developer.sendoso.com/rest-api/reference/sends/get-sends
+  - type: GettingStarted
+    url: https://developer.sendoso.com/rest-api/overview/introduction
+  - type: Authentication
+    url: https://developer.sendoso.com/rest-api/overview/authentication
+  - type: RateLimits
+    url: https://developer.sendoso.com/rest-api/overview/rate-limits
+  - type: Security
+    url: https://developer.sendoso.com/rest-api/overview/security
+  - type: FAQ
+    url: https://developer.sendoso.com/rest-api/overview/faq
+  - type: Webhooks
+    url: https://developer.sendoso.com/webhooks/introduction
+  - type: Documentation
+    url: https://developer.sendoso.com/scim/overview/introduction
+  - type: APIReference
+    url: https://developer.sendoso.com/scim/reference/get-users
+  - type: Authentication
+    url: https://developer.sendoso.com/scim/overview/authentication
+  - type: Security
+    url: https://developer.sendoso.com/scim/overview/security
+- aid: sendoso:sendoso-teams-api
+  name: Sendoso Teams API
+  description: Team groups and their members.
+  humanURL: https://developer.sendoso.com/rest-api/overview/introduction
+  baseURL: https://app.sendoso.com/api/v3
+  tags:
+  - Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/sendoso-teams-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sendoso.com/rest-api/overview/introduction
+  - type: APIReference
+    url: https://developer.sendoso.com/rest-api/reference/sends/get-sends
+  - type: GettingStarted
+    url: https://developer.sendoso.com/rest-api/overview/introduction
+  - type: Authentication
+    url: https://developer.sendoso.com/rest-api/overview/authentication
+  - type: RateLimits
+    url: https://developer.sendoso.com/rest-api/overview/rate-limits
+  - type: Security
+    url: https://developer.sendoso.com/rest-api/overview/security
+  - type: FAQ
+    url: https://developer.sendoso.com/rest-api/overview/faq
+  - type: Webhooks
+    url: https://developer.sendoso.com/webhooks/introduction
+  - type: Documentation
+    url: https://developer.sendoso.com/scim/overview/introduction
+  - type: APIReference
+    url: https://developer.sendoso.com/scim/reference/get-users
+  - type: Authentication
+    url: https://developer.sendoso.com/scim/overview/authentication
+  - type: Security
+    url: https://developer.sendoso.com/scim/overview/security
+- aid: sendoso:sendoso-users-api
+  name: Sendoso Users API
+  description: Read the authorized user, list organization users, invite new users.
+  humanURL: https://developer.sendoso.com/rest-api/overview/introduction
+  baseURL: https://app.sendoso.com/api/v3
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/sendoso-users-api-openapi.yml
+  - type: Documentation
+    url: https://developer.sendoso.com/rest-api/overview/introduction
+  - type: APIReference
+    url: https://developer.sendoso.com/rest-api/reference/sends/get-sends
+  - type: GettingStarted
+    url: https://developer.sendoso.com/rest-api/overview/introduction
+  - type: Authentication
+    url: https://developer.sendoso.com/rest-api/overview/authentication
+  - type: RateLimits
+    url: https://developer.sendoso.com/rest-api/overview/rate-limits
+  - type: Security
+    url: https://developer.sendoso.com/rest-api/overview/security
+  - type: FAQ
+    url: https://developer.sendoso.com/rest-api/overview/faq
+  - type: Webhooks
+    url: https://developer.sendoso.com/webhooks/introduction
+  - type: Documentation
+    url: https://developer.sendoso.com/scim/overview/introduction
+  - type: APIReference
+    url: https://developer.sendoso.com/scim/reference/get-users
+  - type: Authentication
+    url: https://developer.sendoso.com/scim/overview/authentication
+  - type: Security
+    url: https://developer.sendoso.com/scim/overview/security
 common:
+  - type: Overlay
+    url: overlays/sendoso-core-overlay.yaml
+  - type: Overlay
+    url: overlays/sendoso-scim-overlay.yaml
   - type: Website
     url: https://www.sendoso.com/
   - type: DeveloperPortal
