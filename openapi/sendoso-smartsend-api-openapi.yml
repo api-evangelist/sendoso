@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Sendoso and SmartSend Marketplace API
+  title: Sendoso Marketplace Smart Send API
   version: '3'
   summary: Browse the Sendoso marketplace catalog, get AI gift recommendations, and send either.
   description: 'The Sendoso Marketplace and SmartSend API lets you send physical gifts and direct mail from Sendoso''s catalog rather than from a pre-configured campaign. SmartSend picks the gift for you based on the recipient''s interests and preferences.
@@ -23,101 +23,68 @@ servers:
 security:
 - OAuth2: []
 tags:
-- name: Marketplace
-  description: The Sendoso marketplace catalog and sending from it.
+- name: SmartSend
+  description: AI-selected gift recommendations and sending them.
 paths:
-  /api/v3/marketplace/products:
+  /api/v3/smartsend/recommendations:
     get:
-      operationId: getMarketplaceProducts
-      summary: Get Marketplace Products
-      description: Retrieves a paginated list of all products in the marketplace catalog.
+      operationId: getGiftRecommendations
+      summary: Get Gift Recommendations
+      description: Retrieves a list of recommendations for a given recipient email.
       tags:
-      - Marketplace
+      - SmartSend
       externalDocs:
-        url: https://developer.sendoso.com/marketplace/reference/products/get-products
+        url: https://developer.sendoso.com/marketplace/reference/recommendations/get-recommendations
       security:
       - OAuth2:
-        - marketplace
+        - smartsend
       parameters:
-      - name: after
+      - name: recipient_email
         in: query
-        required: false
-        description: The cursor to start from, returned in the `pagination` object of the previous response.
+        required: true
+        description: The email of the recipient.
         schema:
           type: string
-      - name: price_gte_usd
-        in: query
-        required: false
-        description: The minimum price of products in USD.
-        schema:
-          type: integer
       - name: price_lte_usd
         in: query
         required: false
         description: The maximum price of products in USD.
         schema:
           type: integer
-      - name: ship_to_country_codes[]
+      - name: ship_to_country_code
         in: query
         required: false
-        description: The country codes to ship to.
-        schema:
-          type: array
-          items:
-            type: string
-      - name: category_ids[]
-        in: query
-        required: false
-        description: Category IDs to filter products by.
-        schema:
-          type: array
-          items:
-            type: string
-      - name: text_search
-        in: query
-        required: false
-        description: Filter products by exact text search.
+        description: The country code to ship to.
         schema:
           type: string
       responses:
         '200':
-          description: A cursor page of catalog products plus the categories in the result set.
+          description: Recommended products.
           content:
             application/json:
               schema:
                 type: object
                 required:
-                - pagination
-                - categories
                 - products
                 properties:
-                  pagination:
-                    $ref: '#/components/schemas/CursorPagination'
-                  categories:
-                    type: array
-                    description: Groups of nested categories present in the result set.
-                    items:
-                      $ref: '#/components/schemas/CategoryGroup'
                   products:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Product'
+                      $ref: '#/components/schemas/RecommendedProduct'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/TooManyRequests'
-  /api/v3/marketplace/products/send:
+  /api/v3/smartsend/recommendations/send:
     post:
-      operationId: sendMarketplaceProduct
-      summary: Send a Product (variant)
-      description: Send a product variant to a recipient. Only one product variant can be sent at a time; if more than one is supplied, only the first is processed.
+      operationId: sendRecommendation
+      summary: Send a Recommendation
+      description: Automatically pick and send a recommendation to a recipient.
       tags:
-      - Marketplace
+      - SmartSend
       externalDocs:
-        url: https://developer.sendoso.com/marketplace/reference/products/send
+        url: https://developer.sendoso.com/marketplace/reference/recommendations/send
       security:
-      - OAuth2:
-        - marketplace
       - OAuth2:
         - smartsend
       requestBody:
@@ -127,41 +94,29 @@ paths:
             schema:
               type: object
               required:
-              - variant_ids
               - recipient_email
               - recipient_first_name
               - recipient_last_name
               properties:
-                variant_ids:
-                  type: array
-                  description: Catalog product variant ids fetched from the marketplace.
-                  items:
-                    type: string
                 recipient_email:
                   type: string
                 recipient_first_name:
                   type: string
                 recipient_last_name:
                   type: string
-                sender_first_name:
-                  type: string
-                sender_last_name:
-                  type: string
-                sender_email:
-                  type: string
-                sender_organization_name:
+                price_lte_usd:
+                  type: integer
+                  description: Limit the maximum price of the product in USD.
+                ship_to_country_code:
                   type: string
                 message:
                   type: string
-                  description: An optional message to include with the product.
                 gift_exchange_enabled:
                   type: boolean
-                  description: Lets recipients exchange the gift for a similar or lower value item in the marketplace.
                 meeting_url:
                   type: string
                 require_approval:
                   type: boolean
-                  description: Places the send on hold for a manager to approve it from the send tracker.
       responses:
         '200':
           description: Send created.
@@ -193,19 +148,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    Product:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        variants:
-          type: array
-          items:
-            $ref: '#/components/schemas/Variant'
     Variant:
       type: object
       required:
@@ -237,18 +179,6 @@ components:
           type: boolean
         message:
           type: string
-    CursorPagination:
-      type: object
-      properties:
-        after:
-          type: string
-          description: The cursor to use in the next request to fetch the next page.
-        next_page:
-          type: object
-          properties:
-            url:
-              type: string
-              description: The URL to fetch the next page of products.
     MarketplaceSendResult:
       type: object
       required:
@@ -271,23 +201,30 @@ components:
           properties:
             id:
               type: string
-    CategoryGroup:
+    RecommendedProduct:
       type: object
       required:
-      - group_name
-      - children
+      - id
+      - name
+      - description
+      - interests
+      - variants
       properties:
-        group_name:
+        id:
           type: string
-        children:
+        name:
+          type: string
+        description:
+          type: string
+        interests:
+          type: array
+          description: The interests the product was recommended on.
+          items:
+            type: string
+        variants:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
+            $ref: '#/components/schemas/Variant'
   securitySchemes:
     OAuth2:
       type: oauth2

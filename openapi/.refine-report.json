@@ -1,0 +1,30 @@
+{
+  "provider": "sendoso",
+  "sources": [
+    "sendoso-core-api-openapi.yml",
+    "sendoso-marketplace-api-openapi.yml",
+    "sendoso-scim-api-openapi.yml"
+  ],
+  "outputs": [
+    "sendoso-campaigns-api-openapi.yml",
+    "sendoso-sends-api-openapi.yml",
+    "sendoso-teams-api-openapi.yml",
+    "sendoso-users-api-openapi.yml",
+    "sendoso-marketplace-api-openapi.yml",
+    "sendoso-smartsend-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/sendoso-core-api-openapi.yml",
+    "archived openapi/sendoso-scim-api-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sendoso-core-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sendoso-marketplace-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sendoso-scim-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Users' spans 2 source specs (sendoso-core-api-openapi.yml, sendoso-scim-api-openapi.yml): per-path servers applied",
+    "apis.yml register: written (+5 apis, 8 total)"
+  ],
+  "skipped": []
+}
