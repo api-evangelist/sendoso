@@ -1,9 +1,10 @@
 {
   "provider": "sendoso",
   "sources": [
-    "sendoso-core-api-openapi.yml",
+    "_ae-authored/sendoso-core-api-openapi.yml",
+    "_ae-authored/sendoso-scim-api-openapi.yml",
     "sendoso-marketplace-api-openapi.yml",
-    "sendoso-scim-api-openapi.yml"
+    "sendoso-smartsend-api-openapi.yml"
   ],
   "outputs": [
     "sendoso-campaigns-api-openapi.yml",
@@ -13,18 +14,23 @@
     "sendoso-marketplace-api-openapi.yml",
     "sendoso-smartsend-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/sendoso-core-api-openapi.yml",
-    "archived openapi/sendoso-scim-api-openapi.yml"
-  ],
+  "archived": [],
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "sendoso-marketplace-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /api/v3/marketplace/products get, /api/v3/marketplace/products/send post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "sendoso-smartsend-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /api/v3/smartsend/recommendations get, /api/v3/smartsend/recommendations/send post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
   "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "sendoso-core-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "sendoso-marketplace-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "sendoso-scim-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "tag 'Users' spans 2 source specs (sendoso-core-api-openapi.yml, sendoso-scim-api-openapi.yml): per-path servers applied",
-    "apis.yml register: written (+5 apis, 8 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "sendoso-campaigns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sendoso-sends-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sendoso-teams-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sendoso-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
