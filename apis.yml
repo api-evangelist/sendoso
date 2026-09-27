@@ -58,6 +58,7 @@ tags:
   - Account Based Marketing
   - SCIM Provisioning
   - Webhook
+  - A2A
 tags_raw:
   - Corporate Gifting
   - Direct Mail
@@ -71,6 +72,7 @@ tags_raw:
   - Account Based Marketing
   - SCIM Provisioning
   - Webhooks
+  - A2A
 apis:
 - aid: sendoso:sendoso-marketplace-api
   name: Sendoso Marketplace and SmartSend API
@@ -452,3 +454,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 31
   pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://developer.sendoso.com/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

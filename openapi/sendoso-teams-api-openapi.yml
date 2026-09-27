@@ -99,40 +99,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    TeamGroupMember:
-      type: object
-      required:
-      - id
-      - first_name
-      - last_name
-      - email
-      - balance
-      - sandbox
-      - team_group_id
-      - team_id
-      - key
-      properties:
-        id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        email:
-          type: string
-        balance:
-          type: string
-        sandbox:
-          type: boolean
-          description: Whether this user is a sandbox user.
-        team_group_id:
-          type: integer
-        team_id:
-          type: integer
-          description: The team's organization id.
-        key:
-          type: string
-          description: The user's invitation key.
     TeamGroup:
       type: object
       required:
@@ -168,6 +134,40 @@ components:
         updated_at:
           type: string
           description: ISO 8601.
+    TeamGroupMember:
+      type: object
+      required:
+      - id
+      - first_name
+      - last_name
+      - email
+      - balance
+      - sandbox
+      - team_group_id
+      - team_id
+      - key
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        balance:
+          type: string
+        sandbox:
+          type: boolean
+          description: Whether this user is a sandbox user.
+        team_group_id:
+          type: integer
+        team_id:
+          type: integer
+          description: The team's organization id.
+        key:
+          type: string
+          description: The user's invitation key.
     Error:
       type: object
       description: Sendoso's error envelope. Not RFC 9457 problem+json — errors are returned as `application/json` with a `success` flag and a human-readable `message`. Some documented 401 bodies use `description` and `expired` instead of `message`.
@@ -181,27 +181,19 @@ components:
         expired:
           type: boolean
   responses:
-    Unauthorized:
-      description: 'Unauthorized. Documented message: "The access token is invalid".'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Too Many Requests. Sendoso throttles application clients sending more than 10 requests/second; the client is temporarily blocked from making further requests.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: 'Unauthorized. Documented message: "The access token is invalid".'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    Page:
-      name: page
-      in: query
-      required: false
-      description: The page number of the results you want to retrieve. The first page is 1.
-      schema:
-        type: integer
-        minimum: 1
     PerPage:
       name: per_page
       in: query
@@ -210,6 +202,14 @@ components:
       schema:
         type: integer
         maximum: 100
+    Page:
+      name: page
+      in: query
+      required: false
+      description: The page number of the results you want to retrieve. The first page is 1.
+      schema:
+        type: integer
+        minimum: 1
   securitySchemes:
     OAuth2:
       type: oauth2

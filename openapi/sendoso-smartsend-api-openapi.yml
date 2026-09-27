@@ -127,12 +127,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   responses:
-    Unauthorized:
-      description: Unauthorized.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Too Many Requests. The Marketplace and SmartSend APIs are limited to 100 requests per minute per user and return an `X-Rate-Limit-Reset` header indicating when the limit resets.
       headers:
@@ -144,7 +138,42 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    MarketplaceSendResult:
+      type: object
+      required:
+      - products
+      - send
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            required:
+            - variant_id
+            properties:
+              variant_id:
+                type: string
+        send:
+          type: object
+          required:
+          - id
+          properties:
+            id:
+              type: string
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
     Variant:
       type: object
       required:
@@ -169,28 +198,6 @@ components:
             properties:
               url:
                 type: string
-    MarketplaceSendResult:
-      type: object
-      required:
-      - products
-      - send
-      properties:
-        products:
-          type: array
-          items:
-            type: object
-            required:
-            - variant_id
-            properties:
-              variant_id:
-                type: string
-        send:
-          type: object
-          required:
-          - id
-          properties:
-            id:
-              type: string
     RecommendedProduct:
       type: object
       required:
@@ -215,13 +222,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Variant'
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
   securitySchemes:
     OAuth2:
       type: oauth2
