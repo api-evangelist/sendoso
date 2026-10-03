@@ -172,36 +172,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    Product:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        variants:
-          type: array
-          items:
-            $ref: '#/components/schemas/Variant'
-    CategoryGroup:
-      type: object
-      required:
-      - group_name
-      - children
-      properties:
-        group_name:
-          type: string
-        children:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
     MarketplaceSendResult:
       type: object
       required:
@@ -231,18 +201,19 @@ components:
           type: boolean
         message:
           type: string
-    CursorPagination:
+    Product:
       type: object
       properties:
-        after:
+        id:
           type: string
-          description: The cursor to use in the next request to fetch the next page.
-        next_page:
-          type: object
-          properties:
-            url:
-              type: string
-              description: The URL to fetch the next page of products.
+        name:
+          type: string
+        description:
+          type: string
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/Variant'
     Variant:
       type: object
       required:
@@ -267,7 +238,42 @@ components:
             properties:
               url:
                 type: string
+    CategoryGroup:
+      type: object
+      required:
+      - group_name
+      - children
+      properties:
+        group_name:
+          type: string
+        children:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+    CursorPagination:
+      type: object
+      properties:
+        after:
+          type: string
+          description: The cursor to use in the next request to fetch the next page.
+        next_page:
+          type: object
+          properties:
+            url:
+              type: string
+              description: The URL to fetch the next page of products.
   responses:
+    Unauthorized:
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Too Many Requests. The Marketplace and SmartSend APIs are limited to 100 requests per minute per user and return an `X-Rate-Limit-Reset` header indicating when the limit resets.
       headers:
@@ -275,12 +281,6 @@ components:
           description: The time at which the rate limit will reset.
           schema:
             type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized.
       content:
         application/json:
           schema:

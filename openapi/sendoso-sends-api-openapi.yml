@@ -207,53 +207,18 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    PhysicalSendRequest:
-      title: Send Physical Gift
+    Error:
       type: object
-      description: Send a physical item directly to a recipient when their address is known.
-      required:
-      - touch_id
-      - name
-      - email
-      - address
-      - city
-      - state
-      - zip
-      - country
-      - confirm_address
-      - via
-      - via_from
+      description: Sendoso's error envelope. Not RFC 9457 problem+json — errors are returned as `application/json` with a `success` flag and a human-readable `message`. Some documented 401 bodies use `description` and `expired` instead of `message`.
       properties:
-        touch_id:
-          type: integer
-        name:
-          type: string
-        email:
-          type: string
-        address:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zip:
-          type: string
-        country:
-          type: string
-        mobile_no:
-          type: number
-          description: Required for non-US addresses — a request without it will fail for any non-US address.
-        custom_message:
-          type: string
-          description: The message that goes on the notecard in the gift box, if applicable.
-        confirm_address:
+        success:
           type: boolean
-          description: Send `false` when you are providing the recipient address.
-        via:
+        message:
           type: string
-          const: single_person_or_company
-        via_from:
+        description:
           type: string
+        expired:
+          type: boolean
     SendResult:
       type: object
       required:
@@ -296,33 +261,6 @@ components:
           const: single_email_address
         via_from:
           type: string
-    Send:
-      type: object
-      required:
-      - id
-      - send_gid
-      - type
-      - subtype
-      - currency
-      - current_total_cost
-      properties:
-        id:
-          type: integer
-        send_gid:
-          type: string
-          description: The gid of the send.
-        type:
-          type: string
-          description: 'The send''s type. Documented values: Amazon, Handwritten Notes, Inventoried Sends, Sendoso Choice, Sendoso Direct, eGifts International, eGifts USA.'
-        subtype:
-          type: string
-          description: The send's subtype. Documented values include Bundles, Buy/Send via Amazon, Coffee, Custom, Donate to Charity, Experiences, Handwritten Notes, Lunch, On-Demand, Wine, and the per-country eGift Cards variants.
-        currency:
-          type: string
-          description: ISO 4217.
-        current_total_cost:
-          type: string
-          description: The send's cost at the time of the request. May change until the send reaches a final status.
     PhysicalSendAddressCollectionRequest:
       title: Send Physical Gift with Address Collection
       type: object
@@ -379,27 +317,89 @@ components:
           const: single_person_or_company
         via_from:
           type: string
-    Error:
+    PhysicalSendRequest:
+      title: Send Physical Gift
       type: object
-      description: Sendoso's error envelope. Not RFC 9457 problem+json — errors are returned as `application/json` with a `success` flag and a human-readable `message`. Some documented 401 bodies use `description` and `expired` instead of `message`.
+      description: Send a physical item directly to a recipient when their address is known.
+      required:
+      - touch_id
+      - name
+      - email
+      - address
+      - city
+      - state
+      - zip
+      - country
+      - confirm_address
+      - via
+      - via_from
       properties:
-        success:
-          type: boolean
-        message:
+        touch_id:
+          type: integer
+        name:
           type: string
-        description:
+        email:
           type: string
-        expired:
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+        mobile_no:
+          type: number
+          description: Required for non-US addresses — a request without it will fail for any non-US address.
+        custom_message:
+          type: string
+          description: The message that goes on the notecard in the gift box, if applicable.
+        confirm_address:
           type: boolean
+          description: Send `false` when you are providing the recipient address.
+        via:
+          type: string
+          const: single_person_or_company
+        via_from:
+          type: string
+    Send:
+      type: object
+      required:
+      - id
+      - send_gid
+      - type
+      - subtype
+      - currency
+      - current_total_cost
+      properties:
+        id:
+          type: integer
+        send_gid:
+          type: string
+          description: The gid of the send.
+        type:
+          type: string
+          description: 'The send''s type. Documented values: Amazon, Handwritten Notes, Inventoried Sends, Sendoso Choice, Sendoso Direct, eGifts International, eGifts USA.'
+        subtype:
+          type: string
+          description: The send's subtype. Documented values include Bundles, Buy/Send via Amazon, Coffee, Custom, Donate to Charity, Experiences, Handwritten Notes, Lunch, On-Demand, Wine, and the per-country eGift Cards variants.
+        currency:
+          type: string
+          description: ISO 4217.
+        current_total_cost:
+          type: string
+          description: The send's cost at the time of the request. May change until the send reaches a final status.
   responses:
-    TooManyRequests:
-      description: Too Many Requests. Sendoso throttles application clients sending more than 10 requests/second; the client is temporarily blocked from making further requests.
+    Unauthorized:
+      description: 'Unauthorized. Documented message: "The access token is invalid".'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: 'Unauthorized. Documented message: "The access token is invalid".'
+    TooManyRequests:
+      description: Too Many Requests. Sendoso throttles application clients sending more than 10 requests/second; the client is temporarily blocked from making further requests.
       content:
         application/json:
           schema:

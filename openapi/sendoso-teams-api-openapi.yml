@@ -99,6 +99,18 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    Error:
+      type: object
+      description: Sendoso's error envelope. Not RFC 9457 problem+json — errors are returned as `application/json` with a `success` flag and a human-readable `message`. Some documented 401 bodies use `description` and `expired` instead of `message`.
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        description:
+          type: string
+        expired:
+          type: boolean
     TeamGroup:
       type: object
       required:
@@ -168,27 +180,15 @@ components:
         key:
           type: string
           description: The user's invitation key.
-    Error:
-      type: object
-      description: Sendoso's error envelope. Not RFC 9457 problem+json — errors are returned as `application/json` with a `success` flag and a human-readable `message`. Some documented 401 bodies use `description` and `expired` instead of `message`.
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
-        description:
-          type: string
-        expired:
-          type: boolean
   responses:
-    TooManyRequests:
-      description: Too Many Requests. Sendoso throttles application clients sending more than 10 requests/second; the client is temporarily blocked from making further requests.
+    Unauthorized:
+      description: 'Unauthorized. Documented message: "The access token is invalid".'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: 'Unauthorized. Documented message: "The access token is invalid".'
+    TooManyRequests:
+      description: Too Many Requests. Sendoso throttles application clients sending more than 10 requests/second; the client is temporarily blocked from making further requests.
       content:
         application/json:
           schema:

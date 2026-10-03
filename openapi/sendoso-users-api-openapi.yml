@@ -335,68 +335,7 @@ paths:
     - url: https://app.sendoso.com
       description: Production
 components:
-  responses:
-    TooManyRequests:
-      description: Too Many Requests. Sendoso throttles application clients sending more than 10 requests/second; the client is temporarily blocked from making further requests.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: 'Unauthorized. Documented message: "The access token is invalid".'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests_2:
-      description: Too Many Requests. Sendoso does not publish a numeric SCIM limit; the documentation states only that exceeding it returns 429 and temporarily blocks further requests.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-    Unauthorized_2:
-      description: Unauthorized.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-  parameters:
-    PerPage:
-      name: per_page
-      in: query
-      required: false
-      description: The number of results to be returned per page. Max is 100.
-      schema:
-        type: integer
-        maximum: 100
-    Page:
-      name: page
-      in: query
-      required: false
-      description: The page number of the results you want to retrieve. The first page is 1.
-      schema:
-        type: integer
-        minimum: 1
   schemas:
-    User:
-      type: object
-      required:
-      - id
-      - first_name
-      - last_name
-      - email
-      - team_group_id
-      properties:
-        id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        email:
-          type: string
-        team_group_id:
-          type: number
     Error:
       type: object
       description: Sendoso's error envelope. Not RFC 9457 problem+json — errors are returned as `application/json` with a `success` flag and a human-readable `message`. Some documented 401 bodies use `description` and `expired` instead of `message`.
@@ -436,15 +375,31 @@ components:
         team_balance:
           type: integer
           description: The sum of all the users' balance.
-    ScimName:
+    User:
       type: object
       required:
-      - givenName
-      - familyName
+      - id
+      - first_name
+      - last_name
+      - email
+      - team_group_id
       properties:
-        givenName:
+        id:
           type: string
-        familyName:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        team_group_id:
+          type: number
+    Error_2:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
           type: string
     ScimUser:
       type: object
@@ -478,6 +433,16 @@ components:
             properties:
               value:
                 type: string
+    ScimName:
+      type: object
+      required:
+      - givenName
+      - familyName
+      properties:
+        givenName:
+          type: string
+        familyName:
+          type: string
     ScimUserWrite:
       type: object
       required:
@@ -501,13 +466,48 @@ components:
         division:
           type: string
           description: The user's team. Must match the exact team group name in Sendoso — read them from GET /api/v3/groups on the Core API.
-    Error_2:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
+  responses:
+    Unauthorized:
+      description: 'Unauthorized. Documented message: "The access token is invalid".'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Too Many Requests. Sendoso throttles application clients sending more than 10 requests/second; the client is temporarily blocked from making further requests.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized_2:
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+    TooManyRequests_2:
+      description: Too Many Requests. Sendoso does not publish a numeric SCIM limit; the documentation states only that exceeding it returns 429 and temporarily blocks further requests.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+  parameters:
+    PerPage:
+      name: per_page
+      in: query
+      required: false
+      description: The number of results to be returned per page. Max is 100.
+      schema:
+        type: integer
+        maximum: 100
+    Page:
+      name: page
+      in: query
+      required: false
+      description: The page number of the results you want to retrieve. The first page is 1.
+      schema:
+        type: integer
+        minimum: 1
   securitySchemes:
     OAuth2:
       type: oauth2

@@ -126,24 +126,6 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  responses:
-    TooManyRequests:
-      description: Too Many Requests. The Marketplace and SmartSend APIs are limited to 100 requests per minute per user and return an `X-Rate-Limit-Reset` header indicating when the limit resets.
-      headers:
-        X-Rate-Limit-Reset:
-          description: The time at which the rate limit will reset.
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     MarketplaceSendResult:
       type: object
@@ -222,6 +204,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Variant'
+  responses:
+    Unauthorized:
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Too Many Requests. The Marketplace and SmartSend APIs are limited to 100 requests per minute per user and return an `X-Rate-Limit-Reset` header indicating when the limit resets.
+      headers:
+        X-Rate-Limit-Reset:
+          description: The time at which the rate limit will reset.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     OAuth2:
       type: oauth2
