@@ -194,26 +194,35 @@ components:
           properties:
             id:
               type: string
-    Error:
+    CursorPagination:
       type: object
       properties:
-        success:
-          type: boolean
-        message:
+        after:
           type: string
-    Product:
+          description: The cursor to use in the next request to fetch the next page.
+        next_page:
+          type: object
+          properties:
+            url:
+              type: string
+              description: The URL to fetch the next page of products.
+    CategoryGroup:
       type: object
+      required:
+      - group_name
+      - children
       properties:
-        id:
+        group_name:
           type: string
-        name:
-          type: string
-        description:
-          type: string
-        variants:
+        children:
           type: array
           items:
-            $ref: '#/components/schemas/Variant'
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
     Variant:
       type: object
       required:
@@ -238,35 +247,26 @@ components:
             properties:
               url:
                 type: string
-    CategoryGroup:
+    Error:
       type: object
-      required:
-      - group_name
-      - children
       properties:
-        group_name:
+        success:
+          type: boolean
+        message:
           type: string
-        children:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        variants:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-    CursorPagination:
-      type: object
-      properties:
-        after:
-          type: string
-          description: The cursor to use in the next request to fetch the next page.
-        next_page:
-          type: object
-          properties:
-            url:
-              type: string
-              description: The URL to fetch the next page of products.
+            $ref: '#/components/schemas/Variant'
   responses:
     Unauthorized:
       description: Unauthorized.

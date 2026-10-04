@@ -149,13 +149,6 @@ components:
           properties:
             id:
               type: string
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
-          type: string
     Variant:
       type: object
       required:
@@ -204,6 +197,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Variant'
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
   responses:
     Unauthorized:
       description: Unauthorized.
