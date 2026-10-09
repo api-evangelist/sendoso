@@ -142,3 +142,33 @@ notes:
     Gift and fulfillment cost is a separate spend from the platform subscription. Neither is
     priced publicly, and the API exposes account balance (`balance`, `team_balance` on
     GET /api/v3/me) without exposing what it cost to fill.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Starter
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Core
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Advanced
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
