@@ -2,11 +2,14 @@
   "repo": "sendoso",
   "feeds": [
     {
-      "source": "https://sendoso.com/webhooks/",
-      "error": "HTTPError"
+      "source": "https://www.sendoso.com/blog",
+      "feed_url": "https://www.sendoso.com/blog",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "fetched": "2026-08-06T14:08:46Z",
+  "fetched": "2026-10-10T13:15:00Z",
   "post_count": 3,
   "agent_pulled": "2026-06-27",
   "feed_nature": "vendor-blog",
