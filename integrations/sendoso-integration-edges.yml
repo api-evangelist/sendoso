@@ -154,6 +154,23 @@ edges:
   detected: '2026-10-21'
   detected_by: mirror-platform-listings.py
   category: MARKETING_AUTOMATION
+- partner_name: Marketo (own)
+  partner: marketo
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://exchange.adobe.com/apps/ec/106386
+  mirror_of: marketo/integrations/marketo-integration-edges.yml
+  apps:
+  - Sendoso
+  listing_count: 1
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Adobe Exchange Experience Cloud listing (Marketo Engage)
 generated: '2026-10-15'
 method: searched
 source:
@@ -171,3 +188,4 @@ checked:
 - https://slack.com/marketplace
 - salesforce/integrations/salesforce-integration-edges.yml
 - hubspot/integrations/hubspot-integration-edges.yml
+- marketo/integrations/marketo-integration-edges.yml
