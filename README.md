@@ -1,4 +1,4 @@
-# Sendoso (sendoso)
+# Sendoso
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,109 +64,166 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Sendoso is a corporate gifting and direct mail platform that lets sales, marketing, customer success
-and people teams send physical gifts, branded swag, eGifts, direct mail and charitable donations at
-scale. The Core API (v3) automates sending against pre-configured campaigns, the Marketplace and
-SmartSend APIs send from an open catalog, SCIM 2.0 handles user provisioning, an embeddable iFrame
-puts the send flow inside a partner application, and Svix-signed webhooks report twenty-eight send
-lifecycle events.
+Sendoso is a corporate gifting and direct mail platform that lets sales, marketing, customer success and people teams send physical gifts, branded swag, eGifts, direct mail and charitable donations at scale. The Sendoso Core API (v3) automates sending against pre-configured campaigns — physical gifts to a known address, physical gifts with recipient address collection, and eGifts delivered by email or as embeddable links — while the Marketplace and SmartSend APIs send from an open catalog and let Sendoso pick the gift from the recipient's interests. A SCIM 2.0 surface handles user provisioning, an embeddable iFrame puts the whole send flow inside a partner application, and Svix-signed webhooks report twenty-eight send lifecycle events. Sendoso also ships an OAuth-protected MCP server, an agent skill and an A2A agent card, and integrates with Salesforce, HubSpot, Outreach, SalesLoft, Marketo and other CRM and sales engagement tools.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/sendoso/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/sendoso/refs/heads/main/apis.yml)
+**Areas:** Corporate Gifting · Direct Mail · Sales Engagement · Marketing Automation · CRM Integration · eGifts · Swag and Merchandise · Fulfillment · Employee Recognition · Account Based Marketing · SCIM Provisioning · Webhook
 
-## Timestamps
+## Sendoso on APIs.io
 
-- **Created:** 2026-05-02
-- **Modified:** 2026-08-13
+Everything profiled for Sendoso is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/sendoso/](https://apis.io/providers/sendoso/)** — or go straight to one of the APIs or properties below.
 
-## APIs
+### APIs (8)
 
-### Sendoso Core API — `https://app.sendoso.com/api/v3`
+- [Sendoso Marketplace and SmartSend API](https://apis.io/apis/sendoso/sendoso-marketplace-api/) — Browse the Sendoso marketplace catalog, get AI-selected gift recommendations for a recipient, and send either. Four operations on /api/v3, scoped to…
+- [Sendoso Webhooks](https://apis.io/apis/sendoso/sendoso-webhooks/) — Twenty-eight Svix-signed send lifecycle events delivered to an endpoint you control. Subscriptions are configured in a hosted portal; there is no webhook…
+- [Sendoso MCP Server](https://apis.io/apis/sendoso/sendoso-mcp/) — OAuth-protected remote MCP server over the Sendoso platform, at https://app.sendoso.com/mcp. Publishes RFC 9728 protected-resource and RFC 8414…
+- [Sendoso Campaigns API](https://apis.io/apis/sendoso/sendoso-campaigns-api/) — Campaigns, called "touches" in the API.
+- [Sendoso Sends API](https://apis.io/apis/sendoso/sendoso-sends-api/) — Create and retrieve gift, direct mail and eGift sends.
+- [Sendoso Smart Send API](https://apis.io/apis/sendoso/sendoso-smartsend-api/) — AI-selected gift recommendations and sending them.
+- [Sendoso Teams API](https://apis.io/apis/sendoso/sendoso-teams-api/) — Team groups and their members.
+- [Sendoso Users API](https://apis.io/apis/sendoso/sendoso-users-api/) — Read the authorized user, list organization users, invite new users.
 
-Ten operations: create a send (physical, physical-with-address-collection, or eGift), generate eGift
-links, list sends, list and read campaigns ("touches"), read the current user, list and invite users,
-list team groups and their members.
+### Published properties
 
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Sendoso Webhooks](https://apis.io/asyncapis/sendoso/sendoso-webhooks-asyncapi/)
+
+#### Event channels (1)
+
+Individual events and webhooks the provider emits.
+
+- [/](https://apis.io/channels/sendoso/sendevents/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [sendoso-mcp.yml](https://apis.io/servers/sendoso/sendoso-mcp-yml/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Sendoso Vocabulary](https://apis.io/vocabularies/sendoso/sendoso-vocabulary/)
+
+#### Overlays (3)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Sendoso Core Overlay](https://apis.io/overlays/sendoso/sendoso-core-overlay/)
+- [Sendoso Marketplace Overlay](https://apis.io/overlays/sendoso/sendoso-marketplace-overlay/)
+- [Sendoso Scim Overlay](https://apis.io/overlays/sendoso/sendoso-scim-overlay/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Sendoso — jsonschema rules](https://apis.io/rules/sendoso/sendoso-jsonschema-spectral-rules/)
+- [Sendoso API Rules](https://apis.io/rules/sendoso/sendoso-rules/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Sendoso Authentication](https://apis.io/security/sendoso/sendoso-authentication/)
+- [Sendoso Domain Security](https://apis.io/security/sendoso/sendoso-domain-security/)
+- [Sendoso Trust Center](https://apis.io/security/sendoso/sendoso-trust-center/)
+- [Sendoso Vulnerability Disclosure](https://apis.io/security/sendoso/sendoso-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Sendoso Scopes](https://apis.io/scopes/sendoso/sendoso-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Sendoso Plans Pricing](https://apis.io/plans/sendoso/sendoso-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Sendoso Rate Limits](https://apis.io/rate-limits/sendoso/sendoso-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Sendoso Finops](https://apis.io/finops/sendoso/sendoso-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.sendoso.com/)
 - [Documentation](https://developer.sendoso.com/rest-api/overview/introduction)
-- [OpenAPI](openapi/sendoso-core-api-openapi.yml) · [Overlay](overlays/sendoso-core-overlay.yaml)
+- [Getting started](https://developer.sendoso.com/rest-api/overview/introduction)
+- [API reference](https://developer.sendoso.com/rest-api/reference/sends/get-sends)
+- [Pricing](https://www.sendoso.com/compare-plans)
+- [Blog](https://www.sendoso.com/blog)
+- [Terms of service](https://www.sendoso.com/terms)
+- [Privacy policy](https://www.sendoso.com/privacy)
+- [GitHub](https://github.com/sendoso)
 
-### Sendoso Marketplace and SmartSend API — `https://app.sendoso.com/api/v3`
+## API Evangelist rating
 
-Four operations: browse the catalog, send a product variant, get AI gift recommendations for a
-recipient email, send a recommendation. Scoped to `marketplace` and `smartsend`.
+**Kin Score 58.1** — strong · rubric 0.25.0 · scored 2026-10-23
 
-- [Documentation](https://developer.sendoso.com/marketplace/overview/introduction)
-- [OpenAPI](openapi/sendoso-marketplace-api-openapi.yml) · [Overlay](overlays/sendoso-marketplace-overlay.yaml)
+| Facet | Score |
+|---|---|
+| Discoverability | 80.0 |
+| Contract quality | 28.8 |
+| Contract governance | 31.8 |
+| Operational transparency | 42.1 |
+| Developer ergonomics | 71.4 |
+| Access clarity | 77.6 |
 
-### Sendoso SCIM API — `https://app.sendoso.com/api/scim/v2`
+**Agent readiness 45.8** — agent-native
 
-SCIM 2.0 user provisioning. Needs its own OAuth client credentials, separate from the Core API, and
-is an Enterprise-tier entitlement.
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | conformant |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | — |
 
-- [Documentation](https://developer.sendoso.com/scim/overview/introduction)
-- [OpenAPI](openapi/sendoso-scim-api-openapi.yml) · [Overlay](overlays/sendoso-scim-overlay.yaml)
+**Regulatory alignment 45.1** — Horizontal (data, software, accessibility, platform)
 
-### Sendoso Webhooks
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/sendoso/](https://apis.io/providers/sendoso/).
 
-Twenty-eight send lifecycle events, signed with Svix HMAC-SHA256 over the raw body with a five-minute
-replay window. Subscriptions live in a hosted portal; there is no webhook management API.
+## How this profile is made
 
-- [Documentation](https://developer.sendoso.com/webhooks/introduction)
-- [AsyncAPI](asyncapi/sendoso-webhooks-asyncapi.yml)
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-### Sendoso MCP Server — `https://app.sendoso.com/mcp`
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Sendoso: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-An OAuth-protected remote MCP server over the Sendoso platform, publishing RFC 9728 protected-resource
-metadata and RFC 8414 authorization-server metadata with dynamic client registration and PKCE S256.
-Sold from the Core plan tier upward.
+## Open an issue
 
-- [MCP profile](mcp/sendoso-mcp.yml) · [Tool crosswalk](mcp/sendoso-tool-crosswalk.yml)
-
-## Agent surfaces Sendoso publishes itself
-
-| Surface | URL | Status |
-|---|---|---|
-| MCP server (platform) | `https://app.sendoso.com/mcp` | Live, OAuth-gated |
-| MCP server (docs search) | `https://developer.sendoso.com/mcp` | Live, anonymous, 3 tools |
-| A2A agent card | `/.well-known/agent-card.json` on the docs host | 200, graded **conformant** with deviations |
-| Agent Skill | `/.well-known/agent-skills/sendoso/skill.md` | 200, provider-authored, saved verbatim |
-| llms.txt | `https://developer.sendoso.com/llms.txt` | 200, 44 pages, every page also served as `.md` |
-
-Sendoso's `robots.txt` sets `Content-Signal: ai-train=yes, search=yes, ai-input=yes` — an explicit
-opt-in.
-
-## Not published by Sendoso
-
-Recorded absences, so that a gap here reads as deliberate rather than unexamined:
-
-- **No OpenAPI.** Probed 404 on `/openapi.json`, `/openapi.yaml`, `/docs.json`, `/mint.json`,
-  `/rest-api/openapi.json`, `/scim/openapi.json`, `/marketplace/openapi.json` and
-  `/api-reference/openapi.json`. The reference pages are hand-authored MDX, not spec-backed. The
-  three descriptions in `openapi/` are generated by API Evangelist from those pages and say so.
-- **No SDKs.** Nothing first-party on npm, PyPI, RubyGems, Packagist, Maven Central, NuGet, crates.io
-  or pkg.go.dev. Fifteen of the sixteen repositories in `github.com/sendoso` are archived forks of
-  other people's projects.
-- **No status page.** `status.sendoso.com` resolves but does not answer; the underlying Atlassian
-  Statuspage reports INACTIVE.
-- **No changelog, no versioning policy, no deprecation policy, no SLA.**
-- **No security.txt and no published vulnerability disclosure policy** on any host.
-- **No idempotency.** Sendoso states plainly that duplicate payloads are not handled — `POST
-  /api/v3/send` is not safe to retry.
-- **No AsyncAPI.** The event catalog is real and complete; the AsyncAPI document in `asyncapi/` is
-  ours, generated from it.
-- **No named certifications readable.** The Vanta trust center at `security.sendoso.com` returns 200
-  but renders entirely client-side, delivering no certification name to any automated reader.
-
-## Provenance correction, 2026-08-13
-
-This repository previously carried five API entries (Inventory, Recipients, Reports, Sends, Teams)
-and an OpenAPI describing `https://app.sendoso.com/api/v2` with `X-Api-Key` authentication. **None of
-it was real** — Sendoso's API is `/api/v3` with OAuth 2.0, and not one of those paths exists. Those
-files and the eighteen artifacts derived from them (Postman and Open Collections, examples, JSON
-Schema, JSON Structure, JSON-LD, agentic-access) are quarantined in
-[`_scaffold/`](_scaffold/README.md) rather than deleted, so the mistake stays auditable.
-
-## Maintainers
-
-**FN:** API Evangelist
-**Email:** info@apievangelist.com
-**URL:** https://apievangelist.com
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/sendoso/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
