@@ -1,0 +1,89 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://www.sendoso.com/compare-plans
+sources:
+- https://www.sendoso.com/compare-plans
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T141238
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: negotiated
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+published: false
+note: Plan comparison page with no numeric prices; page states 'Why isn't pricing listed? Plans are tailored
+  to your team size, sending volume, and regions.' Numbers shown are license counts/send allowances, not
+  prices.
+plan_count: 5
+plans:
+- name: Start with Merch
+  price_text: Talk to sales
+  period: none
+  included_quota: 5 licenses included; Unlimited branded swag sourcing; Merch on demand; Low minimums,
+    no spend commitment; Bulk sending for procured swag; Shopify integration
+- name: Start with Gifting
+  price_text: Talk to sales
+  period: none
+  included_quota: 5 licenses included; 100 marketplace sends / month; Global eGifts + Marketplace; 1 integration
+    + MCP Server
+- name: Core
+  price_text: Talk to sales
+  period: none
+  included_quota: 10 licenses included; Unlimited + bulk sending; Global storage and fulfillment (1 region);
+    Campaign Studio (4 projects/ yr); 2 platform integrations
+- name: Advanced
+  price_text: Talk to sales
+  period: none
+  included_quota: '50 licenses included; 2 regions; Campaign Studio (unlimited projects); AI Agent: Oso;
+    Unlimited integrations'
+- name: Enterprise
+  price_text: Talk to sales
+  period: none
+  included_quota: Custom licenses included; all regions; Policy Center; SCIM; 2 product environments
+rate_limit_statements:
+- 100 sends / mo
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Start with Merch
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Start with Gifting
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Core
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Advanced
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
